@@ -21,6 +21,7 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { AuthNoticeComponent } from './auth-notice/auth-notice.component';
 // Auth
 import { AuthEffects, AuthGuard, authReducer, AuthService } from '../../../core/auth';
+import { AuthGuardService } from '../../../helper/auth-guard.service';
 
 const routes: Routes = [
 	{
@@ -87,8 +88,9 @@ export class AuthModule {
 		return {
 			ngModule: AuthModule,
 			providers: [
-				AuthService,
-				AuthGuard
+				// AuthService,
+				// AuthGuard,
+				AuthGuardService
 			]
 		};
 	}

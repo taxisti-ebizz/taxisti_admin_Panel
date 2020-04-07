@@ -6,46 +6,49 @@ import {BaseComponent} from './views/theme/base/base.component';
 import {ErrorPageComponent} from './views/theme/content/error-page/error-page.component';
 // Auth
 import {AuthGuard} from './core/auth';
+import { LoginComponent } from './views/pages/auth/login/login.component'; // Used for login functionality
+import { AuthGuardService } from './helper/auth-guard.service'; // Used for authentication
 
 const routes: Routes = [
-	{path: 'auth', loadChildren: () => import('app/views/pages/auth/auth.module').then(m => m.AuthModule)},
+	// { path: '', component: LoginComponent },
+	{path: '', loadChildren: () => import('../app/views/pages/auth/auth.module').then(m => m.AuthModule)},
 
 	{
 		path: '',
 		component: BaseComponent,
-		canActivate: [AuthGuard],
+		canActivate: [AuthGuardService],
 		children: [
 			{
 				path: 'dashboard',
-				loadChildren: () => import('app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule),
+				loadChildren: () => import('../app/views/pages/dashboard/dashboard.module').then(m => m.DashboardModule),
 			},
 			{
 				path: 'mail',
-				loadChildren: () => import('app/views/pages/apps/mail/mail.module').then(m => m.MailModule),
+				loadChildren: () => import('../app/views/pages/apps/mail/mail.module').then(m => m.MailModule),
 			},
 			{
 				path: 'ecommerce',
-				loadChildren: () => import('app/views/pages/apps/e-commerce/e-commerce.module').then(m => m.ECommerceModule),
+				loadChildren: () => import('../app/views/pages/apps/e-commerce/e-commerce.module').then(m => m.ECommerceModule),
 			},
 			{
 				path: 'ngbootstrap',
-				loadChildren: () => import('app/views/pages/ngbootstrap/ngbootstrap.module').then(m => m.NgbootstrapModule),
+				loadChildren: () => import('../app/views/pages/ngbootstrap/ngbootstrap.module').then(m => m.NgbootstrapModule),
 			},
 			{
 				path: 'material',
-				loadChildren: () => import('app/views/pages/material/material.module').then(m => m.MaterialModule),
+				loadChildren: () => import('../app/views/pages/material/material.module').then(m => m.MaterialModule),
 			},
 			{
 				path: 'user-management',
-				loadChildren: () => import('app/views/pages/user-management/user-management.module').then(m => m.UserManagementModule),
+				loadChildren: () => import('../app/views/pages/user-management/user-management.module').then(m => m.UserManagementModule),
 			},
 			{
 				path: 'wizard',
-				loadChildren: () => import('app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
+				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},
 			{
 				path: 'builder',
-				loadChildren: () => import('app/views/theme/content/builder/builder.module').then(m => m.BuilderModule),
+				loadChildren: () => import('../app/views/theme/content/builder/builder.module').then(m => m.BuilderModule),
 			},
 			{
 				path: 'error/403',

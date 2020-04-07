@@ -6,6 +6,8 @@ import { shuffle } from 'lodash';
 // Widgets model
 import { LayoutConfigService, SparklineChartOptions } from '../../../core/_base/layout';
 import { Widget4Data } from '../../partials/content/widgets/widget4/widget4.component';
+import { AdminAuthService } from '../../../helper/admin-auth.service';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'kt-dashboard',
@@ -22,7 +24,15 @@ export class DashboardComponent implements OnInit {
 	widget4_3: Widget4Data;
 	widget4_4: Widget4Data;
 
-	constructor(private layoutConfigService: LayoutConfigService) {
+	constructor(private layoutConfigService: LayoutConfigService,
+		private adminAuthService: AdminAuthService,
+		private router: Router) {
+		if (!this.adminAuthService.loggedIn()) {
+			this.router.navigate(['/']);
+		}
+		else{
+			this.router.navigate(['/dashboard']);
+		}
 	}
 
 	ngOnInit(): void {

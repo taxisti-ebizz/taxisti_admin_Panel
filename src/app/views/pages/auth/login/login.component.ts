@@ -13,13 +13,27 @@ import { AppState } from '../../../../core/reducers';
 // Auth
 import { AuthNoticeService, AuthService, Login } from '../../../../core/auth';
 
+//Http API Method
+import { HttpService } from '../../../../services/http.service';
+
+//API
+import { ApiService } from '../../../../services/api.service';
+
+//Toastr Messages
+import { ToastrService } from 'ngx-toastr'; //Used For display toast messages
+
+
+
+import AXIOS from 'axios'
+import { config } from 'process';
+
 /**
  * ! Just example => Should be removed in development
  */
-const DEMO_PARAMS = {
-	EMAIL: 'admin@demo.com',
-	PASSWORD: 'demo'
-};
+// const DEMO_PARAMS = {
+// 	EMAIL: '',
+// 	PASSWORD: 'demo'
+// };
 
 @Component({
 	selector: 'kt-login',
@@ -59,7 +73,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 		private store: Store<AppState>,
 		private fb: FormBuilder,
 		private cdr: ChangeDetectorRef,
-		private route: ActivatedRoute
+		private route: ActivatedRoute,
+		private api : ApiService,
+		private http : HttpService,
+		private toastr : ToastrService
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -96,22 +113,22 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 */
 	initLoginForm() {
 		// demo message to show
-		if (!this.authNoticeService.onNoticeChanged$.getValue()) {
-			const initialNotice = `Use account
-			<strong>${DEMO_PARAMS.EMAIL}</strong> and password
-			<strong>${DEMO_PARAMS.PASSWORD}</strong> to continue.`;
-			this.authNoticeService.setNotice(initialNotice, 'info');
-		}
+		// if (!this.authNoticeService.onNoticeChanged$.getValue()) {
+		// 	const initialNotice = `Use account
+		// 	<strong>${DEMO_PARAMS.EMAIL}</strong> and password
+		// 	<strong>${DEMO_PARAMS.PASSWORD}</strong> to continue.`;
+		// 	this.authNoticeService.setNotice(initialNotice, 'info');
+		// }
 
 		this.loginForm = this.fb.group({
-			email: [DEMO_PARAMS.EMAIL, Validators.compose([
+			email: ['', Validators.compose([
 				Validators.required,
 				Validators.email,
 				Validators.minLength(3),
 				Validators.maxLength(320) // https://stackoverflow.com/questions/386294/what-is-the-maximum-length-of-a-valid-email-address
 			])
 			],
-			password: [DEMO_PARAMS.PASSWORD, Validators.compose([
+			password: ['', Validators.compose([
 				Validators.required,
 				Validators.minLength(3),
 				Validators.maxLength(100)
@@ -125,6 +142,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	 */
 	submit() {
 		const controls = this.loginForm.controls;
+
 		/** check form */
 		if (this.loginForm.invalid) {
 			Object.keys(controls).forEach(controlName =>
@@ -136,27 +154,45 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.loading = true;
 
 		const authData = {
-			email: controls.email.value,
+			email_id: controls.email.value,
 			password: controls.password.value
 		};
-		this.auth
-			.login(authData.email, authData.password)
-			.pipe(
-				tap(user => {
-					if (user) {
-						this.store.dispatch(new Login({authToken: user.accessToken}));
-						this.router.navigateByUrl(this.returnUrl); // Main page
-					} else {
-						this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
-					}
-				}),
-				takeUntil(this.unsubscribe),
-				finalize(() => {
-					this.loading = false;
-					this.cdr.markForCheck();
-				})
-			)
-			.subscribe();
+		// this.http
+		// 	.login(authData.email, authData.password)
+		// 	.pipe(
+		// 		tap(user => {
+		// 			if (user) {
+		// 				this.store.dispatch(new Login({authToken: user.accessToken}));
+		// 				this.router.navigateByUrl(this.returnUrl); // Main page
+		// 			} else {
+		// 				this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
+		// 			}
+		// 		}),
+		// 		takeUntil(this.unsubscribe),
+		// 		finalize(() => {
+		// 			this.loading = false;
+		// 			this.cdr.markForCheck();
+		// 		})
+		// 	)
+		// 	.subscribe();
+
+		 
+
+		this.http.postRequest(this.api.login,authData).subscribe(res => {
+			const result : any = res;
+			if(result.status == true){
+				//this.store.dispatch(new Login({authToken: result.data.token}));
+				localStorage.setItem('token',result.data.token)
+				localStorage.setItem('userDetail',JSON.stringify(result.data))
+				this.toastr.success(result.message);
+				this.router.navigate(['/dashboard']);
+				//this.router.navigateByUrl(this.returnUrl);
+			}
+			else{
+				//this.toastr.error(result.message);
+			}
+			
+		})
 	}
 
 	/**
