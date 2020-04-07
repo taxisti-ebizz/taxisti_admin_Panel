@@ -20,7 +20,7 @@ import { HttpService } from '../../../../services/http.service';
 import { ApiService } from '../../../../services/api.service';
 
 //Toastr Messages
-import { ToastrService } from 'ngx-toastr'; //Used For display toast messages
+//import { ToastrService } from 'ngx-toastr'; //Used For display toast messages
 
 
 
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private api : ApiService,
 		private http : HttpService,
-		private toastr : ToastrService
+		///private toastr : ToastrService
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -184,7 +184,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 				//this.store.dispatch(new Login({authToken: result.data.token}));
 				localStorage.setItem('token',result.data.token)
 				localStorage.setItem('userDetail',JSON.stringify(result.data))
-				this.toastr.success(result.message);
+				//this.toastr.success(result.message);
 				this.router.navigate(['/dashboard']);
 				//this.router.navigateByUrl(this.returnUrl);
 			}
