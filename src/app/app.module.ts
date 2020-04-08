@@ -61,6 +61,9 @@ import * as scss from 'highlight.js/lib/languages/scss';
 import * as xml from 'highlight.js/lib/languages/xml';
 import * as json from 'highlight.js/lib/languages/json';
 
+//Ngx Spinner
+import { NgxSpinnerModule  } from 'ngx-spinner';
+
 //Toastr Mesasage
 //import { ToastrModule } from 'ngx-toastr';
 
@@ -116,6 +119,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		MatProgressSpinnerModule,
 		InlineSVGModule.forRoot(),
 		ThemeModule,
+		NgxSpinnerModule
 		//NgxDaterangepickerMd.forRoot()
 		//ToastrModule.forRoot()
 	],

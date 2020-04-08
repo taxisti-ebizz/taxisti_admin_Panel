@@ -388,6 +388,13 @@ export class MenuConfig {
 					bullet: 'dot',
 				},
 				{
+					title: 'User Management',
+					root: true,
+					bullet: 'dot',
+					icon: 'flaticon2-user-outline-symbol',
+					page: '/user-management/users'
+				},
+				{
 					title: 'Layout Builder',
 					root: true,
 					icon: 'flaticon2-expand',

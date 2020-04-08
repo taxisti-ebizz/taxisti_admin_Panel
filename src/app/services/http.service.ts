@@ -31,6 +31,20 @@ export class HttpService {
         );
     }
 
+    //Post Request with authToken
+    postReq(url,data){
+
+        const baseUrl = this.checkPort(url);
+        const headers : HttpHeaders = new HttpHeaders({ Authorization: 'Bearer '+this.authService.getToken() });
+            return this.http.post<any>(baseUrl, data, { headers }).pipe(
+            map(
+                userData => {
+                    return userData;
+                }
+            )
+        );
+    }
+
     //Get Request
     getRequest(url) {
         const baseUrl = this.checkPort(url);

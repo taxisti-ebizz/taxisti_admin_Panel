@@ -55,6 +55,9 @@ import {
 	UserEffects
 } from '../../../core/auth';
 
+import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { EditUserComponent } from './users/edit-user/edit-user.component';
+
 const routes: Routes = [
 	{
 		path: '',
@@ -128,7 +131,8 @@ const routes: Routes = [
 		MatExpansionModule,
 		MatTabsModule,
 		MatTooltipModule,
-		MatDialogModule
+		MatDialogModule,
+		NgbPaginationModule
 	],
 	providers: [
 		InterceptService,
@@ -152,7 +156,8 @@ const routes: Routes = [
 	],
 	entryComponents: [
 		ActionNotificationComponent,
-		RoleEditDialogComponent
+		RoleEditDialogComponent,
+		EditUserComponent
 	],
 	declarations: [
 		UserManagementComponent,
@@ -163,7 +168,8 @@ const routes: Routes = [
 		UserRolesListComponent,
 		ChangePasswordComponent,
 		AddressComponent,
-		SocialNetworksComponent
+		SocialNetworksComponent,
+		EditUserComponent
 	]
 })
 export class UserManagementModule {}

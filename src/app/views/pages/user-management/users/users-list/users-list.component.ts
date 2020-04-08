@@ -4,7 +4,7 @@ import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy, OnDe
 import { ActivatedRoute, Router } from '@angular/router';
 // Material
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatPaginator, MatSort, MatSnackBar } from '@angular/material';
+import { MatPaginator, MatSort, MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
 // RXJS
 import { debounceTime, distinctUntilChanged, tap, skip, take, delay } from 'rxjs/operators';
 import { fromEvent, merge, Observable, of, Subscription } from 'rxjs';
@@ -28,6 +28,23 @@ import {
 } from '../../../../../core/auth';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
+//Http API Method
+import { HttpService } from '../../../../../services/http.service';
+
+//API
+import { ApiService } from '../../../../../services/api.service';
+
+//Edit User Modal
+import { EditUserComponent } from '../edit-user/edit-user.component';
+
+//Spinner
+import { NgxSpinnerService } from 'ngx-spinner';
+
+// Edit User Service
+import { EditUserService } from '../../../../../services/user/edit-user.service';
+
+
+
 // Table with EDIT item in MODAL
 // ARTICLE for table with sort/filter/paginator
 // https://blog.angular-university.io/angular-material-data-table/
@@ -41,11 +58,17 @@ import { SubheaderService } from '../../../../../core/_base/layout';
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UsersListComponent implements OnInit, OnDestroy {
+
+	dataSource: MatTableDataSource<any>;
+	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+	@ViewChild(MatSort, { static: true }) sort: MatSort;
+
+
 	// Table fields
-	dataSource: UsersDataSource;
-	displayedColumns = ['select', 'id', 'username', 'email', 'fullname', '_roles', 'actions'];
-	@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-	@ViewChild('sort1', {static: true}) sort: MatSort;
+	//dataSource: UsersDataSource;
+	displayedColumns = ['id', 'username', 'mobile_no', 'completed_ride', 'cancelled_ride', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
+	//@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+	//@ViewChild('sort1', {static: true}) sort: MatSort;
 	// Filter fields
 	@ViewChild('searchInput', {static: true}) searchInput: ElementRef;
 	lastQuery: QueryParamsModel;
@@ -56,22 +79,23 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
 	// Subscriptions
 	private subscriptions: Subscription[] = [];
-
-	/**
-	 *
-	 * @param activatedRoute: ActivatedRoute
-	 * @param store: Store<AppState>
-	 * @param router: Router
-	 * @param layoutUtilsService: LayoutUtilsService
-	 * @param subheaderService: SubheaderService
-	 */
+	page = 1
+	pageSize = 10
+	count = 0;
+	dataObj = {}
+	
 	constructor(
 		private activatedRoute: ActivatedRoute,
 		private store: Store<AppState>,
 		private router: Router,
 		private layoutUtilsService: LayoutUtilsService,
 		private subheaderService: SubheaderService,
-		private cdr: ChangeDetectorRef) {}
+		private cdr: ChangeDetectorRef,
+		private http: HttpService,
+		private api: ApiService,
+		public dialog: MatDialog,
+		private spinner: NgxSpinnerService,
+		private editUserService : EditUserService) {}
 
 	/**
 	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
@@ -93,45 +117,50 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		- when a pagination event occurs => this.paginator.page
 		- when a sort event occurs => this.sort.sortChange
 		**/
-		const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-			tap(() => {
-				this.loadUsersList();
-			})
-		)
-		.subscribe();
-		this.subscriptions.push(paginatorSubscriptions);
+		// const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
+		// 	tap(() => {
+		// 		this.loadUsersList();
+		// 	})
+		// )
+		// .subscribe();
+		// this.subscriptions.push(paginatorSubscriptions);
 
 
 		// Filtration, bind to searchInput
-		const searchSubscription = fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
-			// tslint:disable-next-line:max-line-length
-			debounceTime(150), // The user can type quite quickly in the input box, and that could trigger a lot of server requests. With this operator, we are limiting the amount of server requests emitted to a maximum of one every 150ms
-			distinctUntilChanged(), // This operator will eliminate duplicate values
-			tap(() => {
-				this.paginator.pageIndex = 0;
-				this.loadUsersList();
-			})
-		)
-		.subscribe();
-		this.subscriptions.push(searchSubscription);
+		//==================================================Commented By VS==================================================
+			// const searchSubscription = fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
+			// 	// tslint:disable-next-line:max-line-length
+			// 	debounceTime(150), // The user can type quite quickly in the input box, and that could trigger a lot of server requests. With this operator, we are limiting the amount of server requests emitted to a maximum of one every 150ms
+			// 	distinctUntilChanged(), // This operator will eliminate duplicate values
+			// 	tap(() => {
+			// 		this.paginator.pageIndex = 0;
+			// 		this.loadUsersList();
+			// 	})
+			// )
+			// .subscribe();
+			// this.subscriptions.push(searchSubscription);
+		//==================================================End Commented By VS==================================================
 
 		// Set title to page breadCrumbs
 		this.subheaderService.setTitle('User management');
 
 		// Init DataSource
-		this.dataSource = new UsersDataSource(this.store);
-		const entitiesSubscription = this.dataSource.entitySubject.pipe(
-			skip(1),
-			distinctUntilChanged()
-		).subscribe(res => {
-			this.usersResult = res;
-		});
-		this.subscriptions.push(entitiesSubscription);
+		// this.dataSource = new UsersDataSource(this.store);
+		// const entitiesSubscription = this.dataSource.entitySubject.pipe(
+		// 	skip(1),
+		// 	distinctUntilChanged()
+		// ).subscribe(res => {
+		// 	this.usersResult = res;
+		// });
+		// this.subscriptions.push(entitiesSubscription);
 
 		// First Load
-		of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
-			this.loadUsersList();
-		});
+		// of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
+		// 	this.loadUsersList();
+		// });
+
+		//Get User List
+		this.userList();
 	}
 
 	/**
@@ -141,21 +170,84 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach(el => el.unsubscribe());
 	}
 
+	userList(){
+		try {
+
+			const data = {
+				"page":this.page,
+				//"size":this.pageSize
+			}
+
+			this.http.postReq(this.api.userList,data).subscribe(res => {
+				const result: any = res;
+				if (result.status == true) {
+					this.count = result.data.total;
+					console.log("count ========>>>>>>",result.data.total);
+					
+
+					var i = 1;
+					result.data.data.forEach(element => {
+						element.id = i;
+						i++;
+					});
+					
+					this.loadData(result.data);
+				}
+				else{
+					//this.spinner.hide();
+					//$('#disableprofilepope').modal('show');
+					
+				}
+			});
+
+		} catch (error) {
+			// this.errorMsg = error.error.message;
+			// this.spinner.show();
+		}
+	}
+	
+
+	loadData(data) {
+
+		this.selection.clear();
+		setTimeout(() => {
+			this.dataSource = new MatTableDataSource(data.data);
+			this.paginator = this.paginator;
+			this.sort = this.sort;
+			this.filterConfiguration()
+			//this.spinner.hide();
+		});
+	}
+
+	//User list search filter
+	applyFilter(filterValue: string) {
+		console.log("filterValue ======>>>>",filterValue);
+		
+		this.dataSource.filter = filterValue.trim().toLowerCase();
+
+		if (this.dataSource.paginator) {
+			this.dataSource.paginator.firstPage();
+		}
+	}
+
 	/**
 	 * Load users list
 	 */
-	loadUsersList() {
-		this.selection.clear();
-		const queryParams = new QueryParamsModel(
-			this.filterConfiguration(),
-			this.sort.direction,
-			this.sort.active,
-			this.paginator.pageIndex,
-			this.paginator.pageSize
-		);
-		this.store.dispatch(new UsersPageRequested({ page: queryParams }));
-		this.selection.clear();
-	}
+
+	//========================================Comment By VS ===============================================
+		// loadUsersList() {
+		// 	this.selection.clear();
+		// 	const queryParams = new QueryParamsModel(
+		// 		this.filterConfiguration(),
+		// 		this.sort.direction,
+		// 		this.sort.active,
+		// 		this.paginator.pageIndex,
+		// 		this.paginator.pageSize
+		// 	);
+		// 	this.store.dispatch(new UsersPageRequested({ page: queryParams }));
+		// 	this.selection.clear();
+		// }
+	//========================================End Comment By VS ===============================================
 
 	/** FILTRATION */
 	filterConfiguration(): any {
@@ -250,7 +342,36 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	 *
 	 * @param id
 	 */
-	editUser(id) {
-		this.router.navigate(['../users/edit', id], { relativeTo: this.activatedRoute });
+	// editUser(id) {
+	// 	this.router.navigate(['../users/edit', id], { relativeTo: this.activatedRoute });
+	// }
+
+	//Handle Page
+	handlePage(event){
+		this.page = event;
+		this.userList();
+	}
+
+	/*
+	  Open Add Member Card Modal
+	*/
+	editUser(user) {
+		this.editUserService.mode = 2;
+
+		const dialogRef = this.dialog.open(EditUserComponent, {
+			width: '700px',
+			height: 'auto',
+			backdropClass: 'masterModalPopup',
+			data: { mode: this.editUserService.mode, userData : user }
+		});
+		dialogRef.afterClosed().subscribe(result => {
+			
+			if (result === "close" || result === undefined) {
+				this.userList();
+				
+			} else if (result === false) {
+				this.spinner.hide();
+			}
+		});
 	}
 }
