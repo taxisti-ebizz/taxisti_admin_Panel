@@ -194,7 +194,7 @@ export class SpecificationsListComponent implements OnInit, OnDestroy {
 		const _waitDesciption = 'Specification is deleting...';
 		const _deleteMessage = `Specification has been deleted`;
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, '');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;
@@ -215,7 +215,7 @@ export class SpecificationsListComponent implements OnInit, OnDestroy {
 		const _waitDesciption = 'Specifications are deleting...';
 		const _deleteMessage = 'Selected specifications have been deleted';
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, '');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;

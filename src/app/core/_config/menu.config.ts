@@ -395,6 +395,22 @@ export class MenuConfig {
 					page: '/user-management/users'
 				},
 				{
+					title: 'Driver Management',
+					root: true,
+					bullet: 'dot',	
+					icon: 'flaticon-user-settings',
+					submenu: [
+						{
+							title: 'All Driver',
+							page: '/driver-management/all-driver'
+						},
+						{
+							title: 'Roles',
+							page: '/user-management/roles'
+						}
+					]
+				},
+				{
 					title: 'Layout Builder',
 					root: true,
 					icon: 'flaticon2-expand',

@@ -43,7 +43,8 @@ import {
 	ActionNotificationComponent,
 	DeleteEntityDialogComponent,
 	FetchEntityDialogComponent,
-	UpdateStatusDialogComponent
+	UpdateStatusDialogComponent,
+	VerifyStatusDialogComponent
 } from '../../../partials/content/crud';
 // Components
 import { ECommerceComponent } from './e-commerce.component';
@@ -206,6 +207,7 @@ const routes: Routes = [
 		DeleteEntityDialogComponent,
 		FetchEntityDialogComponent,
 		UpdateStatusDialogComponent,
+		VerifyStatusDialogComponent,
 		SpecificationEditDialogComponent
 	],
 	declarations: [

@@ -43,6 +43,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/user-management/user-management.module').then(m => m.UserManagementModule),
 			},
 			{
+				path: 'driver-management',
+				loadChildren: () => import('../app/views/pages/driver-management/driver-management.module').then(m => m.DriverManagementModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

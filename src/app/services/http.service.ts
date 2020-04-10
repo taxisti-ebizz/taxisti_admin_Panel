@@ -51,6 +51,21 @@ export class HttpService {
         return this.http.get(baseUrl);
     }
 
+    //Delete Request
+    deleteReq(url) {
+        //this.spinner.show();
+
+        const baseUrl = this.checkPort(url);
+        const headers : HttpHeaders = new HttpHeaders({ Authorization: 'Bearer '+this.authService.getToken() });
+            return this.http.delete<any>(baseUrl, { headers }).pipe(
+            map(
+                userData => {
+                    return userData;
+                }
+            )
+        );
+    }
+
     //Merge baseUrl + getUrl
     checkPort(url) {
         return this.baseUrl + url;

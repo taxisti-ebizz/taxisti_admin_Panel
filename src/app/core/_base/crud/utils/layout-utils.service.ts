@@ -5,7 +5,8 @@ import { MatSnackBar, MatDialog } from '@angular/material';
 import { ActionNotificationComponent,
 	DeleteEntityDialogComponent,
 	FetchEntityDialogComponent,
-	UpdateStatusDialogComponent
+	UpdateStatusDialogComponent,
+	VerifyStatusDialogComponent
 } from '../../../../views/partials/content/crud';
 
 export enum MessageType {
@@ -70,9 +71,23 @@ export class LayoutUtilsService {
 	 * @param description: stirng
 	 * @param waitDesciption: string
 	 */
-	deleteElement(title: string = '', description: string = '', waitDesciption: string = '') {
+	deleteElement(title: string = '', description: string = '', waitDesciption: string = '', user_id) {
 		return this.dialog.open(DeleteEntityDialogComponent, {
-			data: { title, description, waitDesciption },
+			data: { title, description, waitDesciption, user_id },
+			width: '440px'
+		});
+	}
+
+	/**
+	 * Showing Confirmation (Mat-Dialog) before Entity Removing
+	 *
+	 * @param title: stirng
+	 * @param description: stirng
+	 * @param waitDesciption: string
+	 */
+	verifyElement(title: string = '', description: string = '', waitDesciption: string = '', user_id, status) {
+		return this.dialog.open(VerifyStatusDialogComponent, {
+			data: { title, description, waitDesciption, user_id, status },
 			width: '440px'
 		});
 	}

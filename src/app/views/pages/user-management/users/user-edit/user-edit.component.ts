@@ -77,9 +77,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 			if (id && id > 0) {
 				this.store.pipe(select(selectUserById(id))).subscribe(res => {
 
-					console.log("res ======>>>>",res);
-					
-
 					if (res) {
 						this.user = res;
 						this.rolesSubject.next(this.user.roles);

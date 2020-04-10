@@ -410,7 +410,7 @@ export class RemarksListComponent implements OnInit, OnDestroy {
 		const _waitDesciption = 'Remark is deleting...';
 		const _deleteMessage = `Remark has been deleted`;
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, '');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;
@@ -430,7 +430,7 @@ export class RemarksListComponent implements OnInit, OnDestroy {
 		const _waitDesciption = 'Remarks are deleting...';
 		const _deleteMessage = 'Selected remarks have been deleted';
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption);
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption,'');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;

@@ -9,10 +9,10 @@ import { HttpService } from '../../../../../services/http.service';
 import { ApiService } from '../../../../../services/api.service';
 
 @Component({
-	selector: 'kt-delete-entity-dialog',
-	templateUrl: './delete-entity-dialog.component.html'
+	selector: 'kt-verify-status-dialog',
+	templateUrl: './verify-status-dialog.component.html'
 })
-export class DeleteEntityDialogComponent implements OnInit {
+export class VerifyStatusDialogComponent implements OnInit {
 	// Public properties
 	viewLoading = false;
 
@@ -23,7 +23,7 @@ export class DeleteEntityDialogComponent implements OnInit {
 	 * @param data: any
 	 */
 	constructor(
-		public dialogRef: MatDialogRef<DeleteEntityDialogComponent>,
+		public dialogRef: MatDialogRef<VerifyStatusDialogComponent>,
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private http: HttpService,
 		private api: ApiService,
@@ -49,11 +49,16 @@ export class DeleteEntityDialogComponent implements OnInit {
 	/**
 	 * Close dialog with true result
 	 */
-	onYesClick(user_id): void {
+	onYesClick(user_id,status): void {
 		/* Server loading imitation. Remove this */
 		this.viewLoading = true;
 
-		this.http.deleteReq(this.api.deleteUser+user_id).subscribe(res => {
+		const data = {
+			"user_id" : user_id,
+			"verify" : status
+		}
+
+		this.http.postReq(this.api.updateUserStatus,data).subscribe(res => {
 			const result : any = res;
 			if(result.status == true){
 				setTimeout(() => {
@@ -65,3 +70,4 @@ export class DeleteEntityDialogComponent implements OnInit {
 		
 	}
 }
+

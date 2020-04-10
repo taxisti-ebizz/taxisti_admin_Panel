@@ -15,17 +15,11 @@ import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsServi
 // Shared
 import { ActionNotificationComponent } from '../../partials/content/crud';
 // Components
-import { UserManagementComponent } from './user-management.component';
-import { UsersListComponent } from './users/users-list/users-list.component';
-import { UserEditComponent } from './users/user-edit/user-edit.component';
-import { RolesListComponent } from './roles/roles-list/roles-list.component';
-import { RoleEditDialogComponent } from './roles/role-edit/role-edit.dialog.component';
-import { UserRolesListComponent } from './users/_subs/user-roles/user-roles-list.component';
-import { ChangePasswordComponent } from './users/_subs/change-password/change-password.component';
-import { AddressComponent } from './users/_subs/address/address.component';
-import { SocialNetworksComponent } from './users/_subs/social-networks/social-networks.component';
-import { EditUserComponent } from './users/edit-user/edit-user.component';
-import { ViewUserDetailsComponent } from './users/view-user-details/view-user-details.component';
+import { DriverManagementComponent } from './driver-management.component';
+
+import { AllDriverListComponent } from './drivers/all-driver-list/all-driver-list.component';
+import { DriverEditComponent } from './drivers/driver-edit/driver-edit.component';
+import { ViewDriverDetailsComponent } from './drivers/view-driver-details/view-driver-details.component';
 
 // Material
 import {
@@ -63,48 +57,24 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 const routes: Routes = [
 	{
 		path: '',
-		component: UserManagementComponent,
+		component: DriverManagementComponent,
 		children: [
 			{
 				path: '',
 				redirectTo: 'roles',
 				pathMatch: 'full'
-			},
-			{
-				path: 'roles',
-				component: RolesListComponent
-			},
-			{
-				path: 'users',
-				component: UsersListComponent
-			},
-			{
-				path: 'users:id',
-				component: UsersListComponent
-			},
-			{
-				path: 'users/add',
-				component: UserEditComponent
-			},
-			{
-				path: 'users/add:id',
-				component: UserEditComponent
-			},
-			{
-				path: 'users/edit',
-				component: UserEditComponent
-			},
-			{
-				path: 'users/edit/:id',
-				component: UserEditComponent
+      },
+      {
+				path: 'all-driver',
+				component: AllDriverListComponent
 			},
 		]
 	}
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
+  imports: [
+    CommonModule,
 		HttpClientModule,
 		PartialsModule,
 		RouterModule.forChild(routes),
@@ -135,8 +105,8 @@ const routes: Routes = [
 		MatTooltipModule,
 		MatDialogModule,
 		NgbPaginationModule
-	],
-	providers: [
+  ],
+  providers: [
 		InterceptService,
 		{
         	provide: HTTP_INTERCEPTORS,
@@ -157,23 +127,14 @@ const routes: Routes = [
 		LayoutUtilsService
 	],
 	entryComponents: [
-		ActionNotificationComponent,
-		RoleEditDialogComponent,
-		EditUserComponent,
-		ViewUserDetailsComponent
+    ActionNotificationComponent,
+    ViewDriverDetailsComponent
 	],
 	declarations: [
-		UserManagementComponent,
-		UsersListComponent,
-		UserEditComponent,
-		RolesListComponent,
-		RoleEditDialogComponent,
-		UserRolesListComponent,
-		ChangePasswordComponent,
-		AddressComponent,
-		SocialNetworksComponent,
-		EditUserComponent,
-		ViewUserDetailsComponent
+		DriverManagementComponent,
+		AllDriverListComponent,
+		DriverEditComponent,
+		ViewDriverDetailsComponent
 	]
 })
-export class UserManagementModule {}
+export class DriverManagementModule { }

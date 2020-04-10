@@ -35,10 +35,10 @@ import { HttpService } from '../../../../../services/http.service';
 import { ApiService } from '../../../../../services/api.service';
 
 //Edit User Modal
-import { EditUserComponent } from '../edit-user/edit-user.component';
+//import { EditUserComponent } from '../edit-user/edit-user.component';
 
 //View User details
-import { ViewUserDetailsComponent } from '../view-user-details/view-user-details.component';
+import { ViewDriverDetailsComponent } from '../view-driver-details/view-driver-details.component';
 
 //Spinner
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -47,20 +47,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EditUserService } from '../../../../../services/user/edit-user.service';
 
 
-
-// Table with EDIT item in MODAL
-// ARTICLE for table with sort/filter/paginator
-// https://blog.angular-university.io/angular-material-data-table/
-// https://v5.material.angular.io/components/table/overview
-// https://v5.material.angular.io/components/sort/overview
-// https://v5.material.angular.io/components/table/overview#sorting
-// https://www.youtube.com/watch?v=NSt9CI3BXv4
 @Component({
 	selector: 'kt-users-list',
-	templateUrl: './users-list.component.html',
+	templateUrl: './all-driver-list.component.html',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UsersListComponent implements OnInit, OnDestroy {
+export class AllDriverListComponent implements OnInit, OnDestroy {
 
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -69,7 +61,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
 	// Table fields
 	//dataSource: UsersDataSource;
-	displayedColumns = ['id', 'username', 'mobile_no', 'completed_ride', 'cancelled_ride', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
+	displayedColumns = ['id', 'username', 'mobile_no', 'image', 'rides', 'cancelled_ride', 'acceptance_ratio', 'rejected_ratio', 'last_week_online_hours', 'current_week_online_hours', 'total_online_hours', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
 	//@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	//@ViewChild('sort1', {static: true}) sort: MatSort;
 	// Filter fields
@@ -116,54 +108,12 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
 		this.subscriptions.push(sortSubscription);
 
-		/* Data load will be triggered in two cases:
-		- when a pagination event occurs => this.paginator.page
-		- when a sort event occurs => this.sort.sortChange
-		**/
-		// const paginatorSubscriptions = merge(this.sort.sortChange, this.paginator.page).pipe(
-		// 	tap(() => {
-		// 		this.loadUsersList();
-		// 	})
-		// )
-		// .subscribe();
-		// this.subscriptions.push(paginatorSubscriptions);
-
-
-		// Filtration, bind to searchInput
-		//==================================================Commented By VS==================================================
-			// const searchSubscription = fromEvent(this.searchInput.nativeElement, 'keyup').pipe(
-			// 	// tslint:disable-next-line:max-line-length
-			// 	debounceTime(150), // The user can type quite quickly in the input box, and that could trigger a lot of server requests. With this operator, we are limiting the amount of server requests emitted to a maximum of one every 150ms
-			// 	distinctUntilChanged(), // This operator will eliminate duplicate values
-			// 	tap(() => {
-			// 		this.paginator.pageIndex = 0;
-			// 		this.loadUsersList();
-			// 	})
-			// )
-			// .subscribe();
-			// this.subscriptions.push(searchSubscription);
-		//==================================================End Commented By VS==================================================
 
 		// Set title to page breadCrumbs
-		this.subheaderService.setTitle('User management');
-
-		// Init DataSource
-		// this.dataSource = new UsersDataSource(this.store);
-		// const entitiesSubscription = this.dataSource.entitySubject.pipe(
-		// 	skip(1),
-		// 	distinctUntilChanged()
-		// ).subscribe(res => {
-		// 	this.usersResult = res;
-		// });
-		// this.subscriptions.push(entitiesSubscription);
-
-		// First Load
-		// of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
-		// 	this.loadUsersList();
-		// });
-
+    this.subheaderService.setTitle('User management');
+    
 		//Get User List
-		this.userList();
+		this.allDriverList();
 	}
 
 	/**
@@ -173,15 +123,15 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		this.subscriptions.forEach(el => el.unsubscribe());
 	}
 
-	userList(){
+	allDriverList(){
 		try {
 
 			const data = {
 				"page":this.page,
-				//"size":this.pageSize
+				"type":"all"
 			}
 
-			this.http.postReq(this.api.userList,data).subscribe(res => {
+			this.http.postReq(this.api.getDriverList,data).subscribe(res => {
 				const result: any = res;
 				if (result.status == true) {
 					this.count = result.data.total;
@@ -348,47 +298,47 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	//Handle Page
 	handlePage(event){
 		this.page = event;
-		this.userList();
+		this.allDriverList();
 	}
 
 	/*
 	  Open Add Member Card Modal
 	*/
-	editUser(user) {
-		this.editUserService.obj = user;
-		this.editUserService.mode = 2;
+	// editUser(user) {
+	// 	this.editUserService.obj = user;
+	// 	this.editUserService.mode = 2;
 
-		const dialogRef = this.dialog.open(EditUserComponent, {
-			width: '700px',
-			height: 'auto',
-			backdropClass: 'masterModalPopup',
-			data: { mode: 2, first_name : user.first_name, last_name : user.last_name, profile_pic : user.profile_pic, user_id : user.user_id }
-		});
-		dialogRef.afterClosed().subscribe(result => {
+	// 	const dialogRef = this.dialog.open(EditUserComponent, {
+	// 		width: '700px',
+	// 		height: 'auto',
+	// 		backdropClass: 'masterModalPopup',
+	// 		data: { mode: 2, first_name : user.first_name, last_name : user.last_name, profile_pic : user.profile_pic, user_id : user.user_id }
+	// 	});
+	// 	dialogRef.afterClosed().subscribe(result => {
 			
-			if (result === "close" || result === undefined) {
-				this.userList();
+	// 		if (result === "close" || result === undefined) {
+	// 			this.userList();
 				
-			} else if (result === false) {
-				this.spinner.hide();
-			}
-		});
-	}
+	// 		} else if (result === false) {
+	// 			this.spinner.hide();
+	// 		}
+	// 	});
+	// }
 
-	viewUser(userData){
-		this.editUserService.obj = userData;
+	viewDriverDetails(driverData){
+		this.editUserService.obj = driverData;
 		this.editUserService.mode = 3;
 
-		const dialogRef = this.dialog.open(ViewUserDetailsComponent, {
+		const dialogRef = this.dialog.open(ViewDriverDetailsComponent, {
 			width: '700px',
 			height: 'auto',
 			backdropClass: 'masterModalPopup',
-			data: { mode: 3, userData : userData }
+			data: { mode: 3, driverData : driverData }
 		});
 		dialogRef.afterClosed().subscribe(result => {
 			
 			if (result === "close" || result === undefined) {
-				this.userList();
+				this.allDriverList();
 				
 			} else if (result === false) {
 				this.spinner.hide();
@@ -424,3 +374,4 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		});
 	}
 }
+
