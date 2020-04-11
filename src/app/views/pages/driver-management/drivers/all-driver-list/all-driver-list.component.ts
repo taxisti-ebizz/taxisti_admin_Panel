@@ -35,7 +35,7 @@ import { HttpService } from '../../../../../services/http.service';
 import { ApiService } from '../../../../../services/api.service';
 
 //Edit User Modal
-//import { EditUserComponent } from '../edit-user/edit-user.component';
+import { DriverEditComponent } from '../driver-edit/driver-edit.component';
 
 //View User details
 import { ViewDriverDetailsComponent } from '../view-driver-details/view-driver-details.component';
@@ -44,7 +44,7 @@ import { ViewDriverDetailsComponent } from '../view-driver-details/view-driver-d
 import { NgxSpinnerService } from 'ngx-spinner';
 
 // Edit User Service
-import { EditUserService } from '../../../../../services/user/edit-user.service';
+import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
 
 
 @Component({
@@ -90,7 +90,7 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 		private api: ApiService,
 		public dialog: MatDialog,
 		private spinner: NgxSpinnerService,
-		private editUserService : EditUserService) {}
+		private editDriverService : EditDriverService) {}
 
 	/**
 	 * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
@@ -304,30 +304,30 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 	/*
 	  Open Add Member Card Modal
 	*/
-	// editUser(user) {
-	// 	this.editUserService.obj = user;
-	// 	this.editUserService.mode = 2;
+	editDriver(driverData) {
+		this.editDriverService.obj = driverData;
+		this.editDriverService.mode = 2;
 
-	// 	const dialogRef = this.dialog.open(EditUserComponent, {
-	// 		width: '700px',
-	// 		height: 'auto',
-	// 		backdropClass: 'masterModalPopup',
-	// 		data: { mode: 2, first_name : user.first_name, last_name : user.last_name, profile_pic : user.profile_pic, user_id : user.user_id }
-	// 	});
-	// 	dialogRef.afterClosed().subscribe(result => {
+		const dialogRef = this.dialog.open(DriverEditComponent, {
+			width: '800px',
+			height: 'auto',
+			backdropClass: 'masterModalPopup',
+			data: { mode: 2, driver : driverData }
+		});
+		dialogRef.afterClosed().subscribe(result => {
 			
-	// 		if (result === "close" || result === undefined) {
-	// 			this.userList();
+			if (result === "close" || result === undefined) {
+				this.allDriverList();
 				
-	// 		} else if (result === false) {
-	// 			this.spinner.hide();
-	// 		}
-	// 	});
-	// }
+			} else if (result === false) {
+				this.spinner.hide();
+			}
+		});
+	}
 
 	viewDriverDetails(driverData){
-		this.editUserService.obj = driverData;
-		this.editUserService.mode = 3;
+		this.editDriverService.obj = driverData;
+		this.editDriverService.mode = 3;
 
 		const dialogRef = this.dialog.open(ViewDriverDetailsComponent, {
 			width: '700px',

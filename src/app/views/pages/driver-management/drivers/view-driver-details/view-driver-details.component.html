@@ -52,7 +52,7 @@
             <br/> 
 
             <div class="col-sm-12">
-                <label class="col-sm-4">Driver Availablit :</label>
+                <label class="col-sm-4">Driver Availability :</label>
                 <span>{{data.driverData.availability}}</span>
             </div>
             <br/>
@@ -65,8 +65,12 @@
             
             <div class="col-sm-12">
                 <label class="col-sm-4">Car Images :</label>
-                <ng-container *ngIf="data.driverData.profile_pic!=''"><img src="{{data.driverData.profile_pic}}"></ng-container> 
-                <ng-container *ngIf="data.driverData.profile_pic==''"><img src="assets/img/car.png"></ng-container> 
+                <ng-container *ngIf="data.driverData.car_images.length > 0">
+                    <ng-container *ngFor="let images of data.driverData.car_images">
+                        <img src="{{images}}">&nbsp;
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="data.driverData.car_images.length == 0"><img src="assets/img/car.png"></ng-container> 
             </div>
             <br/>
             <div class="kt-separator kt-separator--dashed"></div>

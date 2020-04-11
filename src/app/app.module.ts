@@ -64,6 +64,10 @@ import * as json from 'highlight.js/lib/languages/json';
 //Ngx Spinner
 import { NgxSpinnerModule  } from 'ngx-spinner';
 
+//Services
+import { EditUserService } from './services/user/edit-user.service';
+import { EditDriverService } from './services/driver/edit-driver.service';
+
 //Toastr Mesasage
 //import { ToastrModule } from 'ngx-toastr';
 
@@ -158,6 +162,8 @@ export function hljsLanguages(): HighlightLanguage[] {
 		HttpUtilsService,
 		TypesUtilsService,
 		LayoutUtilsService,
+		EditUserService,
+		EditDriverService
 	],
 	bootstrap: [AppComponent]
 })

@@ -127,8 +127,9 @@ const routes: Routes = [
 		LayoutUtilsService
 	],
 	entryComponents: [
-    ActionNotificationComponent,
-    ViewDriverDetailsComponent
+		ActionNotificationComponent,
+		ViewDriverDetailsComponent,
+		DriverEditComponent
 	],
 	declarations: [
 		DriverManagementComponent,
