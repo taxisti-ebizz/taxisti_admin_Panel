@@ -18,13 +18,7 @@ import { CustomerModel, CustomersDataSource, CustomersPageRequested, OneCustomer
 // Components
 import { CustomerEditDialogComponent } from '../customer-edit/customer-edit.dialog.component';
 
-// Table with EDIT item in MODAL
-// ARTICLE for table with sort/filter/paginator
-// https://blog.angular-university.io/angular-material-data-table/
-// https://v5.material.angular.io/compgetItemCssClassByStatusonents/table/overview
-// https://v5.material.angular.io/components/sort/overview
-// https://v5.material.angular.io/components/table/overview#sorting
-// https://www.youtube.com/watch?v=NSt9CI3BXv4
+
 @Component({
 	// tslint:disable-next-line:component-selector
 	selector: 'kt-customers-list',

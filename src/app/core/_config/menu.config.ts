@@ -401,12 +401,36 @@ export class MenuConfig {
 					icon: 'flaticon-user-settings',
 					submenu: [
 						{
-							title: 'All Driver',
+							title: 'Current Drivers',
+							page: '/driver-management/current-drivers'
+						},
+						{
+							title: 'All Drivers',
 							page: '/driver-management/all-driver'
 						},
 						{
-							title: 'Roles',
-							page: '/user-management/roles'
+							title: 'Online Drivers',
+							page: '/driver-management/online-drivers'
+						},
+						{
+							title: 'Location',
+							page: '/driver-management/location'
+						}
+					]
+				},
+				{
+					title: 'Ride Management',
+					root: true,
+					bullet: 'dot',	
+					icon: 'flaticon-truck',
+					submenu: [
+						{
+							title: 'Pending',
+							page: '/ride-management/pending-ride'
+						},
+						{
+							title: 'Running',
+							page: '/ride-management/running-ride'
 						}
 					]
 				},

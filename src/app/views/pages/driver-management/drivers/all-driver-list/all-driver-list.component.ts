@@ -61,7 +61,8 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 
 	// Table fields
 	//dataSource: UsersDataSource;
-	displayedColumns = ['id', 'username', 'mobile_no', 'image', 'rides', 'cancelled_ride', 'acceptance_ratio', 'rejected_ratio', 'last_week_online_hours', 'current_week_online_hours', 'total_online_hours', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
+	//'image',
+	displayedColumns = ['id', 'username', 'mobile_no', 'rides', 'cancelled_ride', 'acceptance_ratio', 'rejected_ratio', 'last_week_online_hours', 'current_week_online_hours', 'total_online_hours', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
 	//@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 	//@ViewChild('sort1', {static: true}) sort: MatSort;
 	// Filter fields
@@ -125,6 +126,7 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 
 	allDriverList(){
 		try {
+			this.spinner.show();
 
 			const data = {
 				"page":this.page,
@@ -159,14 +161,12 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 	
 
 	loadData(data) {
-
-		this.selection.clear();
 		setTimeout(() => {
 			this.dataSource = new MatTableDataSource(data.data);
 			this.paginator = this.paginator;
 			this.sort = this.sort;
-			this.filterConfiguration()
-			//this.spinner.hide();
+			this.filterConfiguration();
+			this.spinner.hide();
 		});
 	}
 

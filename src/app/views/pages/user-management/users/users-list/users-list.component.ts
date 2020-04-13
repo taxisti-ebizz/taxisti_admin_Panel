@@ -47,14 +47,6 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EditUserService } from '../../../../../services/user/edit-user.service';
 
 
-
-// Table with EDIT item in MODAL
-// ARTICLE for table with sort/filter/paginator
-// https://blog.angular-university.io/angular-material-data-table/
-// https://v5.material.angular.io/components/table/overview
-// https://v5.material.angular.io/components/sort/overview
-// https://v5.material.angular.io/components/table/overview#sorting
-// https://www.youtube.com/watch?v=NSt9CI3BXv4
 @Component({
 	selector: 'kt-users-list',
 	templateUrl: './users-list.component.html',
@@ -210,13 +202,13 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
 	loadData(data) {
 
-		this.selection.clear();
+		// this.selection.clear();
 		setTimeout(() => {
 			this.dataSource = new MatTableDataSource(data.data);
 			this.paginator = this.paginator;
 			this.sort = this.sort;
 			this.filterConfiguration()
-			//this.spinner.hide();
+			this.spinner.hide();
 		});
 	}
 

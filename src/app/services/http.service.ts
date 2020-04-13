@@ -3,6 +3,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { AdminAuthService } from '../helper/admin-auth.service';
 import { map, catchError, retry } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
     providedIn: 'root'
@@ -13,13 +14,14 @@ export class HttpService {
 
     constructor(private http: HttpClient, 
         private authService: AdminAuthService,
+        private spinner : NgxSpinnerService
       ) {     
     }
 
 
     //Post Request
     postRequest(url, data) : Observable<any> {
-        //this.spinner.show();
+        this.spinner.show();
 
         const baseUrl = this.checkPort(url);
         return this.http.post(baseUrl, data).pipe(
@@ -33,6 +35,7 @@ export class HttpService {
 
     //Post Request with authToken
     postReq(url,data){
+        this.spinner.show();
 
         const baseUrl = this.checkPort(url);
         const headers : HttpHeaders = new HttpHeaders({ Authorization: 'Bearer '+this.authService.getToken() });
@@ -47,13 +50,15 @@ export class HttpService {
 
     //Get Request
     getRequest(url) {
+        this.spinner.show();
+
         const baseUrl = this.checkPort(url);
         return this.http.get(baseUrl);
     }
 
     //Delete Request
     deleteReq(url) {
-        //this.spinner.show();
+        this.spinner.show();
 
         const baseUrl = this.checkPort(url);
         const headers : HttpHeaders = new HttpHeaders({ Authorization: 'Bearer '+this.authService.getToken() });

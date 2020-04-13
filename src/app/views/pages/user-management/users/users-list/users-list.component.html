@@ -99,6 +99,11 @@
 					<mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
 				</ng-container>
 
+				<!-- <ng-container matColumnDef="name">
+					<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+					<td mat-cell *matCellDef="let user">{{user.id}} </td>
+				</ng-container> -->
+
 				<ng-container matColumnDef="username">
 					<mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
 					<mat-cell *matCellDef="let user">{{user.first_name+' '+user.last_name}}</mat-cell>
@@ -203,7 +208,7 @@
 		<!-- start: BOTTOM -->
 		<div class="mat-table__bottom">
 			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
-			<!-- <mat-spinner [diameter]="20" *ngIf="dataSource.loading$ | async"></mat-spinner> -->
+			<!-- <mat-spinner [diameter]="20" *ngIf="dataSource.length > 0 | async"></mat-spinner> -->
 			<!-- MATERIAL PAGINATOR | Binded to dasources -->
 			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
 			<!-- <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator> -->

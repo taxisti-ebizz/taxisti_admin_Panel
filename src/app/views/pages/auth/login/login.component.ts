@@ -27,6 +27,9 @@ import { ApiService } from '../../../../services/api.service';
 import AXIOS from 'axios'
 import { config } from 'process';
 
+//Ngx Spinner
+import { NgxSpinnerService } from 'ngx-spinner';
+
 /**
  * ! Just example => Should be removed in development
  */
@@ -76,6 +79,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private api : ApiService,
 		private http : HttpService,
+		private spinner: NgxSpinnerService
 		///private toastr : ToastrService
 	) {
 		this.unsubscribe = new Subject();
@@ -186,7 +190,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 				localStorage.setItem('userDetail',JSON.stringify(result.data))
 				//this.toastr.success(result.message);
 				this.router.navigate(['/dashboard']);
+				this.spinner.hide();
 				//this.router.navigateByUrl(this.returnUrl);
+				
 			}
 			else{
 				//this.toastr.error(result.message);
