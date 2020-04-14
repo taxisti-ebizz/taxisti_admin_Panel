@@ -102,16 +102,16 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 	 */
 	ngOnInit() {
 		// load roles list
-		const rolesSubscription = this.store.pipe(select(selectAllRoles)).subscribe(res => this.allRoles = res);
-		this.subscriptions.push(rolesSubscription);
+		// const rolesSubscription = this.store.pipe(select(selectAllRoles)).subscribe(res => this.allRoles = res);
+		// this.subscriptions.push(rolesSubscription);
 
 		// If the user changes the sort order, reset back to the first page.
-		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-		this.subscriptions.push(sortSubscription);
+		// const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+		// this.subscriptions.push(sortSubscription);
 
 
 		// Set title to page breadCrumbs
-    this.subheaderService.setTitle('User management');
+    	this.subheaderService.setTitle('Driver Management');
     
 		//Get User List
 		this.allDriverList();
@@ -125,49 +125,42 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 	}
 
 	allDriverList(){
-		try {
-			this.spinner.show();
 
-			const data = {
-				"page":this.page,
-				"type":"all"
-			}
-
-			this.http.postReq(this.api.getDriverList,data).subscribe(res => {
-				const result: any = res;
-				if (result.status == true) {
-					this.count = result.data.total;
-
-					var i = 1;
-					result.data.data.forEach(element => {
-						element.id = i;
-						i++;
-					});
-					
-					this.loadData(result.data);
-				}
-				else{
-					//this.spinner.hide();
-					//$('#disableprofilepope').modal('show');
-					
-				}
-			});
-
-		} catch (error) {
-			// this.errorMsg = error.error.message;
-			// this.spinner.show();
+		const data = {
+			"page":this.page,
+			"type":"all"
 		}
+
+		this.http.postReq(this.api.getDriverList,data).subscribe(res => {
+			const result: any = res;
+			if (result.status == true) {
+				this.count = result.data.total;
+
+				var i = 1;
+				result.data.data.forEach(element => {
+					element.id = i;
+					i++;
+				});
+				
+				this.loadData(result.data);
+			}
+			else{
+				//this.spinner.hide();
+				//$('#disableprofilepope').modal('show');
+				
+			}
+		});
 	}
 	
 
 	loadData(data) {
-		setTimeout(() => {
+		// setTimeout(() => {
 			this.dataSource = new MatTableDataSource(data.data);
 			this.paginator = this.paginator;
 			this.sort = this.sort;
-			this.filterConfiguration();
+			//this.filterConfiguration();
 			this.spinner.hide();
-		});
+		// });
 	}
 
 	//User list search filter
@@ -198,19 +191,6 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 		// }
 	//========================================End Comment By VS ===============================================
 
-	/** FILTRATION */
-	filterConfiguration(): any {
-		const filter: any = {};
-		const searchText: string = this.searchInput.nativeElement.value;
-
-		filter.lastName = searchText;
-
-		filter.username = searchText;
-		filter.email = searchText;
-		filter.fillname = searchText;
-		return filter;
-	}
-
 	/** ACTIONS */
 	/**
 	 * Delete user
@@ -232,58 +212,6 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 			this.store.dispatch(new UserDeleted({ id: _item.id }));
 			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
 		});
-	}
-
-	/**
-	 * Fetch selected rows
-	 */
-	fetchUsers() {
-		const messages = [];
-		this.selection.selected.forEach(elem => {
-			messages.push({
-				text: `${elem.fullname}, ${elem.email}`,
-				id: elem.id.toString(),
-				status: elem.username
-			});
-		});
-		this.layoutUtilsService.fetchElements(messages);
-	}
-
-	/**
-	 * Check all rows are selected
-	 */
-	isAllSelected(): boolean {
-		const numSelected = this.selection.selected.length;
-		const numRows = this.usersResult.length;
-		return numSelected === numRows;
-	}
-
-	/**
-	 * Toggle selection
-	 */
-	masterToggle() {
-		if (this.selection.selected.length === this.usersResult.length) {
-			this.selection.clear();
-		} else {
-			this.usersResult.forEach(row => this.selection.select(row));
-		}
-	}
-
-	/* UI */
-	/**
-	 * Returns user roles string
-	 *
-	 * @param user: User
-	 */
-	getUserRolesStr(user: User): string {
-		const titles: string[] = [];
-		each(user.roles, (roleId: number) => {
-			const _role = find(this.allRoles, (role: Role) => role.id === roleId);
-			if (_role) {
-				titles.push(_role.title);
-			}
-		});
-		return titles.join(', ');
 	}
 
 	/**

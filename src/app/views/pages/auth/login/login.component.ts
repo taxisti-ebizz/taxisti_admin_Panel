@@ -189,10 +189,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 				localStorage.setItem('token',result.data.token)
 				localStorage.setItem('userDetail',JSON.stringify(result.data))
 				//this.toastr.success(result.message);
-				this.router.navigate(['/dashboard']);
 				this.spinner.hide();
-				//this.router.navigateByUrl(this.returnUrl);
-				
+				this.router.navigate(['/dashboard']);
 			}
 			else{
 				//this.toastr.error(result.message);

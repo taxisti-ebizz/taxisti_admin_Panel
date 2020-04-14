@@ -18,8 +18,12 @@ import { ActionNotificationComponent } from '../../partials/content/crud';
 import { DriverManagementComponent } from './driver-management.component';
 
 import { AllDriverListComponent } from './drivers/all-driver-list/all-driver-list.component';
+import { DriverListComponent } from './drivers/driver-list/driver-list.component';
 import { DriverEditComponent } from './drivers/driver-edit/driver-edit.component';
 import { ViewDriverDetailsComponent } from './drivers/view-driver-details/view-driver-details.component';
+import { ListComponent } from './current-drivers/list/list.component';
+import { EditComponent } from './current-drivers/edit/edit.component';
+import { ViewComponent } from './current-drivers/view/view.component';
 
 // Material
 import {
@@ -54,6 +58,8 @@ import {
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
+
+
 const routes: Routes = [
 	{
 		path: '',
@@ -63,10 +69,14 @@ const routes: Routes = [
 				path: '',
 				redirectTo: 'roles',
 				pathMatch: 'full'
-      },
-      {
-				path: 'all-driver',
-				component: AllDriverListComponent
+      		},
+      		{
+				path: 'all-drivers-list',
+				component: DriverListComponent
+			},
+			{
+				path: 'current-drivers-list',
+				component: ListComponent
 			},
 		]
 	}
@@ -135,7 +145,11 @@ const routes: Routes = [
 		DriverManagementComponent,
 		AllDriverListComponent,
 		DriverEditComponent,
-		ViewDriverDetailsComponent
+		ViewDriverDetailsComponent,
+		ListComponent,
+		EditComponent,
+		ViewComponent,
+		DriverListComponent
 	]
 })
 export class DriverManagementModule { }

@@ -129,7 +129,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
 			this.paginator.pageSize
 		);
 		// Call request from server
-		this.store.dispatch(new CustomersPageRequested({ page: queryParams }));
+		//this.store.dispatch(new CustomersPageRequested({ page: queryParams }));
 		this.selection.clear();
 	}
 

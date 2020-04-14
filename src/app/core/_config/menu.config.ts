@@ -402,11 +402,11 @@ export class MenuConfig {
 					submenu: [
 						{
 							title: 'Current Drivers',
-							page: '/driver-management/current-drivers'
+							page: '/driver-management/current-drivers-list'
 						},
 						{
 							title: 'All Drivers',
-							page: '/driver-management/all-driver'
+							page: '/driver-management/all-drivers-list'
 						},
 						{
 							title: 'Online Drivers',
