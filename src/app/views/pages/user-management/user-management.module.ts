@@ -17,6 +17,7 @@ import { ActionNotificationComponent } from '../../partials/content/crud';
 // Components
 import { UserManagementComponent } from './user-management.component';
 import { UsersListComponent } from './users/users-list/users-list.component';
+import { AllUsersListComponent } from './users/all-users-list/all-users-list.component';
 import { UserEditComponent } from './users/user-edit/user-edit.component';
 import { RolesListComponent } from './roles/roles-list/roles-list.component';
 import { RoleEditDialogComponent } from './roles/role-edit/role-edit.dialog.component';
@@ -75,8 +76,8 @@ const routes: Routes = [
 				component: RolesListComponent
 			},
 			{
-				path: 'users',
-				component: UsersListComponent
+				path: 'users-list',
+				component: AllUsersListComponent
 			},
 			{
 				path: 'users:id',
@@ -173,7 +174,8 @@ const routes: Routes = [
 		AddressComponent,
 		SocialNetworksComponent,
 		EditUserComponent,
-		ViewUserDetailsComponent
+		ViewUserDetailsComponent,
+		AllUsersListComponent
 	]
 })
 export class UserManagementModule {}

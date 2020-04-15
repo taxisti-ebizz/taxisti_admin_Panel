@@ -1,182 +1,100 @@
 <kt-portlet>
-	<!-- PORTLET LOADING | Binded to TABLE Datasource -->
-	<!-- See prop => '~/core/_crud/models/data-sources/_base.datasource.ts' (loading$) -->
-	<!-- [viewLoading$]="dataSource.loading$" -->
-	<kt-portlet-header [title]="'Users list'" [class]="'kt-portlet__head--lg'"> 
-		<ng-container ktPortletTools>
-			<button [routerLink]="['../users/add']" mat-raised-button color="primary" matTooltip="Create new User">New user</button>
-			<!-- Buttons (Material Angular) | See off.documenations 'https://material.angular.io/components/button/overview' -->
-			<!-- mat-raised-button | Rectangular contained button w/ elevation  -->
-		</ng-container>
+
+	<kt-portlet-header [sticky]="true" [title]="'User List'" [class]="'kt-portlet__head--lg'">
+		<!-- <ng-container ktPortletTools>
+			<button (click)="createProduct()" mat-raised-button color="primary" matTooltip="Create new product">New product</button>
+		</ng-container> -->
 	</kt-portlet-header>
 	<!-- end::Header -->
 
-	<!-- start::Body (attribute: ktPortletBody) -->
 	<kt-portlet-body>
 		<!-- start::FILTERS & GROUP ACTIONS -->
 		<div class="kt-form kt-margin-b-30">
 			<!-- start::FILTERS -->
 			<div class="kt-form__filtration">
 				<div class="row align-items-center">
-					<div class="col-md-2 kt-margin-bottom-10-mobile">
-						<mat-form-field class="mat-form-field-fluid">
-							<input matInput placeholder="Search user" #searchInput placeholder="Search" (keyup)="applyFilter($event.target.value)">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" #searchInput (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
 							<mat-hint align="start">
-								<strong>Search</strong> in all fields
+								<strong>Search in all fields</strong>
 							</mat-hint>
 						</mat-form-field>
 					</div>
 				</div>
 			</div>
 			<!-- end::FILTERS -->
-
-			<!-- start::GROUP ACTIONS -->
-			<!-- Group actions list: 'Delete selected' | 'Fetch selected' | 'Update status for selected' -->
-			<!-- Group actions are shared for all LISTS -->
-			<div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20"
-				[ngClass]="{'show' : selection.selected.length > 0}"><!-- We show 'Group Actions' div if smth are selected -->
-				<div class="col-xl-12">
-					<div class="kt-form__group kt-form__group--inline">
-						<div class="kt-form__label kt-form__label-no-wrap">
-							<label class="kt--font-bold kt-font-danger-">
-								<span translate="ECOMMERCE.COMMON.SELECTED_RECORDS_COUNT"></span> {{ selection.selected.length }}
-							</label>
-							<!-- selectedCountsTitle => function from codeBehind (users-list.component.ts file) -->
-							<!-- selectedCountsTitle => just returns title of selected items count -->
-							<!-- for example: Selected records count: 4 -->
-						</div>
-						<div class="kt-form__control kt-form__group--inline">
-							<button (click)="fetchUsers()" mat-raised-button matTooltip="Fetch selected users"  class="mat-button-mt-4">
-								<mat-icon>clear_all</mat-icon>
-								Fetch Selected
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- end::GROUP ACTIONS -->
 		</div>
 		<!-- end::FILTERS & GROUP ACTIONS -->
 
 		<!-- MATERIAL TABLE | Binded to datasources -->
 		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
 		<div class="mat-table__wrapper">
-			<!-- <mat-table class="lmat-elevation-z8"
-				#table
-				[dataSource]="dataSource"
-				matSort
-				#sort1="matSort"
-				matSortActive="id"
-				matSortDirection="asc"
-				matSortDisableClear> -->
-			<table mat-table [dataSource]="dataSource" matSort matSortActive="created" width="100%">
-				<!-- Checkbox Column -->
 
-				<!-- Table with selection -->
-				<!-- https://run.stackblitz.com/api/angular/v1?file=app%2Ftable-selection-example.ts -->
-				<!-- <ng-container matColumnDef="select">
-					<mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
-						<mat-checkbox (change)="$event ? masterToggle() : null"
-							[checked]="selection.hasValue() && isAllSelected()"
-							[indeterminate]="selection.hasValue() && !isAllSelected()">
-						</mat-checkbox>
-					</mat-header-cell>
-					<mat-cell *matCellDef="let row" class="mat-column-checkbox">
-						<mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)">
-						</mat-checkbox>
-					</mat-cell>
-				</ng-container> -->
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-				 <!-- start::FILTERS -->
-				 <!-- <mat-form-field class="mat-form-field-fluid">
-					<input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
-				</mat-form-field> -->
-				<!-- end::FILTERS -->
-				 
 				<ng-container matColumnDef="id">
 					<!-- ATTRIBUTE mat-sort-header  for sorting | https://material.angular.io/components/sort/overview -->
-					<mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.id}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> ID </th>
+					<td mat-cell *matCellDef="let user"> {{user.id}} </td>
 				</ng-container>
-
-				<!-- <ng-container matColumnDef="name">
-					<th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-					<td mat-cell *matCellDef="let user">{{user.id}} </td>
-				</ng-container> -->
-
+		
 				<ng-container matColumnDef="username">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.first_name+' '+user.last_name}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Username </th>
+					<td mat-cell *matCellDef="let user"> {{user.first_name+' '+user.last_name}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="mobile_no">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Mobile No</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.mobile_no}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Mobile No </th>
+					<td mat-cell *matCellDef="let user"> {{user.mobile_no}} </td>
 				</ng-container>
-
-				<!-- <ng-container matColumnDef="mobile_no">
-					<mat-header-cell *matHeaderCellDef mat-sort-header class="email-cell">Mobile No</mat-header-cell>
-					<mat-cell *matCellDef="let user" class="email-cell">
-						<a href="user-management/users#" class="kt-link">{{user.mobile_no}}</a>
-					</mat-cell>
-				</ng-container> -->
-
+		
 				<ng-container matColumnDef="completed_ride">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Completed Ride</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.complate_ride_count}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Completed Ride </th>
+					<td mat-cell *matCellDef="let user"> {{user.complate_ride_count}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="cancelled_ride">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Cancelled Ride</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.cancel_ride_count}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Cancelled Ride </th>
+					<td mat-cell *matCellDef="let user"> {{user.cancel_ride_count}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="total_reviews">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Total Reviews</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.total_review_count}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Total Reviews </th>
+					<td mat-cell *matCellDef="let user"> {{user.total_review_count}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="average_rating">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Average Rating</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.avg_rating_count}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Average Rating </th>
+					<td mat-cell *matCellDef="let user"> {{user.avg_rating_count}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="date_of_birth">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Date Of Birth</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.date_of_birth}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Date Of Birth </th>
+					<td mat-cell *matCellDef="let user"> {{user.date_of_birth}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="date_of_register">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Date Of Register</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.created_date}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Date Of Register </th>
+					<td mat-cell *matCellDef="let user"> {{user.created_date}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="device_type">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>Device Type</mat-header-cell>
-					<mat-cell *matCellDef="let user">{{user.device_type}}</mat-cell>
+					<th mat-header-cell *matHeaderCellDef> Device Type </th>
+					<td mat-cell *matCellDef="let user"> {{user.device_type}} </td>
 				</ng-container>
-
+		
 				<ng-container matColumnDef="verify">
-					<mat-header-cell *matHeaderCellDef mat-sort-header>verify (0 = unapproved, 1 = approved)</mat-header-cell>
-					<!-- <mat-cell *matCellDef="let user">{{user.verify}}</mat-cell> -->
-					<mat-cell class="mat-cell cdk-column-status mat-column-status ng-star-inserted" role="gridcell" *matCellDef="let user">
+					<th mat-header-cell *matHeaderCellDef> verify (0 = unapproved, 1 = approved) </th>
+					<td mat-cell *matCellDef="let user"> 
 						<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide" *ngIf="user.verify == 0">Unapproved</span>
 						<span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" *ngIf="user.verify == 1">Approved</span>
-					</mat-cell>
+					</td>
 				</ng-container>
-
-				<!-- <ng-container matColumnDef="cancelled_ride">
-					<mat-header-cell *matHeaderCellDef>Cancelled Ride</mat-header-cell>
-					<mat-cell *matCellDef="let user">
-						<span>{{ user.cancelled_ride }}</span>
-					</mat-cell>
-				</ng-container> -->
-
-				
-
+		
 				<ng-container matColumnDef="actions">
-					<mat-header-cell *matHeaderCellDef>Action / Status</mat-header-cell>
-					<mat-cell *matCellDef="let user">
+					<th mat-header-cell *matHeaderCellDef> Action / Status </th>
+					<td mat-cell *matCellDef="let user"> 
 						<button (click)="viewUser(user)" mat-icon-button color="primary" matTooltip="view User Details">
 							<mat-icon>remove_red_eye</mat-icon>
 						</button>&nbsp;
@@ -192,28 +110,21 @@
 						<button mat-icon-button color="warn" matTooltip="Verify user" type="button" *ngIf="user.verify == 0" (click)="verifyUser(user.user_id,1)">
 							<mat-icon style="color: red;">thumb_down</mat-icon>
 						</button>
-					</mat-cell>
+					</td>
 				</ng-container>
+            
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </div>
 
-				<mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-				<mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-			<!-- </mat-table> -->
-			</table>
-			<!-- Message for empty data  -->
-			<!-- <div class="mat-table__message" *ngIf="dataSource.length < 0 ">No records found</div> -->
-			<!-- <div class="mat-table__message" *ngIf="dataSource.isPreloadTextViewed$ | async">Please wait....</div> -->
-		</div>
-
-		<!-- start: BOTTOM -->
-		<div class="mat-table__bottom">
-			<!-- MATERIAL SPINNER | Url: 'https://material.angular.io/components/progress-spinner/overview' -->
-			<!-- <mat-spinner [diameter]="20" *ngIf="dataSource.length > 0 | async"></mat-spinner> -->
-			<!-- MATERIAL PAGINATOR | Binded to dasources -->
-			<!-- See off.documentations 'https://material.angular.io/components/paginator/overview' -->
-			<!-- <mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [length]="dataSource.paginatorTotal$ | async" [showFirstLastButtons]="true"></mat-paginator> -->
-			<!-- <ngb-pagination [collectionSize]="count" [pageSize]="pageSize" (pageChange)="handlePage($event)" [boundaryLinks]="true" size="lg"></ngb-pagination>    -->
-
+        <!-- start: BOTTOM -->
+		<!-- <div class="mat-table__bottom">
+			<mat-spinner [diameter]="20"></mat-spinner>
+			<mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [showFirstLastButtons]="true"></mat-paginator>
+        </div> -->
+        
+        <div class="mat-table__bottom">
 			<ngb-pagination [collectionSize]="count" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
 
 		</div>

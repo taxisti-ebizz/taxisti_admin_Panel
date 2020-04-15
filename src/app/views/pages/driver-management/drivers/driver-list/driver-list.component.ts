@@ -51,7 +51,7 @@ export class DriverListComponent implements OnInit {
       private editDriverService : EditDriverService,
       public dialog: MatDialog,
       private layoutUtilsService: LayoutUtilsService,
-      private store: Store<AppState>,) { }
+      private store: Store<AppState>) { }
 
     ngOnInit() {
         // Set title to page breadCrumbs
@@ -60,6 +60,7 @@ export class DriverListComponent implements OnInit {
         this.allDriverList();
     }
 
+    //Get all drivers
     allDriverList(){
 
       const data = {
@@ -83,12 +84,12 @@ export class DriverListComponent implements OnInit {
       })
     }
 
+    //Load driver data
     loadData(data){
     
       this.dataSource = new MatTableDataSource(data.data);
       this.paginator = this.paginator;
       this.sort = this.sort;
-      //this.filterConfiguration();
       this.spinner.hide();
       
     }
@@ -100,7 +101,7 @@ export class DriverListComponent implements OnInit {
     }
 
     /*
-	  Open Add Member Card Modal
+      Edit Driver detail
     */
     editDriver(driverData) {
       this.editDriverService.obj = driverData;
@@ -123,6 +124,7 @@ export class DriverListComponent implements OnInit {
       });
     }
 
+    // Vew Driver Details
     viewDriverDetails(driverData){
       this.editDriverService.obj = driverData;
       this.editDriverService.mode = 3;
@@ -144,7 +146,8 @@ export class DriverListComponent implements OnInit {
       });
     }
 
-    verifyUser(userId,status){
+    //Verify Driver
+    verifyDriver(userId,status){
       var _title = '';
       var _description = '';
       var _waitDesciption = '';

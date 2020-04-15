@@ -392,7 +392,7 @@ export class MenuConfig {
 					root: true,
 					bullet: 'dot',
 					icon: 'flaticon2-user-outline-symbol',
-					page: '/user-management/users'
+					page: '/user-management/users-list'
 				},
 				{
 					title: 'Driver Management',

@@ -1,12 +1,9 @@
-import { AfterViewInit, AfterViewChecked } from '@angular/core';
 // Angular
 import { Component, OnInit, ElementRef, ViewChild, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 // Material
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatPaginator, MatSort, MatSnackBar, MatTableDataSource, MatDialog } from '@angular/material';
 // RXJS
-import { debounceTime, distinctUntilChanged, tap, skip, take, delay } from 'rxjs/operators';
 import { fromEvent, merge, Observable, of, Subscription } from 'rxjs';
 // LODASH
 import { each, find } from 'lodash';
@@ -20,10 +17,7 @@ import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../.
 import {
 	User,
 	Role,
-	UsersDataSource,
 	UserDeleted,
-	UsersPageRequested,
-	selectUserById,
 	selectAllRoles
 } from '../../../../../core/auth';
 import { SubheaderService } from '../../../../../core/_base/layout';
@@ -62,15 +56,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	// Table fields
 	//dataSource: UsersDataSource;
 	displayedColumns = ['id', 'username', 'mobile_no', 'completed_ride', 'cancelled_ride', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
-	//@ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-	//@ViewChild('sort1', {static: true}) sort: MatSort;
-	// Filter fields
-	@ViewChild('searchInput', {static: true}) searchInput: ElementRef;
-	lastQuery: QueryParamsModel;
-	// Selection
-	selection = new SelectionModel<User>(true, []);
-	usersResult: User[] = [];
-	allRoles: Role[] = [];
+	
 
 	// Subscriptions
 	private subscriptions: Subscription[] = [];
@@ -80,12 +66,9 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	dataObj = {}
 	
 	constructor(
-		private activatedRoute: ActivatedRoute,
 		private store: Store<AppState>,
-		private router: Router,
 		private layoutUtilsService: LayoutUtilsService,
 		private subheaderService: SubheaderService,
-		private cdr: ChangeDetectorRef,
 		private http: HttpService,
 		private api: ApiService,
 		public dialog: MatDialog,
@@ -100,13 +83,18 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	 * On init
 	 */
 	ngOnInit() {
-		// load roles list
-		const rolesSubscription = this.store.pipe(select(selectAllRoles)).subscribe(res => this.allRoles = res);
-		this.subscriptions.push(rolesSubscription);
 
-		// If the user changes the sort order, reset back to the first page.
-		const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-		this.subscriptions.push(sortSubscription);
+		//==================================Comment By VS======================================
+			// load roles list
+			// const rolesSubscription = this.store.pipe(select(selectAllRoles)).subscribe(res => this.allRoles = res);
+			// this.subscriptions.push(rolesSubscription);
+
+			// If the user changes the sort order, reset back to the first page.
+			// const sortSubscription = this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+			// this.subscriptions.push(sortSubscription);
+
+		//==================================END Comment By VS======================================
+
 
 		/* Data load will be triggered in two cases:
 		- when a pagination event occurs => this.paginator.page
@@ -119,7 +107,7 @@ export class UsersListComponent implements OnInit, OnDestroy {
 		// )
 		// .subscribe();
 		// this.subscriptions.push(paginatorSubscriptions);
-
+		
 
 		// Filtration, bind to searchInput
 		//==================================================Commented By VS==================================================
@@ -134,25 +122,28 @@ export class UsersListComponent implements OnInit, OnDestroy {
 			// )
 			// .subscribe();
 			// this.subscriptions.push(searchSubscription);
+		
+	
+			// Init DataSource
+			// this.dataSource = new UsersDataSource(this.store);
+			// const entitiesSubscription = this.dataSource.entitySubject.pipe(
+			// 	skip(1),
+			// 	distinctUntilChanged()
+			// ).subscribe(res => {
+			// 	this.usersResult = res;
+			// });
+			// this.subscriptions.push(entitiesSubscription);
+
+			// First Load
+			// of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
+			// 	this.loadUsersList();
+			// });
+
 		//==================================================End Commented By VS==================================================
+
 
 		// Set title to page breadCrumbs
 		this.subheaderService.setTitle('User management');
-
-		// Init DataSource
-		// this.dataSource = new UsersDataSource(this.store);
-		// const entitiesSubscription = this.dataSource.entitySubject.pipe(
-		// 	skip(1),
-		// 	distinctUntilChanged()
-		// ).subscribe(res => {
-		// 	this.usersResult = res;
-		// });
-		// this.subscriptions.push(entitiesSubscription);
-
-		// First Load
-		// of(undefined).pipe(take(1), delay(1000)).subscribe(() => { // Remove this line, just loading imitation
-		// 	this.loadUsersList();
-		// });
 
 		//Get User List
 		this.userList();
@@ -202,14 +193,10 @@ export class UsersListComponent implements OnInit, OnDestroy {
 
 	loadData(data) {
 
-		// this.selection.clear();
-		setTimeout(() => {
-			this.dataSource = new MatTableDataSource(data.data);
-			this.paginator = this.paginator;
-			this.sort = this.sort;
-			this.filterConfiguration()
-			this.spinner.hide();
-		});
+		this.dataSource = new MatTableDataSource(data.data);
+		this.paginator = this.paginator;
+		this.sort = this.sort;
+		this.spinner.hide();
 	}
 
 	//User list search filter
@@ -241,17 +228,20 @@ export class UsersListComponent implements OnInit, OnDestroy {
 	//========================================End Comment By VS ===============================================
 
 	/** FILTRATION */
-	filterConfiguration(): any {
-		const filter: any = {};
-		const searchText: string = this.searchInput.nativeElement.value;
+	//========================================Comment By VS ===============================================
 
-		filter.lastName = searchText;
+		// filterConfiguration(): any {
+		// 	const filter: any = {};
+		// 	const searchText: string = this.searchInput.nativeElement.value;
 
-		filter.username = searchText;
-		filter.email = searchText;
-		filter.fillname = searchText;
-		return filter;
-	}
+		// 	filter.lastName = searchText;
+
+		// 	filter.username = searchText;
+		// 	filter.email = searchText;
+		// 	filter.fillname = searchText;
+		// 	return filter;
+		// }
+	//========================================End Comment By VS ===============================================
 
 	/** ACTIONS */
 	/**
@@ -274,58 +264,6 @@ export class UsersListComponent implements OnInit, OnDestroy {
 			this.store.dispatch(new UserDeleted({ id: _item.id }));
 			this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
 		});
-	}
-
-	/**
-	 * Fetch selected rows
-	 */
-	fetchUsers() {
-		const messages = [];
-		this.selection.selected.forEach(elem => {
-			messages.push({
-				text: `${elem.fullname}, ${elem.email}`,
-				id: elem.id.toString(),
-				status: elem.username
-			});
-		});
-		this.layoutUtilsService.fetchElements(messages);
-	}
-
-	/**
-	 * Check all rows are selected
-	 */
-	isAllSelected(): boolean {
-		const numSelected = this.selection.selected.length;
-		const numRows = this.usersResult.length;
-		return numSelected === numRows;
-	}
-
-	/**
-	 * Toggle selection
-	 */
-	masterToggle() {
-		if (this.selection.selected.length === this.usersResult.length) {
-			this.selection.clear();
-		} else {
-			this.usersResult.forEach(row => this.selection.select(row));
-		}
-	}
-
-	/* UI */
-	/**
-	 * Returns user roles string
-	 *
-	 * @param user: User
-	 */
-	getUserRolesStr(user: User): string {
-		const titles: string[] = [];
-		each(user.roles, (roleId: number) => {
-			const _role = find(this.allRoles, (role: Role) => role.id === roleId);
-			if (_role) {
-				titles.push(_role.title);
-			}
-		});
-		return titles.join(', ');
 	}
 
 	/**
