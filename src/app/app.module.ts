@@ -1,6 +1,6 @@
 // Angular
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -63,6 +63,7 @@ import * as json from 'highlight.js/lib/languages/json';
 
 //Ngx Spinner
 import { NgxSpinnerModule  } from 'ngx-spinner';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 //Services
 import { EditUserService } from './services/user/edit-user.service';
@@ -163,9 +164,11 @@ export function hljsLanguages(): HighlightLanguage[] {
 		TypesUtilsService,
 		LayoutUtilsService,
 		EditUserService,
-		EditDriverService
+		EditDriverService,
+		NgxSpinnerService
 	],
-	bootstrap: [AppComponent]
+	bootstrap: [AppComponent],
+	schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule {
 }
