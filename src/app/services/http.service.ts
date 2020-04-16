@@ -21,8 +21,6 @@ export class HttpService {
 
     //Post Request
     postRequest(url, data) : Observable<any> {
-        this.spinner.show();
-
         const baseUrl = this.checkPort(url);
         return this.http.post(baseUrl, data).pipe(
             map(

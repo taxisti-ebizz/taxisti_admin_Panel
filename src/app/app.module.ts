@@ -69,8 +69,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { EditUserService } from './services/user/edit-user.service';
 import { EditDriverService } from './services/driver/edit-driver.service';
 
-//Toastr Mesasage
-//import { ToastrModule } from 'ngx-toastr';
+//Toastr Message
+import { ToastrModule } from 'ngx-toastr';
 
 //import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
@@ -104,6 +104,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 	declarations: [AppComponent],
 	imports: [
 		BrowserAnimationsModule,
+		ToastrModule.forRoot(), // ToastrModule added
 		BrowserModule,
 		AppRoutingModule,
 		HttpClientModule,
@@ -124,9 +125,8 @@ export function hljsLanguages(): HighlightLanguage[] {
 		MatProgressSpinnerModule,
 		InlineSVGModule.forRoot(),
 		ThemeModule,
-		NgxSpinnerModule
+		NgxSpinnerModule,
 		//NgxDaterangepickerMd.forRoot()
-		//ToastrModule.forRoot()
 	],
 	exports: [],
 	providers: [

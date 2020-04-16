@@ -54,13 +54,13 @@
                   <!-- Rides Column -->
                   <ng-container matColumnDef="rides">
                     <th mat-header-cell *matHeaderCellDef> Rides </th>
-                    <td mat-cell *matCellDef="let driver"> {{driver.rides_count}} </td>
+                    <td mat-cell *matCellDef="let driver"> {{driver.driver_rides_count}} </td>
                 </ng-container>
 
                 <!-- Cancelled Ride Column -->
                 <ng-container matColumnDef="cancelled_ride">
                     <th mat-header-cell *matHeaderCellDef> Cancelled Ride </th>
-                    <td mat-cell *matCellDef="let driver"> {{driver.cancel_ride_count}} </td>
+                    <td mat-cell *matCellDef="let driver"> {{driver.driver_cancel_ride_count}} </td>
                 </ng-container>
 
                 <!-- Acceptance Ratio Column -->
@@ -96,13 +96,13 @@
                 <!-- Total Reviews Column -->
                 <ng-container matColumnDef="total_reviews">
                     <th mat-header-cell *matHeaderCellDef> Total Reviews </th>
-                    <td mat-cell *matCellDef="let driver"> {{driver.total_review_count}} </td>
+                    <td mat-cell *matCellDef="let driver"> {{driver.driver_total_review_count}} </td>
                 </ng-container>
 
                 <!-- Average Rating Column -->
                 <ng-container matColumnDef="average_rating">
                     <th mat-header-cell *matHeaderCellDef> Average Rating </th>
-                    <td mat-cell *matCellDef="let driver"> {{driver.avg_rating_count}} </td>
+                    <td mat-cell *matCellDef="let driver"> {{driver.driver_avg_rating_count}} </td>
                 </ng-container>
 
                 <!-- Date Of Birth Column -->
@@ -125,7 +125,7 @@
 
                 <!-- Verify Column -->
                 <ng-container matColumnDef="verify">
-                    <th mat-header-cell *matHeaderCellDef> Verify (0 = unapproved, 1 = approved) </th>
+                    <th mat-header-cell *matHeaderCellDef> Verify <br>(0 = unapproved, 1 = approved) </th>
                     <td mat-cell *matCellDef="let driver"> 
                         <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide" *ngIf="driver.verify == 0">Unapproved</span>
                         <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" *ngIf="driver.verify == 1">Approved</span> 
@@ -160,9 +160,8 @@
 
         <!-- start: BOTTOM -->
 		<div class="mat-table__bottom">
-			<mat-spinner [diameter]="20"></mat-spinner>
-			<mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [showFirstLastButtons]="true"></mat-paginator>
-		</div>
+			<ngb-pagination [collectionSize]="count" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
 		<!-- end: BOTTOM -->
 	</kt-portlet-body>
 	<!-- end::Body -->

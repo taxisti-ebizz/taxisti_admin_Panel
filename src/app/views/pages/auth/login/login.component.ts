@@ -20,9 +20,7 @@ import { HttpService } from '../../../../services/http.service';
 import { ApiService } from '../../../../services/api.service';
 
 //Toastr Messages
-//import { ToastrService } from 'ngx-toastr'; //Used For display toast messages
-
-
+import { ToastrService } from 'ngx-toastr';
 
 import AXIOS from 'axios'
 import { config } from 'process';
@@ -79,8 +77,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 		private route: ActivatedRoute,
 		private api : ApiService,
 		private http : HttpService,
-		private spinner: NgxSpinnerService
-		///private toastr : ToastrService
+		private spinner: NgxSpinnerService,
+		private toastr : ToastrService
 	) {
 		this.unsubscribe = new Subject();
 	}
@@ -160,27 +158,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 		const authData = {
 			email_id: controls.email.value,
 			password: controls.password.value
-		};
-		// this.http
-		// 	.login(authData.email, authData.password)
-		// 	.pipe(
-		// 		tap(user => {
-		// 			if (user) {
-		// 				this.store.dispatch(new Login({authToken: user.accessToken}));
-		// 				this.router.navigateByUrl(this.returnUrl); // Main page
-		// 			} else {
-		// 				this.authNoticeService.setNotice(this.translate.instant('AUTH.VALIDATION.INVALID_LOGIN'), 'danger');
-		// 			}
-		// 		}),
-		// 		takeUntil(this.unsubscribe),
-		// 		finalize(() => {
-		// 			this.loading = false;
-		// 			this.cdr.markForCheck();
-		// 		})
-		// 	)
-		// 	.subscribe();
-
-		 
+		}; 
 
 		this.http.postRequest(this.api.login,authData).subscribe(res => {
 			const result : any = res;
@@ -188,15 +166,20 @@ export class LoginComponent implements OnInit, OnDestroy {
 				//this.store.dispatch(new Login({authToken: result.data.token}));
 				localStorage.setItem('token',result.data.token)
 				localStorage.setItem('userDetail',JSON.stringify(result.data))
+				this.toastr.success(result.message);
 				//this.toastr.success(result.message);
 				this.spinner.hide();
 				this.router.navigate(['/dashboard']);
 			}
 			else{
-				//this.toastr.error(result.message);
+				if (result.errors.password) { 
+					this.toastr.error(result.errors.password[0]);
+				}
+				else{
+					this.toastr.error(result.message);
+				}
 			}
-			
-		})
+		});
 	}
 
 	/**

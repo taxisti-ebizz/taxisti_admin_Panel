@@ -82,4 +82,10 @@ export class ListComponent implements OnInit {
       }
     }
 
+    //Handle Page
+    handlePage(event){
+      this.page = event;
+      this.driverList();
+    }
+
 }
