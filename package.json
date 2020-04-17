@@ -5,12 +5,13 @@
     "scripts": {
         "ng": "ng",
         "start": "node --max_old_space_size=8192 node_modules/@angular/cli/bin/ng serve",
-        "build": "ng build --prod",
+        "build": "ng build --prod && gzipper --verbose ./dist ./very/deep/folder",
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
         "bundle-report": "webpack-bundle-analyzer dist/stats.json",
-        "rtl": "webpack"
+        "rtl": "webpack",
+        "gzipper": "gzipper"
     },
     "private": true,
     "dependencies": {
@@ -80,6 +81,7 @@
         "@types/object-path": "^0.11.0",
         "codelyzer": "^5.2.1",
         "css-loader": "^3.4.1",
+        "gzipper": "^3.7.0",
         "jasmine-core": "~3.4.0",
         "jasmine-spec-reporter": "~4.2.1",
         "karma": "^4.4.1",

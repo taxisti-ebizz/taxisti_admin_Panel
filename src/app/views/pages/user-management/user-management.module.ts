@@ -23,8 +23,6 @@ import { UserRolesListComponent } from './users/_subs/user-roles/user-roles-list
 import { ChangePasswordComponent } from './users/_subs/change-password/change-password.component';
 import { AddressComponent } from './users/_subs/address/address.component';
 import { SocialNetworksComponent } from './users/_subs/social-networks/social-networks.component';
-// import { EditUserComponent } from './users/edit-user/edit-user.component';
-// import { ViewUserDetailsComponent } from './users/view-user-details/view-user-details.component';
 
 // Material
 import {
@@ -72,31 +70,7 @@ const routes: Routes = [
 			{
 				path: 'roles',
 				component: RolesListComponent
-			},
-			// {
-			// 	path: 'users-list',
-			// 	component: AllUsersListComponent
-			// },
-			// {
-			// 	path: 'users:id',
-			// 	component: UsersListComponent
-			// },
-			// {
-			// 	path: 'users/add',
-			// 	component: UserEditComponent
-			// },
-			// {
-			// 	path: 'users/add:id',
-			// 	component: UserEditComponent
-			// },
-			// {
-			// 	path: 'users/edit',
-			// 	component: UserEditComponent
-			// },
-			// {
-			// 	path: 'users/edit/:id',
-			// 	component: UserEditComponent
-			// },
+			}
 		]
 	}
 ];
@@ -158,8 +132,6 @@ const routes: Routes = [
 	entryComponents: [
 		ActionNotificationComponent,
 		RoleEditDialogComponent,
-		//EditUserComponent,
-		//ViewUserDetailsComponent
 	],
 	declarations: [
 		UserManagementComponent,
@@ -168,10 +140,7 @@ const routes: Routes = [
 		UserRolesListComponent,
 		ChangePasswordComponent,
 		AddressComponent,
-		SocialNetworksComponent,
-		//EditUserComponent,
-		//ViewUserDetailsComponent,
-		//AllUsersListComponent
+		SocialNetworksComponent
 	]
 })
 export class UserManagementModule {}
