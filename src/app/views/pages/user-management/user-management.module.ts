@@ -16,15 +16,15 @@ import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsServi
 import { ActionNotificationComponent } from '../../partials/content/crud';
 // Components
 import { UserManagementComponent } from './user-management.component';
-import { AllUsersListComponent } from './users/all-users-list/all-users-list.component';
+// import { AllUsersListComponent } from './users/all-users-list/all-users-list.component';
 import { RolesListComponent } from './roles/roles-list/roles-list.component';
 import { RoleEditDialogComponent } from './roles/role-edit/role-edit.dialog.component';
 import { UserRolesListComponent } from './users/_subs/user-roles/user-roles-list.component';
 import { ChangePasswordComponent } from './users/_subs/change-password/change-password.component';
 import { AddressComponent } from './users/_subs/address/address.component';
 import { SocialNetworksComponent } from './users/_subs/social-networks/social-networks.component';
-import { EditUserComponent } from './users/edit-user/edit-user.component';
-import { ViewUserDetailsComponent } from './users/view-user-details/view-user-details.component';
+// import { EditUserComponent } from './users/edit-user/edit-user.component';
+// import { ViewUserDetailsComponent } from './users/view-user-details/view-user-details.component';
 
 // Material
 import {
@@ -73,10 +73,10 @@ const routes: Routes = [
 				path: 'roles',
 				component: RolesListComponent
 			},
-			{
-				path: 'users-list',
-				component: AllUsersListComponent
-			},
+			// {
+			// 	path: 'users-list',
+			// 	component: AllUsersListComponent
+			// },
 			// {
 			// 	path: 'users:id',
 			// 	component: UsersListComponent
@@ -158,8 +158,8 @@ const routes: Routes = [
 	entryComponents: [
 		ActionNotificationComponent,
 		RoleEditDialogComponent,
-		EditUserComponent,
-		ViewUserDetailsComponent
+		//EditUserComponent,
+		//ViewUserDetailsComponent
 	],
 	declarations: [
 		UserManagementComponent,
@@ -169,9 +169,9 @@ const routes: Routes = [
 		ChangePasswordComponent,
 		AddressComponent,
 		SocialNetworksComponent,
-		EditUserComponent,
-		ViewUserDetailsComponent,
-		AllUsersListComponent
+		//EditUserComponent,
+		//ViewUserDetailsComponent,
+		//AllUsersListComponent
 	]
 })
 export class UserManagementModule {}
