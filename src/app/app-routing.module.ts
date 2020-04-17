@@ -43,6 +43,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/user-management/user-management.module').then(m => m.UserManagementModule),
 			},
 			{
+				path: 'user-list-management',
+				loadChildren: () => import('../app/views/pages/user-list-management/user-list-management.module').then(m => m.UserListManagementModule),
+			},
+			{
 				path: 'driver-management',
 				loadChildren: () => import('../app/views/pages/driver-management/driver-management.module').then(m => m.DriverManagementModule),
 			},

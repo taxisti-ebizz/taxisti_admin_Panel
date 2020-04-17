@@ -23,7 +23,7 @@ import { MyPageComponent } from './my-page/my-page.component';
 		PartialsModule,
 		MailModule,
 		ECommerceModule,
-		UserManagementModule,
+		UserManagementModule
 	],
 	providers: []
 })

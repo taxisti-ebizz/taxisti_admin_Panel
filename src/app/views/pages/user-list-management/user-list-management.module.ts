@@ -1,4 +1,3 @@
-// Angular
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -14,17 +13,13 @@ import { PartialsModule } from '../../partials/partials.module';
 import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService} from '../../../core/_base/crud';
 // Shared
 import { ActionNotificationComponent } from '../../partials/content/crud';
-// Components
-import { UserManagementComponent } from './user-management.component';
-import { AllUsersListComponent } from './users/all-users-list/all-users-list.component';
-import { RolesListComponent } from './roles/roles-list/roles-list.component';
-import { RoleEditDialogComponent } from './roles/role-edit/role-edit.dialog.component';
-import { UserRolesListComponent } from './users/_subs/user-roles/user-roles-list.component';
-import { ChangePasswordComponent } from './users/_subs/change-password/change-password.component';
-import { AddressComponent } from './users/_subs/address/address.component';
-import { SocialNetworksComponent } from './users/_subs/social-networks/social-networks.component';
-import { EditUserComponent } from './users/edit-user/edit-user.component';
-import { ViewUserDetailsComponent } from './users/view-user-details/view-user-details.component';
+
+
+//Component
+import { UserListManagementComponent } from './user-list-management.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserEditComponent } from './user-edit/user-edit.component';
+import { ViewUserDetailsComponent } from './view-user-details/view-user-details.component';
 
 // Material
 import {
@@ -59,63 +54,40 @@ import {
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
+
 const routes: Routes = [
 	{
 		path: '',
-		component: UserManagementComponent,
+		component: UserListManagementComponent,
 		children: [
 			{
-				path: '',
-				redirectTo: 'roles',
-				pathMatch: 'full'
-			},
-			{
-				path: 'roles',
-				component: RolesListComponent
-			},
-			{
-				path: 'users-list',
-				component: AllUsersListComponent
-			},
-			// {
-			// 	path: 'users:id',
-			// 	component: UsersListComponent
-			// },
-			// {
-			// 	path: 'users/add',
-			// 	component: UserEditComponent
-			// },
-			// {
-			// 	path: 'users/add:id',
-			// 	component: UserEditComponent
-			// },
-			// {
-			// 	path: 'users/edit',
-			// 	component: UserEditComponent
-			// },
-			// {
-			// 	path: 'users/edit/:id',
-			// 	component: UserEditComponent
-			// },
+          path: '',
+          redirectTo: 'roles',
+          pathMatch: 'full'
+      },
+      {
+          path: 'users-list',
+          component: UserListComponent,
+			}
 		]
 	}
 ];
 
 @NgModule({
-	imports: [
-		CommonModule,
+  imports: [
+    CommonModule,
 		HttpClientModule,
 		PartialsModule,
 		RouterModule.forChild(routes),
 		StoreModule.forFeature('users', usersReducer),
-        EffectsModule.forFeature([UserEffects]),
+    EffectsModule.forFeature([UserEffects]),
 		FormsModule,
 		ReactiveFormsModule,
 		TranslateModule.forChild(),
 		MatButtonModule,
 		MatMenuModule,
 		MatSelectModule,
-        MatInputModule,
+    MatInputModule,
 		MatTableModule,
 		MatAutocompleteModule,
 		MatRadioModule,
@@ -134,13 +106,13 @@ const routes: Routes = [
 		MatTooltipModule,
 		MatDialogModule,
 		NgbPaginationModule
-	],
-	providers: [
+  ],
+  providers: [
 		InterceptService,
 		{
-        	provide: HTTP_INTERCEPTORS,
-       	 	useClass: InterceptService,
-			multi: true
+      provide: HTTP_INTERCEPTORS,
+      useClass: InterceptService,
+      multi: true
 		},
 		{
 			provide: MAT_DIALOG_DEFAULT_OPTIONS,
@@ -156,22 +128,15 @@ const routes: Routes = [
 		LayoutUtilsService
 	],
 	entryComponents: [
-		ActionNotificationComponent,
-		RoleEditDialogComponent,
-		EditUserComponent,
-		ViewUserDetailsComponent
-	],
-	declarations: [
-		UserManagementComponent,
-		RolesListComponent,
-		RoleEditDialogComponent,
-		UserRolesListComponent,
-		ChangePasswordComponent,
-		AddressComponent,
-		SocialNetworksComponent,
-		EditUserComponent,
-		ViewUserDetailsComponent,
-		AllUsersListComponent
-	]
+    ActionNotificationComponent,
+    UserEditComponent,
+    ViewUserDetailsComponent
+  ],
+  declarations: [
+    UserListManagementComponent,
+    UserListComponent, 
+    UserEditComponent, 
+    ViewUserDetailsComponent
+  ],
 })
-export class UserManagementModule {}
+export class UserListManagementModule { }

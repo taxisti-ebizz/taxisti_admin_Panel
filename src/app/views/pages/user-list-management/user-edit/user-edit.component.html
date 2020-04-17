@@ -1,0 +1,103 @@
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{data.mode == 2 ? 'Edit '+data.first_name+' '+data.last_name : 'View'}}</h3>
+		</div>
+	</div>
+	<form class="kt-form" [formGroup]="editUserForm" (ngSubmit)="updateUser(editUserForm.value)">
+		<div class="kt-portlet__body">
+
+			<div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				Oh snap! Fill up a few things and try submitting again.
+			</kt-alert>
+
+			<div class="form-group kt-form__group row">
+				<div class="col-lg-6 kt-margin-bottom-20-mobile">
+					<label for="ssn" class="form-label label document">First Name</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter First Name" formControlName="first_name" />
+						<div *ngIf="valid.first_name.errors" class="validate">
+							<div *ngIf="valid.first_name.errors.required">First name is required</div>
+						</div>
+						<!-- <mat-hint align="start">Please enter
+							<strong>First Name</strong>
+						</mat-hint> -->
+					</mat-form-field>
+				</div>
+				<div class="col-lg-6 kt-margin-bottom-20-mobile">
+					<label for="ssn" class="form-label label document">Last Name</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter Last Name" formControlName="last_name" />
+						<div *ngIf="valid.last_name.errors" class="validate">
+							<div *ngIf="valid.last_name.errors.required">Last name is required</div>
+						</div>
+						<!-- <mat-hint align="start">Please enter
+							<strong>Last Name</strong>
+						</mat-hint> -->
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="kt-separator kt-separator--dashed"></div>
+			<div class="form-group kt-form__group row">
+				<div class="col-lg-5 kt-margin-bottom-20-mobile">
+				
+					<label for="ssn" class="form-label label document">Profile Pic</label>
+					<!-- <div *ngIf="error_file" class="validate">
+						{{ 'COMPANY.REGISTER.DOCUMENT_ERROR' | translate }}
+					</div> -->
+					
+
+					<div class="upload-image">
+						<div #image class="image-wrapper"></div>
+						<div class="certificate-browse-btn">
+							<input #myInput type="file" id="pimage"
+								(change)="onUploadChange($event)"/>
+							<div class="browse-image">
+								<p>Drop file here OR </p>
+								<img src="assets/img/upload.png" />
+								<p>browse image</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" *ngIf="data.profile_pic!=''">
+						<div class="displayDocument">
+							<img [src]="data.profile_pic" class="rounded mb-3 displayImage">
+
+							<a class="delete" href="javascript:void()"
+								(click)="deleteCertificate(data.user_id)"
+								mat-icon-button
+								style="color: #ff0000;position: absolute;top: 0;right: 0;">
+								<mat-icon>delete</mat-icon>
+							</a>
+						</div>
+					</div>
+
+					<div class="form-row" id="certificate">
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<input type="hidden" id="userId" formControlName="user_id">
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+							Cancel
+						</button>&nbsp;
+						<button type="submit" mat-raised-button color="primary" [disabled]="viewLoading" matTooltip="Save changes">
+							Save
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

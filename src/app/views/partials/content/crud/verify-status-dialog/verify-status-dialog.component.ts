@@ -1,5 +1,5 @@
 // Angular
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 //Http API Method
@@ -8,11 +8,19 @@ import { HttpService } from '../../../../../services/http.service';
 //API
 import { ApiService } from '../../../../../services/api.service';
 
+import { NgxSpinnerService } from 'ngx-spinner';
+
+//import { UserListComponent } from '../../../../pages/user-list-management/user-list/user-list.component'
+
 @Component({
 	selector: 'kt-verify-status-dialog',
 	templateUrl: './verify-status-dialog.component.html'
 })
 export class VerifyStatusDialogComponent implements OnInit {
+
+
+	// @ViewChild(UserListComponent, { static : true})
+	// private userListComponent: UserListComponent;
 	// Public properties
 	viewLoading = false;
 
@@ -27,6 +35,7 @@ export class VerifyStatusDialogComponent implements OnInit {
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private http: HttpService,
 		private api: ApiService,
+		private spinner: NgxSpinnerService
 	) { }
 
 	/**
@@ -38,6 +47,7 @@ export class VerifyStatusDialogComponent implements OnInit {
 	 */
 	ngOnInit() {
 	}
+
 
 	/**
 	 * Close dialog with false result
@@ -63,6 +73,7 @@ export class VerifyStatusDialogComponent implements OnInit {
 			if(result.status == true){
 				setTimeout(() => {
 					this.dialogRef.close(true); // Keep only this row
+					this.spinner.hide();
 				}, 2500);
 			}
 		})

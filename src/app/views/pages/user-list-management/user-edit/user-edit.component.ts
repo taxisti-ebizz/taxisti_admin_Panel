@@ -3,29 +3,23 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 //Http API Method
-import { HttpService } from '../../../../../services/http.service';
+import { HttpService } from '../../../../services/http.service';
 
 //API Service
-import { ApiService } from '../../../../../services/api.service';
+import { ApiService } from '../../../../services/api.service';
 
 //Edit User Service
-import { EditUserService } from '../../../../../services/user/edit-user.service';
-
-//Ngx Spinner
-import { NgxSpinnerService } from 'ngx-spinner';
+import { EditUserService } from '../../../../services/user/edit-user.service';
 
 declare var $ : any;
 
 @Component({
-  selector: 'kt-edit-user',
-  templateUrl: './edit-user.component.html',
-  styleUrls: ['./edit-user.component.scss']
+  selector: 'kt-user-edit',
+  templateUrl: './user-edit.component.html',
+  styleUrls: ['./user-edit.component.scss']
 })
+export class UserEditComponent implements OnInit {
 
-export class EditUserComponent implements OnInit {
-
-    // Public properties
-    //customer: CustomerModel;
     editUserForm: FormGroup;
     hasFormErrors = false;
     viewLoading = false;
@@ -42,15 +36,14 @@ export class EditUserComponent implements OnInit {
     certificates: any = [];
     getImages = false;
     certificateLength: number = 0;
-    
-    constructor(public dialogRef: MatDialogRef<EditUserComponent>,
+
+    constructor(public dialogRef: MatDialogRef<UserEditComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
       private formBuilder : FormBuilder,
       private router: Router,
 		  private http: HttpService,
       private api: ApiService,
-      private editUserService : EditUserService,
-      private spinner: NgxSpinnerService) { }
+      private editUserService : EditUserService) { }
 
     ngOnInit() {
       this.editUserForm = this.formBuilder.group({
@@ -65,8 +58,8 @@ export class EditUserComponent implements OnInit {
       }
     }
 
-    //Update User
-    updateUser(formData) {
+     //Update User
+     updateUser(formData) {
       //this.spinner.show();
 
       this.hasFormErrors = false;
@@ -94,7 +87,7 @@ export class EditUserComponent implements OnInit {
           //this.toastr.success('Member updated successfully');
           
           this.dialogRef.close();
-          this.spinner.hide();
+          //this.spinner.hide();
         }
       });
     }
@@ -178,8 +171,7 @@ export class EditUserComponent implements OnInit {
           //   const reader = new FileReader();
           //   var category = 'certificate';
           //   reader.onload = this.handleOfficialDocReaderLoaded.bind(this, '', category, ext);
-          console.log("file =======>>>>>>>",file);
-            
+         
           //this.editUserForm.get('profile_pic').setValue(file);
           this.profile_img = file;
           this.form.append('profile_pic', evt.target.files[i]);
@@ -191,37 +183,5 @@ export class EditUserComponent implements OnInit {
     getControlsValue() {
       return <FormArray>this.editUserForm.controls.profile_pic.value;
     }
-
-
-  // // Handle uploaded file with extension
-	// handleOfficialDocReaderLoaded(txt, category, ext, e) {
-
-	// 	var dataType = '';
-	// 	if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
-	// 		dataType = 'data:image/png;base64,';
-  //   }
-    
-  //   this.base64textString.push(dataType + btoa(e.target.result));
-
-  //   (<FormArray>this.editUserForm.get('profile_pic')).push(
-  //     new FormGroup({
-  //       base64string: new FormControl(dataType + btoa(e.target.result)),
-  //     })
-  //   );
-
-  // }
-  
-  //Delete certificate
-	deleteCertificate(i, id) {
-
-		// this.http.deleteRequest(this.api.deleteCertificate + id).subscribe(res => {
-		// 	const result: any = res;
-		// 	if (result.status == 200) {
-		// 		this.certificates.splice(i, 1);
-		// 		this.certificateLength -= 1;
-		// 		this.spinner.hide();
-		// 	}
-		// });
-	}
 
 }
