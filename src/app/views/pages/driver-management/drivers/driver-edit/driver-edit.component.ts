@@ -8,8 +8,8 @@ import { HttpService } from '../../../../../services/http.service';
 //API Service
 import { ApiService } from '../../../../../services/api.service';
 
-//Edit User Service
-import { EditUserService } from '../../../../../services/user/edit-user.service';
+//Edit Driver Service
+import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
 
 declare var $ : any;
 
@@ -22,7 +22,7 @@ export class DriverEditComponent implements OnInit {
 
     // Public properties
     //customer: CustomerModel;
-    editUserForm: FormGroup;
+    editDriverForm: FormGroup;
     hasFormErrors = false;
     viewLoading = false;
 
@@ -45,18 +45,22 @@ export class DriverEditComponent implements OnInit {
       private router: Router,
 		  private http: HttpService,
       private api: ApiService,
-      private editUserService : EditUserService) { }
+      private editDriverService : EditDriverService) { }
 
     ngOnInit() {
-      this.editUserForm = this.formBuilder.group({
+      this.editDriverForm = this.formBuilder.group({
         user_id : [''],
         first_name : ['', Validators.required],
-        last_name : ['',Validators.required]
+        last_name : ['',Validators.required],
+        date_of_birth : ['',Validators.required],
+        car_brand : ['',Validators.required],
+        car_year : ['',Validators.required],
+        plate_no : ['',Validators.required],
       })
 
-      this.editUserForm.reset();
-      if (this.editUserService.mode === 2) {
-          this.editUserForm.patchValue(this.editUserService.obj);
+      this.editDriverForm.reset();
+      if (this.editDriverService.mode === 2) {
+          this.editDriverForm.patchValue(this.editDriverService.obj);
       }
     }
 
@@ -64,9 +68,9 @@ export class DriverEditComponent implements OnInit {
       //this.spinner.show();
 
       this.hasFormErrors = false;
-      const controls = this.editUserForm.controls;
+      const controls = this.editDriverForm.controls;
       /** check form */
-      if (this.editUserForm.invalid) {
+      if (this.editDriverForm.invalid) {
         Object.keys(controls).forEach(controlName =>
           controls[controlName].markAsTouched()
         );
@@ -94,7 +98,7 @@ export class DriverEditComponent implements OnInit {
     }
 
     //Validate Form
-    get valid() { return this.editUserForm.controls; }
+    get valid() { return this.editDriverForm.controls; }
 
     //Upload Certificate of incorporation
     onUploadChange(evt) {
@@ -142,7 +146,7 @@ export class DriverEditComponent implements OnInit {
                 $(this).parent(".custImage").remove();
                 self.base64textString.splice(i, 1);
                 self.fileStream.splice(i, 1);
-                (<FormArray>self.editUserForm.get('profile_pic')).removeAt(i);
+                (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
                 self.certificateLength -= 1;
               });
 
@@ -181,39 +185,31 @@ export class DriverEditComponent implements OnInit {
 
     //Get company images value
     getControlsValue() {
-      return <FormArray>this.editUserForm.controls.profile_pic.value;
+      return <FormArray>this.editDriverForm.controls.profile_pic.value;
+    }
+
+    //Delete car images using Id
+    deleteCarImg(driver_id){
+
     }
 
 
-  // // Handle uploaded file with extension
-	// handleOfficialDocReaderLoaded(txt, category, ext, e) {
+    // // Handle uploaded file with extension
+    // handleOfficialDocReaderLoaded(txt, category, ext, e) {
 
-	// 	var dataType = '';
-	// 	if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
-	// 		dataType = 'data:image/png;base64,';
-  //   }
-    
-  //   this.base64textString.push(dataType + btoa(e.target.result));
+    // 	var dataType = '';
+    // 	if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
+    // 		dataType = 'data:image/png;base64,';
+    //   }
+      
+    //   this.base64textString.push(dataType + btoa(e.target.result));
 
-  //   (<FormArray>this.editUserForm.get('profile_pic')).push(
-  //     new FormGroup({
-  //       base64string: new FormControl(dataType + btoa(e.target.result)),
-  //     })
-  //   );
+    //   (<FormArray>this.editUserForm.get('profile_pic')).push(
+    //     new FormGroup({
+    //       base64string: new FormControl(dataType + btoa(e.target.result)),
+    //     })
+    //   );
 
-  // }
-  
-  //Delete certificate
-	deleteCertificate(i, id) {
-
-		// this.http.deleteRequest(this.api.deleteCertificate + id).subscribe(res => {
-		// 	const result: any = res;
-		// 	if (result.status == 200) {
-		// 		this.certificates.splice(i, 1);
-		// 		this.certificateLength -= 1;
-		// 		this.spinner.hide();
-		// 	}
-		// });
-	}
+    // }
 
 }

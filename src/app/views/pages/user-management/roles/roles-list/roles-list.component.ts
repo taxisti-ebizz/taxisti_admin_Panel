@@ -159,7 +159,7 @@ export class RolesListComponent implements OnInit, OnDestroy {
 		const _waitDesciption = 'Role is deleting...';
 		const _deleteMessage = `Role has been deleted`;
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, '');
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, '', 'role');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;

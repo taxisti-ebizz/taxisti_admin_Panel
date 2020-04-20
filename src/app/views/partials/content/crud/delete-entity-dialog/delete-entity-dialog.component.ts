@@ -8,6 +8,10 @@ import { HttpService } from '../../../../../services/http.service';
 //API
 import { ApiService } from '../../../../../services/api.service';
 
+//Ngx Spinner
+import { NgxSpinnerService } from 'ngx-spinner';
+
+
 @Component({
 	selector: 'kt-delete-entity-dialog',
 	templateUrl: './delete-entity-dialog.component.html'
@@ -27,6 +31,7 @@ export class DeleteEntityDialogComponent implements OnInit {
 		@Inject(MAT_DIALOG_DATA) public data: any,
 		private http: HttpService,
 		private api: ApiService,
+		private spinner: NgxSpinnerService
 	) { }
 
 	/**
@@ -49,18 +54,34 @@ export class DeleteEntityDialogComponent implements OnInit {
 	/**
 	 * Close dialog with true result
 	 */
-	onYesClick(user_id): void {
+	onYesClick(id,type): void {
 		/* Server loading imitation. Remove this */
 		this.viewLoading = true;
 
-		this.http.deleteReq(this.api.deleteUser+user_id).subscribe(res => {
-			const result : any = res;
-			if(result.status == true){
-				setTimeout(() => {
-					this.dialogRef.close(true); // Keep only this row
-				}, 2500);
-			}
-		})
+		switch (type) {
+			case 'user':
+				this.http.deleteReq(this.api.deleteUser+id).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+			break;
+			case 'driver':
+				this.http.deleteReq(this.api.deleteDriver+id).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+			break;
+		}
+
+		
 
 		
 	}

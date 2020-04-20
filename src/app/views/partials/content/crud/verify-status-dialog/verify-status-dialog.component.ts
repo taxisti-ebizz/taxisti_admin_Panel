@@ -59,26 +59,42 @@ export class VerifyStatusDialogComponent implements OnInit {
 	/**
 	 * Close dialog with true result
 	 */
-	onYesClick(user_id,status): void {
+	onYesClick(id,status,type): void {
 		/* Server loading imitation. Remove this */
 		this.viewLoading = true;
 
-		const data = {
-			"user_id" : user_id,
-			"verify" : status
-		}
-
-		this.http.postReq(this.api.updateUserStatus,data).subscribe(res => {
-			const result : any = res;
-			if(result.status == true){
-				setTimeout(() => {
-					this.dialogRef.close(true); // Keep only this row
-					this.spinner.hide();
-				}, 2500);
-			}
-		})
-
+		switch (type) {
+			case 'user':
+				const userData = {
+					"user_id" : id,
+					"verify" : status
+				}
 		
+				this.http.postReqForVerify(this.api.updateUserStatus,userData).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+			break;
+			case 'driver':
+				const driverData = {
+					"driver_id" : id,
+					"verify" : status
+				}
+		
+				this.http.postReqForVerify(this.api.updateDriverStatus,driverData).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+			break;
+		}
 	}
 }
 

@@ -17,5 +17,7 @@ export class ApiService {
 
     //Driver 
     getDriverList = this.path+'getDriverList';
+    deleteDriver = this.path+'deleteDriver/';
+    updateDriverStatus = this.path+'updateDriverStatus';
 
 }

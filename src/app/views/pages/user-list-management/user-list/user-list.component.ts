@@ -169,7 +169,7 @@ export class UserListComponent implements OnInit {
       _deleteMessage = `User has been Approve`;
     }
 
-    const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, userId, status);
+    const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, userId, status, 'user');
     dialogRef.afterClosed().subscribe(res => {
       if (!res) {
         return;
@@ -187,7 +187,7 @@ export class UserListComponent implements OnInit {
     const _waitDesciption = 'User is deleting...';
     const _deleteMessage = `User has been deleted`;
 
-    const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, _item);
+    const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, _item, 'user');
     dialogRef.afterClosed().subscribe(res => {
       if (!res) {
         return;

@@ -22,7 +22,7 @@
 		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit text-right">
 			<div class="kt-form__actions kt-form__actions--sm">
 				<button mat-button (click)="onNoClick()">Cancel</button>&nbsp;
-				<button mat-button (click)="onYesClick(data.user_id)" color="primary" cdkFocusInitial [disabled]="viewLoading">Delete</button>
+				<button mat-button (click)="onYesClick(data.id,data.type)" color="primary" cdkFocusInitial [disabled]="viewLoading">Delete</button>
 			</div>
 		</div>
 	</div>

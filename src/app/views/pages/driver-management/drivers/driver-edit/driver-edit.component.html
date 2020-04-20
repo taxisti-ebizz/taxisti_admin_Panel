@@ -2,10 +2,10 @@
 	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
 	<div class="kt-portlet__head kt-portlet__head__custom">
 		<div class="kt-portlet__head-label">
-			<h3 class="kt-portlet__head-title">{{data.mode == 2 ? 'Edit '+data.first_name+' '+data.last_name : 'View'}}</h3>
+			<h3 class="kt-portlet__head-title">{{data.mode == 2 ? 'Edit '+data.driver.first_name+' '+data.driver.last_name : 'View'}}</h3>
 		</div>
 	</div>
-	<form class="kt-form" [formGroup]="editUserForm" (ngSubmit)="updateUser(editUserForm.value)">
+	<form class="kt-form" [formGroup]="editDriverForm" (ngSubmit)="updateUser(editDriverForm.value)">
 		<div class="kt-portlet__body">
 
 			<div class="kt-portlet__body-progress">
@@ -18,7 +18,7 @@
 
 			<div class="form-group kt-form__group row">
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
-					<label for="ssn" class="form-label label document">First Name</label>
+					<!-- <label for="ssn" class="form-label label document">First Name</label> -->
 					<mat-form-field class="mat-form-field-fluid">
 						<input matInput placeholder="Enter First Name" formControlName="first_name" />
 						<div *ngIf="valid.first_name.errors" class="validate">
@@ -27,7 +27,7 @@
 					</mat-form-field>
 				</div>
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
-					<label for="ssn" class="form-label label document">Last Name</label>
+					<!-- <label for="ssn" class="form-label label document">Last Name</label> -->
 					<mat-form-field class="mat-form-field-fluid">
 						<input matInput placeholder="Enter Last Name" formControlName="last_name" />
 						<div *ngIf="valid.last_name.errors" class="validate">
@@ -36,24 +36,50 @@
 					</mat-form-field>
                 </div>
                 <div class="col-lg-4 kt-margin-bottom-20-mobile">
-					<label for="ssn" class="form-label label document">Date Of Birth</label>
+					<!-- <label for="ssn" class="form-label label document">Date Of Birth</label> -->
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Last Name" formControlName="last_name" />
-						<div *ngIf="valid.last_name.errors" class="validate">
-							<div *ngIf="valid.last_name.errors.required">Last name is required</div>
+						<input matInput placeholder="Enter Last Name" formControlName="date_of_birth" />
+						<div *ngIf="valid.date_of_birth.errors" class="validate">
+							<div *ngIf="valid.date_of_birth.errors.required">Date of birth is required</div>
 						</div>
 					</mat-form-field>
 				</div>
 			</div>
 			<div class="kt-separator kt-separator--dashed"></div>
 			<div class="form-group kt-form__group row">
-				<div class="col-lg-5 kt-margin-bottom-20-mobile">
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<!-- <label for="ssn" class="form-label label document">Car Brand</label> -->
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter Car Brand" formControlName="car_brand"/>
+						<div *ngIf="valid.car_brand.errors" class="validate">
+							<div *ngIf="valid.car_brand.errors.required">Car brand is required</div>
+						</div>
+					</mat-form-field>
+				</div>
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<!-- <label for="ssn" class="form-label label document">Car Year</label> -->
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter Car Year" formControlName="car_year" />
+						<div *ngIf="valid.car_year.errors" class="validate">
+							<div *ngIf="valid.car_year.errors.required">Car year is required</div>
+						</div>
+					</mat-form-field>
+                </div>
+                <div class="col-lg-4 kt-margin-bottom-20-mobile">
+					<!-- <label for="ssn" class="form-label label document">Plate Number</label> -->
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput placeholder="Enter Plate Number" formControlName="plate_no" />
+						<div *ngIf="valid.plate_no.errors" class="validate">
+							<div *ngIf="valid.plate_no.errors.required">Plate number is required</div>
+						</div>
+					</mat-form-field>
+				</div>
+			</div>
+			<div class="kt-separator kt-separator--dashed"></div>
+			<div class="form-group kt-form__group row">
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 				
 					<label for="ssn" class="form-label label document">Profile Pic</label>
-					<!-- <div *ngIf="error_file" class="validate">
-						{{ 'COMPANY.REGISTER.DOCUMENT_ERROR' | translate }}
-					</div> -->
-					
 
 					<div class="upload-image">
 						<div #image class="image-wrapper"></div>
@@ -68,16 +94,80 @@
 						</div>
 					</div>
 
-					<div class="col-md-12" *ngIf="data.profile_pic!=''">
+					<div class="col-md-12" *ngIf="data.driver.profile!='' || data.driver.profile!=null">
 						<div class="displayDocument">
-							<img [src]="data.profile_pic" class="rounded mb-3 displayImage">
+							<img [src]="data.driver.profile" class="rounded mb-3 displayImage">
 
-							<a class="delete" href="javascript:void()"
-								(click)="deleteCertificate(data.user_id)"
+							<!-- <a class="delete" href="javascript:void()"
+								(click)="deleteCertificate(data.driver.driver_id)"
 								mat-icon-button
 								style="color: #ff0000;position: absolute;top: 0;right: 0;">
 								<mat-icon>delete</mat-icon>
-							</a>
+							</a> -->
+						</div>
+					</div>
+
+					<div class="form-row" id="certificate">
+					</div>
+
+				</div>
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+				
+					<label for="ssn" class="form-label label document">Car Image</label>
+
+					<div class="upload-image">
+						<div #image class="image-wrapper"></div>
+						<div class="certificate-browse-btn">
+							<input #myInput type="file" id="carImage"
+								(change)="onUploadChange($event)"/>
+							<div class="browse-image">
+								<p>Drop file here OR </p>
+								<img src="assets/img/upload.png" />
+								<p>browse image</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" *ngIf="data.driver.car_images!=''">
+						<ng-container *ngFor="let carImg of data.driver.car_images">
+							<div class="displayDocument">
+								<img [src]="carImg" class="rounded mb-3 displayImage">
+	
+								<a class="delete" href="javascript:void()"
+									(click)="deleteCarImg(data.driver.driver_id)"
+									mat-icon-button
+									style="color: #ff0000;position: absolute;top: 0;right: 0;">
+									<mat-icon>delete</mat-icon>
+								</a>
+							</div>
+						</ng-container>
+						
+					</div>
+
+					<div class="form-row" id="certificate">
+					</div>
+
+				</div>
+				<div class="col-lg-4 kt-margin-bottom-20-mobile">
+				
+					<label for="ssn" class="form-label label document">Licence Image</label>
+
+					<div class="upload-image">
+						<div #image class="image-wrapper"></div>
+						<div class="certificate-browse-btn">
+							<input #myInput type="file" id="licImage"
+								(change)="onUploadChange($event)"/>
+							<div class="browse-image">
+								<p>Drop file here OR </p>
+								<img src="assets/img/upload.png" />
+								<p>browse image</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-12" *ngIf="data.driver.licence!=''">
+						<div class="displayDocument">
+							<img [src]="data.driver.licence" class="rounded mb-3 displayImage">
 						</div>
 					</div>
 

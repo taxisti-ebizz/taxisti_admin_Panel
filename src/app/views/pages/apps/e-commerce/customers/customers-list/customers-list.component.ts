@@ -171,7 +171,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
 		const _waitDesciption: string = this.translate.instant('ECOMMERCE.CUSTOMERS.DELETE_CUSTOMER_SIMPLE.WAIT_DESCRIPTION');
 		const _deleteMessage = this.translate.instant('ECOMMERCE.CUSTOMERS.DELETE_CUSTOMER_SIMPLE.MESSAGE');
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption,'');
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption,'','customer');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;
@@ -191,7 +191,7 @@ export class CustomersListComponent implements OnInit, OnDestroy {
 		const _waitDesciption: string = this.translate.instant('ECOMMERCE.CUSTOMERS.DELETE_CUSTOMER_MULTY.WAIT_DESCRIPTION');
 		const _deleteMessage = this.translate.instant('ECOMMERCE.CUSTOMERS.DELETE_CUSTOMER_MULTY.MESSAGE');
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, '');
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, '', 'customer');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;

@@ -193,17 +193,17 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 
 	/** ACTIONS */
 	/**
-	 * Delete user
+	 * Delete Driver
 	 *
 	 * @param _item: User
 	 */
-	deleteUser(_item: User) {
-		const _title = 'User Delete';
-		const _description = 'Are you sure to permanently delete this user?';
-		const _waitDesciption = 'User is deleting...';
-		const _deleteMessage = `User has been deleted`;
+	deleteDriver(_item: User) {
+		const _title = 'Driver Delete';
+		const _description = 'Are you sure to permanently delete this driver?';
+		const _waitDesciption = 'Driver is deleting...';
+		const _deleteMessage = `Driver has been deleted`;
 
-		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, _item);
+		const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, _item,'driver');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;
@@ -230,14 +230,15 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 	}
 
 	/*
-	  Open Add Member Card Modal
+	  Open Edit Driver Modal
 	*/
 	editDriver(driverData) {
+
 		this.editDriverService.obj = driverData;
 		this.editDriverService.mode = 2;
 
 		const dialogRef = this.dialog.open(DriverEditComponent, {
-			width: '800px',
+			width: '900px',
 			height: 'auto',
 			backdropClass: 'masterModalPopup',
 			data: { mode: 2, driver : driverData }
@@ -291,7 +292,7 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 			_deleteMessage = `User has been Approve`;
 		}
 
-		const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, userId, status);
+		const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, userId, status, 'driver');
 		dialogRef.afterClosed().subscribe(res => {
 			if (!res) {
 				return;

@@ -71,9 +71,10 @@ export class LayoutUtilsService {
 	 * @param description: stirng
 	 * @param waitDesciption: string
 	 */
-	deleteElement(title: string = '', description: string = '', waitDesciption: string = '', user_id) {
+	deleteElement(title: string = '', description: string = '', waitDesciption: string = '', id, type) {
+		
 		return this.dialog.open(DeleteEntityDialogComponent, {
-			data: { title, description, waitDesciption, user_id },
+			data: { title, description, waitDesciption, id, type },
 			width: '440px'
 		});
 	}
@@ -85,9 +86,9 @@ export class LayoutUtilsService {
 	 * @param description: stirng
 	 * @param waitDesciption: string
 	 */
-	verifyElement(title: string = '', description: string = '', waitDesciption: string = '', user_id, status) {
+	verifyElement(title: string = '', description: string = '', waitDesciption: string = '', id, status, type) {
 		return this.dialog.open(VerifyStatusDialogComponent, {
-			data: { title, description, waitDesciption, user_id, status },
+			data: { title, description, waitDesciption, id, status, type},
 			width: '440px'
 		});
 	}

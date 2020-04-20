@@ -11,7 +11,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
 // Models
-import { UserDeleted } from '../../../../../core/auth';
+import { UserDeleted, User } from '../../../../../core/auth';
 
 // Services
 import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
@@ -147,31 +147,32 @@ export class DriverListComponent implements OnInit {
     }
 
     //Verify Driver
-    verifyDriver(userId,status){
+    verifyDriver(driverId,status){
       var _title = '';
       var _description = '';
       var _waitDesciption = '';
       var _deleteMessage = '';
       if(status == 0){
-        _title = 'User Unapprove';
+        _title = 'Driver Unapprove';
         _description = 'Are you sure want to Unapprove?';
-        _waitDesciption = 'User is unapproving...';
-        _deleteMessage = `User has been Unapproved`;
+        _waitDesciption = 'Driver is unapproving...';
+        _deleteMessage = `Driver has been Unapproved`;
       }else{
-        _title = 'User Approve';
+        _title = 'Driver Approve';
         _description = 'Are you sure want to Approve?';
-        _waitDesciption = 'User is aprroving...';
-        _deleteMessage = `User has been Approve`;
+        _waitDesciption = 'Driver is aprroving...';
+        _deleteMessage = `Driver has been Approve`;
       }
 
-      const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, userId, status);
+      const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, driverId, status, 'driver');
       dialogRef.afterClosed().subscribe(res => {
         if (!res) {
           return;
         }
 
-        this.store.dispatch(new UserDeleted({ id: userId }));
+        this.store.dispatch(new UserDeleted({ id: driverId }));
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+        this.allDriverList();
       });
     }
     
@@ -182,6 +183,28 @@ export class DriverListComponent implements OnInit {
       if (this.dataSource.paginator) {
         this.dataSource.paginator.firstPage();
       }
+    }
+
+    //Delete Driver 
+    deleteDriver(_item: User) {
+      
+      const _title = 'Delete Driver';
+      const _description = 'Are you sure to permanently delete this driver?';
+      const _waitDesciption = 'Driver is deleting...';
+      const _deleteMessage = `Driver has been deleted`;
+  
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, _item, 'driver');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
+  
+        this.store.dispatch(new UserDeleted({ id: _item.id }));
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+        setTimeout(() => {
+            this.allDriverList();
+        }, 1000);
+      });
     }
 
 }
