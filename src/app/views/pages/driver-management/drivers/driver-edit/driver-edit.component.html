@@ -2,10 +2,10 @@
 	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
 	<div class="kt-portlet__head kt-portlet__head__custom">
 		<div class="kt-portlet__head-label">
-			<h3 class="kt-portlet__head-title">{{data.mode == 2 ? 'Edit '+data.driver.first_name+' '+data.driver.last_name : 'View'}}</h3>
+			<h3 class="kt-portlet__head-title">{{data.mode == 2 ? 'Edit ': 'View '}} <strong>{{data.driver.first_name+' '+data.driver.last_name}}</strong> Details</h3>
 		</div>
 	</div>
-	<form class="kt-form" [formGroup]="editDriverForm" (ngSubmit)="updateUser(editDriverForm.value)">
+	<form class="kt-form" [formGroup]="editDriverForm" (ngSubmit)="updateDriverDetails(editDriverForm.value)">
 		<div class="kt-portlet__body">
 
 			<div class="kt-portlet__body-progress">
@@ -85,7 +85,7 @@
 						<div #image class="image-wrapper"></div>
 						<div class="certificate-browse-btn">
 							<input #myInput type="file" id="pimage"
-								(change)="onUploadChange($event)"/>
+								(change)="onUploadChange($event,'profile')"/>
 							<div class="browse-image">
 								<p>Drop file here OR </p>
 								<img src="assets/img/upload.png" />
@@ -94,7 +94,7 @@
 						</div>
 					</div>
 
-					<div class="col-md-12" *ngIf="data.driver.profile!='' || data.driver.profile!=null">
+					<div class="col-md-12" *ngIf="data.driver.profile!='' && data.driver.profile!=null">
 						<div class="displayDocument">
 							<img [src]="data.driver.profile" class="rounded mb-3 displayImage">
 
@@ -119,7 +119,7 @@
 						<div #image class="image-wrapper"></div>
 						<div class="certificate-browse-btn">
 							<input #myInput type="file" id="carImage"
-								(change)="onUploadChange($event)"/>
+								(change)="onUploadChange($event,'car')" multiple/>
 							<div class="browse-image">
 								<p>Drop file here OR </p>
 								<img src="assets/img/upload.png" />
@@ -129,13 +129,11 @@
 					</div>
 
 					<div class="col-md-12" *ngIf="data.driver.car_images!=''">
-						<ng-container *ngFor="let carImg of data.driver.car_images">
-							<div class="displayDocument">
-								<img [src]="carImg" class="rounded mb-3 displayImage">
+						<ng-container >
+							<div class="displayDocument" *ngFor="let carImg of data.driver.car_images">
+								<img [src]="carImg.image" class="rounded mb-3 displayImage">
 	
-								<a class="delete" href="javascript:void()"
-									(click)="deleteCarImg(data.driver.driver_id)"
-									mat-icon-button
+								<a class="delete" href="javascript:void()" (click)="deleteCarImg(carImg.id)" mat-icon-button
 									style="color: #ff0000;position: absolute;top: 0;right: 0;">
 									<mat-icon>delete</mat-icon>
 								</a>
@@ -144,7 +142,7 @@
 						
 					</div>
 
-					<div class="form-row" id="certificate">
+					<div class="form-row" id="displyCarImg">
 					</div>
 
 				</div>
@@ -156,7 +154,7 @@
 						<div #image class="image-wrapper"></div>
 						<div class="certificate-browse-btn">
 							<input #myInput type="file" id="licImage"
-								(change)="onUploadChange($event)"/>
+								(change)="onUploadChange($event,'lic')"/>
 							<div class="browse-image">
 								<p>Drop file here OR </p>
 								<img src="assets/img/upload.png" />
@@ -171,13 +169,13 @@
 						</div>
 					</div>
 
-					<div class="form-row" id="certificate">
+					<div class="form-row" id="displyLicImg">
 					</div>
 
 				</div>
 			</div>
 		</div>
-		<input type="hidden" id="userId" formControlName="user_id">
+		<input type="hidden" id="driverId" formControlName="driver_id">
 		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
 			<div class="kt-form__actions kt-form__actions--solid">
 				<div class="row text-right">

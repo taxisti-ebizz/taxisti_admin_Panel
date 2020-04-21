@@ -19,5 +19,7 @@ export class ApiService {
     getDriverList = this.path+'getDriverList';
     deleteDriver = this.path+'deleteDriver/';
     updateDriverStatus = this.path+'updateDriverStatus';
+    editDriverDetail = this.path+'editDriverDetail';
+    deleteCarImage = this.path+'deleteCarImage/';
 
 }

@@ -11,6 +11,15 @@ import { ApiService } from '../../../../../services/api.service';
 //Edit Driver Service
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
 
+// Services
+import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
+
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../../../core/reducers';
+
+// Models
+import { UserDeleted, User } from '../../../../../core/auth';
+
 declare var $ : any;
 
 @Component({
@@ -27,16 +36,15 @@ export class DriverEditComponent implements OnInit {
     viewLoading = false;
 
     form = new FormData();
-    profile_img: File = null;
-
-
+    profile_img: File = null; //Store Profile Image
+    car_img = []; // Store Car Image
+    lic_img : File = null; // Store Licence Image
+    requests : any = [];
+    
     //Upload Profile Pic
     error_file = false;
-    pImages = new FormArray([]);
     fileStream = [];
     base64textString = [];
-    certificates: any = [];
-    getImages = false;
     certificateLength: number = 0;
     
     constructor(public dialogRef: MatDialogRef<DriverEditComponent>,
@@ -45,11 +53,13 @@ export class DriverEditComponent implements OnInit {
       private router: Router,
 		  private http: HttpService,
       private api: ApiService,
-      private editDriverService : EditDriverService) { }
+      private editDriverService : EditDriverService,
+      private layoutUtilsService: LayoutUtilsService,
+      private store: Store<AppState>) { }
 
     ngOnInit() {
       this.editDriverForm = this.formBuilder.group({
-        user_id : [''],
+        driver_id : [''],
         first_name : ['', Validators.required],
         last_name : ['',Validators.required],
         date_of_birth : ['',Validators.required],
@@ -64,7 +74,7 @@ export class DriverEditComponent implements OnInit {
       }
     }
 
-    updateUser(formData) {
+    updateDriverDetails(formData) {
       //this.spinner.show();
 
       this.hasFormErrors = false;
@@ -79,14 +89,20 @@ export class DriverEditComponent implements OnInit {
         return;
       }      
 
-      const userData = {
-        "user_id" : formData.user_id,
-        "first_name" : formData.first_name,
-        "last_name" : formData.last_name,
-        "profile_pic" : this.fileStream
-      }
+      const imgFormData = new FormData();
+      imgFormData.append('driver_id',formData.driver_id);
+      imgFormData.append('first_name',formData.first_name);
+      imgFormData.append('last_name',formData.last_name);
+      imgFormData.append('date_of_birth',formData.date_of_birth);
+      imgFormData.append('car_brand',formData.car_brand);
+      imgFormData.append('car_year',formData.car_year);
+      imgFormData.append('plate_no',formData.plate_no);
+      imgFormData.append('profile_pic',this.profile_img);
+      imgFormData.append('licence',this.lic_img);
+      imgFormData.append('car_image',this.requests);
 
-      this.http.postReq(this.api.editUserDetails,userData).subscribe(res => {
+
+      this.http.postReq(this.api.editDriverDetail,imgFormData).subscribe(res => {
         const result : any = res;
         if(result.status == true){
           //this.toastr.success('Member updated successfully');
@@ -101,7 +117,7 @@ export class DriverEditComponent implements OnInit {
     get valid() { return this.editDriverForm.controls; }
 
     //Upload Certificate of incorporation
-    onUploadChange(evt) {
+    onUploadChange(evt,type) {
 
       if (evt.target.files.length < 0) {
         this.error_file = true;
@@ -112,6 +128,21 @@ export class DriverEditComponent implements OnInit {
       }
 
       if (evt.target.files && evt.target.files[0]) {
+        if(type == 'profile'){
+          this.profile_img = <File>evt.target.files[0];
+        }
+        else if(type == 'car'){
+          ///this.car_img = <File>evt.target.files[0];
+
+          for (let k = 0; k < evt.target.files.length; k++) {	
+                //this.car_img.push(<File>evt.target.files[k]);
+                this.requests.push(<File>evt.target.files[k]);    
+          }
+        }
+        else{
+          this.lic_img = <File>evt.target.files[0];
+        }
+        
         var filesAmount = evt.target.files.length;
 
         var j = 0;
@@ -138,17 +169,49 @@ export class DriverEditComponent implements OnInit {
                 filePath = evt.target.result;
               }
 
-              $("#certificate").append("<div class=\"custImage\" style=\"float: left;display: inline-block;width: 100px;height: 100px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
+              if(type == 'profile'){
 
-              this.certificateLength = j;
-              var self = this;
-              $(".remove").click(function () {
-                $(this).parent(".custImage").remove();
-                self.base64textString.splice(i, 1);
-                self.fileStream.splice(i, 1);
-                (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
-                self.certificateLength -= 1;
-              });
+                $("#certificate").append("<div class=\"custImage\" style=\"float: left;display: inline-block;width: 100%;height: 150px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
+
+                
+
+                this.certificateLength = j;
+                var self = this;
+                $(".remove").click(function () {
+                  $(this).parent(".custImage").remove();
+                  self.base64textString.splice(i, 1);
+                  self.fileStream.splice(i, 1);
+                  (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
+                  self.certificateLength -= 1;
+                });
+              }
+              else if(type == 'car'){
+                $("#displyCarImg").append("<div class=\"carImage\" style=\"float: left;display: inline-block;width: 100%;height: 150px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
+
+                this.certificateLength = j;
+                var self = this;
+                $(".remove").click(function () {
+                  $(this).parent(".carImage").remove();
+                  self.base64textString.splice(i, 1);
+                  self.fileStream.splice(i, 1);
+                  (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
+                  self.certificateLength -= 1;
+                });
+              }
+              else{
+                $("#displyLicImg").append("<div class=\"licImage\" style=\"float: left;display: inline-block;width: 100%;height: 150px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
+
+                this.certificateLength = j;
+                var self = this;
+                $(".remove").click(function () {
+                  $(this).parent(".licImage").remove();
+                  self.base64textString.splice(i, 1);
+                  self.fileStream.splice(i, 1);
+                  (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
+                  self.certificateLength -= 1;
+                });
+              }
+              
 
             }
           }
@@ -158,29 +221,25 @@ export class DriverEditComponent implements OnInit {
       }
 
       //this.urlStream(evt.target.files);
-      for (let i = 0; i < evt.target.files.length; i++) {
+      // for (let i = 0; i < evt.target.files.length; i++) {
 
-        const extension = evt.target.files[i].name.substr(evt.target.files[i].name.lastIndexOf('.')).split('.');
+      //   const extension = evt.target.files[i].name.substr(evt.target.files[i].name.lastIndexOf('.')).split('.');
           
-        const ext = extension[1].toLowerCase();
+      //   const ext = extension[1].toLowerCase();
 
-        //this.companyDetailForm.controls['certificate_type'].setValue(ext);
-        if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png') {
-          //this.toastr.error('not an accepted file extension');
-          return false;
-        }
-        else {
-          const file = evt.target.files[i];
-          this.fileStream.push(file);
-          // if (file) {
-          //   const reader = new FileReader();
-          //   var category = 'certificate';
-          //   reader.onload = this.handleOfficialDocReaderLoaded.bind(this, '', category, ext);
-          //this.editUserForm.get('profile_pic').setValue(file);
-          this.profile_img = file;
-          this.form.append('profile_pic', evt.target.files[i]);
-        }
-      }
+      //   //this.companyDetailForm.controls['certificate_type'].setValue(ext);
+      //   if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png') {
+      //     //this.toastr.error('not an accepted file extension');
+      //     return false;
+      //   }
+      //   else {
+      //     const file = evt.target.files[i];
+      //     this.fileStream.push(file);
+         
+      //     this.profile_img = file;
+      //     this.form.append('profile_pic', evt.target.files[i]);
+      //   }
+      // }
     }
 
     //Get company images value
@@ -189,27 +248,22 @@ export class DriverEditComponent implements OnInit {
     }
 
     //Delete car images using Id
-    deleteCarImg(driver_id){
-
+    deleteCarImg(_item : User){
+        
+        const _title = 'Delete Car Image';
+        const _description = 'Are you sure to permanently delete this image?';
+        const _waitDesciption = 'Car image is deleting...';
+        const _deleteMessage = `Car image has been deleted`;
+    
+        const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, _item, 'dltCarImg');
+        dialogRef.afterClosed().subscribe(res => {
+          if (!res) {
+            return;
+          }
+    
+          this.store.dispatch(new UserDeleted({ id: _item.id }));
+          this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+          this.dialogRef.close(true);
+      })
     }
-
-
-    // // Handle uploaded file with extension
-    // handleOfficialDocReaderLoaded(txt, category, ext, e) {
-
-    // 	var dataType = '';
-    // 	if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
-    // 		dataType = 'data:image/png;base64,';
-    //   }
-      
-    //   this.base64textString.push(dataType + btoa(e.target.result));
-
-    //   (<FormArray>this.editUserForm.get('profile_pic')).push(
-    //     new FormGroup({
-    //       base64string: new FormControl(dataType + btoa(e.target.result)),
-    //     })
-    //   );
-
-    // }
-
 }

@@ -139,7 +139,8 @@ const routes: Routes = [
 	entryComponents: [
 		ActionNotificationComponent,
 		ViewDriverDetailsComponent,
-		DriverEditComponent
+		DriverEditComponent,
+		ViewComponent
 	],
 	declarations: [
 		DriverManagementComponent,

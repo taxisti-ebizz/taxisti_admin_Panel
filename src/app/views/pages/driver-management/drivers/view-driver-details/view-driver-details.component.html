@@ -66,8 +66,8 @@
             <div class="col-sm-12">
                 <label class="col-sm-4">Car Images :</label>
                 <ng-container *ngIf="data.driverData.car_images.length > 0">
-                    <ng-container *ngFor="let images of data.driverData.car_images">
-                        <img src="{{images}}">&nbsp;
+                    <ng-container *ngFor="let carImg of data.driverData.car_images">
+                        <img src="{{carImg.image}}">&nbsp;
                     </ng-container>
                 </ng-container>
                 <ng-container *ngIf="data.driverData.car_images.length == 0"><img src="assets/img/car.png"></ng-container> 
