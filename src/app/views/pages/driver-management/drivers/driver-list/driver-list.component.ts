@@ -137,10 +137,7 @@ export class DriverListComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         
-        if (result === "close" || result === undefined) {
-          this.allDriverList();
-          
-        } else if (result === false) {
+        if (result === false) {
           this.spinner.hide();
         }
       });

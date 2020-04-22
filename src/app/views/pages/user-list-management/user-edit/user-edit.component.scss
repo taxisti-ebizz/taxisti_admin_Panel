@@ -1,0 +1,31 @@
+.certificate-browse-btn {
+    box-sizing: border-box;
+    display: inline-block;
+    margin: 0.5rem;
+    position: relative;
+    width: 100%;
+    padding: 25px 0;
+    border: #999 2px dashed;
+    text-align: center;
+}
+.browse-image {
+    position: relative;
+    top: 17%;
+}
+#pimage {
+    cursor: pointer;
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top:0;
+    bottom:0;
+    left:0;
+    right: 0;
+    z-index: 3;
+}
+
+.displayImage{
+    width: 100%;
+    height: 150px;
+}

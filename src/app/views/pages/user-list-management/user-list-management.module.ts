@@ -74,20 +74,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
+  	imports: [
+    	CommonModule,
 		HttpClientModule,
 		PartialsModule,
 		RouterModule.forChild(routes),
 		StoreModule.forFeature('users', usersReducer),
-    EffectsModule.forFeature([UserEffects]),
+    	EffectsModule.forFeature([UserEffects]),
 		FormsModule,
 		ReactiveFormsModule,
 		TranslateModule.forChild(),
 		MatButtonModule,
 		MatMenuModule,
 		MatSelectModule,
-    MatInputModule,
+    	MatInputModule,
 		MatTableModule,
 		MatAutocompleteModule,
 		MatRadioModule,
@@ -106,13 +106,13 @@ const routes: Routes = [
 		MatTooltipModule,
 		MatDialogModule,
 		NgbPaginationModule
-  ],
-  providers: [
+  	],
+  	providers: [
 		InterceptService,
 		{
-      provide: HTTP_INTERCEPTORS,
-      useClass: InterceptService,
-      multi: true
+			provide: HTTP_INTERCEPTORS,
+			useClass: InterceptService,
+			multi: true
 		},
 		{
 			provide: MAT_DIALOG_DEFAULT_OPTIONS,
@@ -128,15 +128,15 @@ const routes: Routes = [
 		LayoutUtilsService
 	],
 	entryComponents: [
-    ActionNotificationComponent,
-    UserEditComponent,
-    ViewUserDetailsComponent
-  ],
-  declarations: [
-    UserListManagementComponent,
-    UserListComponent, 
-    UserEditComponent, 
-    ViewUserDetailsComponent
-  ],
+		ActionNotificationComponent,
+		UserEditComponent,
+		ViewUserDetailsComponent
+	],
+	declarations: [
+		UserListManagementComponent,
+		UserListComponent, 
+		UserEditComponent, 
+		ViewUserDetailsComponent
+	],
 })
 export class UserListManagementModule { }

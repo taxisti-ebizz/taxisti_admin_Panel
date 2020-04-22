@@ -119,11 +119,8 @@ export class UserListComponent implements OnInit {
       data: { mode: 2, first_name : user.first_name, last_name : user.last_name, profile_pic : user.profile_pic, user_id : user.user_id }
     });
     dialogRef.afterClosed().subscribe(result => {
-      
-      if (result === "close" || result === undefined) {
-        this.allUsersList();
-        
-      } else if (result === false) {
+    
+      if (result === false) {
         this.spinner.hide();
       }
     });
@@ -142,10 +139,7 @@ export class UserListComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       
-      if (result === "close" || result === undefined) {
-        this.allUsersList();
-        
-      } else if (result === false) {
+      if (result === false) {
         this.spinner.hide();
       }
     });

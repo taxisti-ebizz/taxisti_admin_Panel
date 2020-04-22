@@ -109,10 +109,7 @@ export class ListComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe(result => {
         
-        if (result === "close" || result === undefined) {
-          this.driverList();
-          
-        } else if (result === false) {
+       if (result === false) {
           this.spinner.hide();
         }
       });

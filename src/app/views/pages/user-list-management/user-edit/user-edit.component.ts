@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, EventEmitter, Output } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,6 +11,12 @@ import { ApiService } from '../../../../services/api.service';
 //Edit User Service
 import { EditUserService } from '../../../../services/user/edit-user.service';
 
+//Spinner
+import { NgxSpinnerService } from 'ngx-spinner';
+
+//Component
+//import { UserListComponent } from '../user-list/user-list.component';
+
 declare var $ : any;
 
 @Component({
@@ -19,6 +25,9 @@ declare var $ : any;
   styleUrls: ['./user-edit.component.scss']
 })
 export class UserEditComponent implements OnInit {
+
+    //@ViewChild(UserListComponent, {static : false}) userList: UserListComponent;
+    @Output() private allUserList = new EventEmitter<number>();
 
     editUserForm: FormGroup;
     hasFormErrors = false;
@@ -43,7 +52,8 @@ export class UserEditComponent implements OnInit {
       private router: Router,
 		  private http: HttpService,
       private api: ApiService,
-      private editUserService : EditUserService) { }
+      private editUserService : EditUserService,
+      private spinner : NgxSpinnerService) { }
 
     ngOnInit() {
       this.editUserForm = this.formBuilder.group({
@@ -74,20 +84,21 @@ export class UserEditComponent implements OnInit {
         return;
       }      
 
-      const userData = {
-        "user_id" : formData.user_id,
-        "first_name" : formData.first_name,
-        "last_name" : formData.last_name,
-        "profile_pic" : this.fileStream
-      }
+      const userFormdata = new FormData();
+      userFormdata.append('user_id',formData.user_id);
+      userFormdata.append('first_name',formData.first_name);
+      userFormdata.append('last_name',formData.last_name);
+      userFormdata.append('profile_pic',this.profile_img);
 
-      this.http.postReq(this.api.editUserDetails,userData).subscribe(res => {
+      this.http.postReq(this.api.editUserDetails,userFormdata).subscribe(res => {
         const result : any = res;
         if(result.status == true){
           //this.toastr.success('Member updated successfully');
-          
+  
           this.dialogRef.close();
-          //this.spinner.hide();
+          this.allUserList.emit();
+          // this.spinner.hide();
+          // location.reload();
         }
       });
     }
@@ -107,6 +118,7 @@ export class UserEditComponent implements OnInit {
       }
 
       if (evt.target.files && evt.target.files[0]) {
+        this.profile_img = <File>evt.target.files[0];
         var filesAmount = evt.target.files.length;
 
         var j = 0;
@@ -132,8 +144,8 @@ export class UserEditComponent implements OnInit {
               if (ext == 'jpg' || ext == 'jpeg' || ext == 'png') {
                 filePath = evt.target.result;
               }
-
-              $("#certificate").append("<div class=\"custImage\" style=\"float: left;display: inline-block;width: 100px;height: 100px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
+             
+              $("#certificate").append("<div class=\"custImage\" style=\"float: left;display: inline-block;width: 100%;height: 150px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
 
               this.certificateLength = j;
               var self = this;
@@ -153,30 +165,24 @@ export class UserEditComponent implements OnInit {
       }
 
       //this.urlStream(evt.target.files);
-      for (let i = 0; i < evt.target.files.length; i++) {
+      // for (let i = 0; i < evt.target.files.length; i++) {
 
-        const extension = evt.target.files[i].name.substr(evt.target.files[i].name.lastIndexOf('.')).split('.');
+      //   const extension = evt.target.files[i].name.substr(evt.target.files[i].name.lastIndexOf('.')).split('.');
           
-        const ext = extension[1].toLowerCase();
+      //   const ext = extension[1].toLowerCase();
 
-        //this.companyDetailForm.controls['certificate_type'].setValue(ext);
-        if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png') {
-          //this.toastr.error('not an accepted file extension');
-          return false;
-        }
-        else {
-          const file = evt.target.files[i];
-          this.fileStream.push(file);
-          // if (file) {
-          //   const reader = new FileReader();
-          //   var category = 'certificate';
-          //   reader.onload = this.handleOfficialDocReaderLoaded.bind(this, '', category, ext);
-         
-          //this.editUserForm.get('profile_pic').setValue(file);
-          this.profile_img = file;
-          this.form.append('profile_pic', evt.target.files[i]);
-        }
-      }
+      //   if (ext !== 'jpg' && ext !== 'jpeg' && ext !== 'png') {
+      //     //this.toastr.error('not an accepted file extension');
+      //     return false;
+      //   }
+      //   else {
+      //     const file = evt.target.files[i];
+      //     this.fileStream.push(file);
+          
+      //     this.profile_img = file;
+      //     this.form.append('profile_pic', evt.target.files[i]);
+      //   }
+      // }
     }
 
     //Get company images value

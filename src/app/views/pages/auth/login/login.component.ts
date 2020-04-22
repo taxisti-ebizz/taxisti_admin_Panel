@@ -47,6 +47,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	loading = false;
 	isLoggedIn$: Observable<boolean>;
 	errors: any = [];
+	class = '';
 
 	private unsubscribe: Subject<any>;
 
@@ -153,7 +154,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		this.loading = true;
+		
 
 		const authData = {
 			email_id: controls.email.value,
@@ -163,10 +164,10 @@ export class LoginComponent implements OnInit, OnDestroy {
 		this.http.postRequest(this.api.login,authData).subscribe(res => {
 			const result : any = res;
 			if(result.status == true){
+				this.loading = true;
 				//this.store.dispatch(new Login({authToken: result.data.token}));
 				localStorage.setItem('token',result.data.token)
 				localStorage.setItem('userDetail',JSON.stringify(result.data))
-				this.toastr.success(result.message);
 				//this.toastr.success(result.message);
 				this.spinner.hide();
 				this.router.navigate(['/dashboard']);

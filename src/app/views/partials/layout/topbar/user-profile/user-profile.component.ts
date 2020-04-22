@@ -8,6 +8,11 @@ import { select, Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
 import { currentUser, Logout, User } from '../../../../../core/auth';
 
+//Services
+//import { CommonService } from '../../../../../services/common.service';
+import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
+
 @Component({
 	selector: 'kt-user-profile',
 	templateUrl: './user-profile.component.html',
@@ -15,6 +20,8 @@ import { currentUser, Logout, User } from '../../../../../core/auth';
 export class UserProfileComponent implements OnInit {
 	// Public properties
 	user$: Observable<User>;
+	username = '';
+	profile_pic = '';
 
 	@Input() avatar = true;
 	@Input() greeting = true;
@@ -26,7 +33,9 @@ export class UserProfileComponent implements OnInit {
 	 *
 	 * @param store: Store<AppState>
 	 */
-	constructor(private store: Store<AppState>) {
+	constructor(private store: Store<AppState>,
+		private router: Router,
+    	private toastr: ToastrService) {
 	}
 
 	/**
@@ -37,13 +46,21 @@ export class UserProfileComponent implements OnInit {
 	 * On init
 	 */
 	ngOnInit(): void {
-		this.user$ = this.store.pipe(select(currentUser));
+		//this.user$ = this.store.pipe(select(currentUser));
+		this.username = localStorage.getItem('userDetail')!=''?JSON.parse(localStorage.getItem('userDetail')).name:'Admin';
 	}
 
 	/**
 	 * Log out
 	 */
 	logout() {
-		this.store.dispatch(new Logout());
+		//this.store.dispatch(new Logout());
+		this.toastr.success("Logout Successfully");
+		localStorage.clear();
+		this.router.navigate(['/']);
+		
+		// setTimeout(() => {
+		// 	location.reload();
+		// }, 1000);
 	}
 }
