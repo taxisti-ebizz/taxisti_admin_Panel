@@ -2,43 +2,35 @@
 	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
 	<div class="kt-portlet__head kt-portlet__head__custom">
 		<div class="kt-portlet__head-label">
-			<h3 class="kt-portlet__head-title">{{data.mode == 2 ? 'Edit '+data.first_name+' '+data.last_name : 'View'}}</h3>
+			<h3 class="kt-portlet__head-title"> Edit <strong>{{data.user.first_name+' '+data.user.last_name}}</strong> Details</h3>
 		</div>
 	</div>
-	<form class="kt-form" [formGroup]="editUserForm" (ngSubmit)="updateUser(editUserForm.value)">
+	<!-- [formGroup]="editUserForm" (ngSubmit)="updateUser(editUserForm.value)" -->
+	<form class="kt-form" (ngSubmit)="submit" #formControl="ngForm" >
 		<div class="kt-portlet__body">
 
 			<div class="kt-portlet__body-progress">
 				<mat-spinner [diameter]="20"></mat-spinner>
 			</div>
 
-			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
-				Oh snap! Fill up a few things and try submitting again.
-			</kt-alert>
-
 			<div class="form-group kt-form__group row">
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<label for="ssn" class="form-label label document">First Name</label>
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter First Name" formControlName="first_name" />
-						<div *ngIf="valid.first_name.errors" class="validate">
+						<input matInput placeholder="Enter First Name" [(ngModel)]="data.user.first_name" name="first_name" required/>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <div *ngIf="valid.first_name.errors" class="validate">
 							<div *ngIf="valid.first_name.errors.required">First name is required</div>
-						</div>
-						<!-- <mat-hint align="start">Please enter
-							<strong>First Name</strong>
-						</mat-hint> -->
+						</div> -->
 					</mat-form-field>
 				</div>
 				<div class="col-lg-6 kt-margin-bottom-20-mobile">
-					<label for="ssn" class="form-label label document">Last Name</label>
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Last Name" formControlName="last_name" />
+						<input matInput placeholder="Enter Last Name" [(ngModel)]="data.user.last_name" name="last_name" required/>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <input matInput placeholder="Enter Last Name" formControlName="last_name" />
 						<div *ngIf="valid.last_name.errors" class="validate">
 							<div *ngIf="valid.last_name.errors.required">Last name is required</div>
-						</div>
-						<!-- <mat-hint align="start">Please enter
-							<strong>Last Name</strong>
-						</mat-hint> -->
+						</div> -->
 					</mat-form-field>
 				</div>
 			</div>
@@ -47,10 +39,6 @@
 				<div class="col-lg-5 kt-margin-bottom-20-mobile">
 				
 					<label for="ssn" class="form-label label document">Profile Pic</label>
-					<!-- <div *ngIf="error_file" class="validate">
-						{{ 'COMPANY.REGISTER.DOCUMENT_ERROR' | translate }}
-					</div> -->
-					
 
 					<div class="upload-image">
 						<div #image class="image-wrapper"></div>
@@ -83,8 +71,24 @@
 
 				</div>
 			</div>
+
+			<input matInput [(ngModel)]="data.user.user_id" name="user_id" hidden>
+			<input matInput [(ngModel)]="data.user.mobile_no" name="mobile_no" hidden>
+			<input matInput [(ngModel)]="data.user.complate_ride_count" name="completed_ride" hidden>
+			<input matInput [(ngModel)]="data.user.cancel_ride_count" name="cancelled_ride" hidden>
+			<input matInput [(ngModel)]="data.user.total_review_count" name="total_reviews" hidden>
+			<input matInput [(ngModel)]="data.user.avg_rating_count" name="average_rating" hidden>
+			<input matInput [(ngModel)]="data.user.date_of_birth" name="date_of_birth" hidden>
+			<input matInput [(ngModel)]="data.user.created_date" name="date_of_register" hidden>
+			<input matInput [(ngModel)]="data.user.device_type" name="device_type" hidden>
+			<ng-container *ngIf="data.user.device_type == 0">
+			<input matInput [(ngModel)]="Unapproved" name="verify" hidden>
+			</ng-container>
+			<ng-container *ngIf="data.user.device_type == 1">
+			<input matInput [(ngModel)]="Approved" name="verify" hidden>
+			</ng-container>
 		</div>
-		<input type="hidden" id="userId" formControlName="user_id">
+		<!-- <input type="hidden" id="userId" formControlName="user_id"> -->
 		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
 			<div class="kt-form__actions kt-form__actions--solid">
 				<div class="row text-right">
@@ -92,9 +96,11 @@
 						<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
 							Cancel
 						</button>&nbsp;
-						<button type="submit" mat-raised-button color="primary" [disabled]="viewLoading" matTooltip="Save changes">
+						<button type="submit" mat-raised-button [disabled]="!formControl.valid" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" (click)="updateUser()">Update</button>
+
+						<!-- <button type="submit" mat-raised-button color="primary" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" [disabled]="viewLoading" matTooltip="Save changes">
 							Save
-						</button>
+						</button> -->
 					</div>
 				</div>
 			</div>

@@ -68,6 +68,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 //Services
 import { EditUserService } from './services/user/edit-user.service';
 import { EditDriverService } from './services/driver/edit-driver.service';
+import {DataService} from './services/user/data.service';
 
 //Toastr Message
 import { ToastrModule } from 'ngx-toastr';
@@ -165,6 +166,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		LayoutUtilsService,
 		EditUserService,
 		EditDriverService,
+		DataService,
 		NgxSpinnerService
 	],
 	bootstrap: [AppComponent],

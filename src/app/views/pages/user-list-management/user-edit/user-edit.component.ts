@@ -2,6 +2,11 @@ import { Component, OnInit, Inject, ViewChild, EventEmitter, Output } from '@ang
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+
+// RxJS
+import { Observable, Subject } from 'rxjs';
+import { finalize, takeUntil, tap } from 'rxjs/operators';
+
 //Http API Method
 import { HttpService } from '../../../../services/http.service';
 
@@ -13,6 +18,7 @@ import { EditUserService } from '../../../../services/user/edit-user.service';
 
 //Spinner
 import { NgxSpinnerService } from 'ngx-spinner';
+import { DataService } from '../../../../services/user/data.service';
 
 //Component
 //import { UserListComponent } from '../user-list/user-list.component';
@@ -27,11 +33,12 @@ declare var $ : any;
 export class UserEditComponent implements OnInit {
 
     //@ViewChild(UserListComponent, {static : false}) userList: UserListComponent;
-    @Output() private allUserList = new EventEmitter<number>();
+    //@Output() private allUserList = new EventEmitter<any>();
 
     editUserForm: FormGroup;
     hasFormErrors = false;
     viewLoading = false;
+    loading = false;
 
     form = new FormData();
     profile_img: File = null;
@@ -53,7 +60,12 @@ export class UserEditComponent implements OnInit {
 		  private http: HttpService,
       private api: ApiService,
       private editUserService : EditUserService,
-      private spinner : NgxSpinnerService) { }
+      private spinner : NgxSpinnerService,
+      public dataService: DataService) { }
+
+    formControl = new FormControl('', [
+      Validators.required
+    ]);  
 
     ngOnInit() {
       this.editUserForm = this.formBuilder.group({
@@ -68,43 +80,46 @@ export class UserEditComponent implements OnInit {
       }
     }
 
-     //Update User
-     updateUser(formData) {
-      //this.spinner.show();
+    //Update User
+    // updateUser(formData) {
+    //   //this.spinner.show();
+    //   this.loading = true;
+    //   this.hasFormErrors = false;
+    //   const controls = this.editUserForm.controls;
+    //   /** check form */
+    //   if (this.editUserForm.invalid) {
+    //     Object.keys(controls).forEach(controlName =>
+    //       controls[controlName].markAsTouched()
+    //     );
 
-      this.hasFormErrors = false;
-      const controls = this.editUserForm.controls;
-      /** check form */
-      if (this.editUserForm.invalid) {
-        Object.keys(controls).forEach(controlName =>
-          controls[controlName].markAsTouched()
-        );
+    //     this.hasFormErrors = true;
+    //     return;
+    //   }      
 
-        this.hasFormErrors = true;
-        return;
-      }      
+    //   const userFormdata = new FormData();
+    //   userFormdata.append('user_id',formData.user_id);
+    //   userFormdata.append('first_name',formData.first_name);
+    //   userFormdata.append('last_name',formData.last_name);
+    //   userFormdata.append('profile_pic',this.profile_img);
 
-      const userFormdata = new FormData();
-      userFormdata.append('user_id',formData.user_id);
-      userFormdata.append('first_name',formData.first_name);
-      userFormdata.append('last_name',formData.last_name);
-      userFormdata.append('profile_pic',this.profile_img);
+    //   this.http
+		// 	.postReqForVerify(this.api.editUserDetails,userFormdata)
+		// 	.pipe(
+		// 		tap(user => {
+					
+		// 			if (user.status == true) {
+		// 				  this.dialogRef.close();
+		// 			}
+		// 		}),
+		// 		finalize(() => {
+		// 			this.loading = false;
+		// 		})
+		// 	).subscribe();
 
-      this.http.postReq(this.api.editUserDetails,userFormdata).subscribe(res => {
-        const result : any = res;
-        if(result.status == true){
-          //this.toastr.success('Member updated successfully');
-  
-          this.dialogRef.close();
-          this.allUserList.emit();
-          // this.spinner.hide();
-          // location.reload();
-        }
-      });
-    }
+    // }
 
     //Validate Form
-    get valid() { return this.editUserForm.controls; }
+    valid() { return this.formControl.hasError('required') ? 'Required field' : ''; }
 
     //Upload Certificate of incorporation
     onUploadChange(evt) {
@@ -188,6 +203,41 @@ export class UserEditComponent implements OnInit {
     //Get company images value
     getControlsValue() {
       return <FormArray>this.editUserForm.controls.profile_pic.value;
+    }
+
+    updateUser(): void {
+      
+      this.loading = true;
+
+      const userFormdata = new FormData();
+      userFormdata.append('user_id',this.data.user.user_id);
+      userFormdata.append('first_name',this.data.user.first_name);
+      userFormdata.append('last_name',this.data.user.last_name);
+      userFormdata.append('profile_pic',this.profile_img);
+
+      this.http
+			.postReqForVerify(this.api.editUserDetails,userFormdata)
+			.pipe(
+				tap(user => {
+					
+					if (user.status == true) {
+              this.dialogRef.close();
+              this.dataService.updateIssue(this.data);
+					}
+				}),
+				finalize(() => {
+					this.loading = false;
+				})
+			).subscribe();
+     
+    }
+
+    onNoClick(): void {
+      this.dialogRef.close();
+    }
+
+    submit() {
+      // emppty stuff
     }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table'; 
 
 //Http API Method
@@ -6,7 +6,9 @@ import { HttpService } from '../../../../services/http.service';
 
 //API
 import { ApiService } from '../../../../services/api.service';
-import { MatPaginator, MatSort, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SubheaderService } from '../../../../core/_base/layout';
 
@@ -27,6 +29,17 @@ import { EditUserService } from '../../../../services/user/edit-user.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 
+//=================================New===============================================
+import {DataSource} from '@angular/cdk/collections';
+import { fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import {UserIssue} from '../../../../core/e-commerce/_models/user-issue.module';
+import {map} from 'rxjs/operators';
+import { DataService } from '../../../../services/user/data.service';
+
+//===========================================End New============================================
+
+
 @Component({
   selector: 'kt-user-list',
   templateUrl: './user-list.component.html',
@@ -36,28 +49,42 @@ export class UserListComponent implements OnInit {
 
     displayedColumns = ['id', 'username', 'mobile_no', 'completed_ride', 'cancelled_ride', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
 	
-    dataSource: MatTableDataSource<any>;
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
+    //dataSource: MatTableDataSource<any>;
+    
 
     page = 1
     pageSize = 10
     count = 0;
 
+    //======================================================New==================================================================
+      exampleDatabase: DataService | null;
+      dataSource: ExampleDataSource | null;
+      index: number;
+      id: number;
+
+      @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //Old
+      @ViewChild(MatSort, { static: true }) sort: MatSort; // Old
+      @ViewChild('filter', {static: true}) filter: ElementRef;
+    //======================================================End New==================================================================
+
+  
     constructor(private http: HttpService,
       private api: ApiService,
       private spinner: NgxSpinnerService,
       private subheaderService: SubheaderService,
-      private editUserService : EditUserService,
+      public editUserService : EditUserService,
       public dialog: MatDialog,
       private layoutUtilsService: LayoutUtilsService,
-      private store: Store<AppState>) { }
+      private store: Store<AppState>,
+      private httpClient : HttpClient,
+      private dataService : DataService) { }
 
     ngOnInit() {
       // Set title to page breadCrumbs
       this.subheaderService.setTitle('User Management');
 
-      this.allUsersList();
+      //this.allUsersList();
+      this.loadData();
     }
 
     // Get all user list
@@ -73,21 +100,40 @@ export class UserListComponent implements OnInit {
 
 					var i = 1;
 					result.data.data.forEach(element => {
-						element.id = i;
+            element.id = i;
+        
 						i++;
-					});
-					
-					this.loadData(result.data);
+          });
+          
+					//this.loadData(result.data);
         }
       })
     }
 
     //Load User Data
-    loadData(data){
-      this.dataSource = new MatTableDataSource(data.data);
-      this.paginator = this.paginator;
-      this.sort = this.sort;
-      this.spinner.hide();
+    //data
+    loadData(){
+      // this.dataSource = new MatTableDataSource(data.data);
+      // this.paginator = this.paginator;
+      // this.sort = this.sort;
+      // this.spinner.hide();
+
+      //=============================New===============================================
+        this.exampleDatabase = new DataService(this.httpClient);
+        this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+        
+        fromEvent(this.filter.nativeElement, 'keyup')
+        // .debounceTime(150)
+        // .distinctUntilChanged()
+        .subscribe(() => {
+          if (!this.dataSource) {
+            return;
+          }
+          this.dataSource.filter = this.filter.nativeElement.value;
+        });
+        
+
+      //=============================End  New===============================================
     }
 
     //Handle Page
@@ -95,35 +141,67 @@ export class UserListComponent implements OnInit {
       this.page = event;
       this.allUsersList();
     }
+    //=========================================  Edit user details commented by VS 24-04-2020==========================================
+
 
     //User list search filter
-    applyFilter(filterValue: string) {
-      this.dataSource.filter = filterValue.trim().toLowerCase();
+    // applyFilter(filterValue: string) {
+    //   this.dataSource.filter = filterValue.trim().toLowerCase();
   
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
-      }
-    }
+    //   if (this.dataSource.paginator) {
+    //     this.dataSource.paginator.firstPage();
+    //   }
+    // }
 
-    /*
-      Edit user details
-    */
-   editUser(user) {
-    this.editUserService.obj = user;
-    this.editUserService.mode = 2;
-
-    const dialogRef = this.dialog.open(UserEditComponent, {
-      width: '700px',
-      height: 'auto',
-      backdropClass: 'masterModalPopup',
-      data: { mode: 2, first_name : user.first_name, last_name : user.last_name, profile_pic : user.profile_pic, user_id : user.user_id }
-    });
-    dialogRef.afterClosed().subscribe(result => {
     
-      if (result === false) {
-        this.spinner.hide();
+    //  editUser(user) {
+    //   this.editUserService.obj = user;
+    //   this.editUserService.mode = 2;
+
+    //   const dialogRef = this.dialog.open(UserEditComponent, {
+    //     width: '700px',
+    //     height: 'auto',
+    //     backdropClass: 'masterModalPopup',
+    //     data: { mode: 2, first_name : user.first_name, last_name : user.last_name, profile_pic : user.profile_pic, user_id : user.user_id }
+    //   });
+    //   dialogRef.afterClosed().subscribe(result => {
+    //     this.spinner.hide();
+    //     if (result === false) {
+    //       this.spinner.hide();
+    //     }
+    //   });
+    // }
+
+    //========================================= END Edit user details commented by VS 24-04-2020==========================================
+
+
+  startEdit(i: number, userData) {
+    
+    this.id = userData.id;
+    // index row is used just for debugging proposes and can be removed
+    this.index = i;
+    console.log(this.index);
+    const dialogRef = this.dialog.open(UserEditComponent, {
+      data: { user : userData }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        // When using an edit things are little different, firstly we find record inside DataService by id
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        // Then you update that record using data from dialogData (values you enetered)
+        this.exampleDatabase.dataChange.value[foundIndex] = this.dataService.getDialogData();
+        // And lastly refresh table
+        this.refreshTable();
       }
     });
+  }
+
+  private refreshTable() {
+    // Refreshing table using paginator
+    // Thanks yeager-j for tips
+    // https://github.com/marinantonio/angular-mat-table-crud/issues/12
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
 
   //View User Details
@@ -191,4 +269,97 @@ export class UserListComponent implements OnInit {
       this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
     });
   }
+}
+
+//===================================New ===================================================
+export class ExampleDataSource extends DataSource<UserIssue> {
+  _filterChange = new BehaviorSubject('');
+
+  page = 1
+  pageSize = 10
+  count = 0;
+
+  get filter(): string {
+    return this._filterChange.value;
+  }
+
+  set filter(filter: string) {
+    this._filterChange.next(filter);
+  }
+
+  filteredData: UserIssue[] = [];
+  renderedData: UserIssue[] = [];
+
+  constructor(public exampleDatabase: DataService,
+              public paginator: MatPaginator,
+              public sort: MatSort) {
+    super();
+    // Reset to the first page when the user changes the filter.
+    //this._filterChange.subscribe(() => this._paginator.page = 0);
+  }
+
+  /** Connect function called by the table to retrieve one stream containing the data to render. */
+  connect(): Observable<UserIssue[]> {
+    // Listen for any changes in the base data, sorting, filtering, or pagination
+    const displayDataChanges = [
+      this.exampleDatabase.dataChange,
+      this.sort.sortChange,
+      this._filterChange,
+      //this._paginator.page
+    ];
+
+    this.exampleDatabase.getAllIssues(this.page);
+
+    return merge(...displayDataChanges).pipe(map( () => {
+        // Filter data
+
+        this.filteredData = this.exampleDatabase.data.slice().filter((issue: UserIssue) => {
+          const searchStr = (issue.id + issue.first_name + issue.last_name + issue.mobile_no + issue.date_of_birth + issue.date_of_register).toLowerCase();
+          return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+        });
+
+        // Sort filtered data
+        //const sortedData = this.sortData(this.filteredData.slice());
+
+        // Grab the page's slice of the filtered sorted data.
+        // const startIndex = this.page * this.pageSize;
+        // this.renderedData = sortedData.splice(startIndex, this.pageSize);
+        return this.filteredData.slice();
+      }
+    ));
+  }
+
+  disconnect() {}
+
+
+  /** Returns a sorted copy of the database data. */
+  // sortData(data: UserIssue[]): UserIssue[] {
+  //   if (!this.sort.active || this.sort.direction === '') {
+  //     return data;
+  //   }
+
+  //   return data.sort((a, b) => {
+  //     let propertyA: number | string | Date = '';
+  //     let propertyB: number | string | Date = '';
+    
+
+  //     switch (this.sort.active) {
+  //       case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
+  //       case 'first_name': [propertyA, propertyB] = [a.first_name, b.first_name]; break;
+  //       case 'last_name': [propertyA, propertyB] = [a.last_name, b.last_name]; break;
+  //       case 'mobile_no': [propertyA, propertyB] = [a.mobile_no, b.mobile_no]; break;
+  //       case 'completed_ride': [propertyA, propertyB] = [a.completed_ride, b.completed_ride]; break;
+  //       case 'cancelled_ride': [propertyA, propertyB] = [a.cancelled_ride, b.cancelled_ride]; break;
+  //       case 'total_reviews': [propertyA, propertyB] = [a.total_reviews, b.total_reviews]; break;
+  //       case 'average_rating': [propertyA, propertyB] = [a.average_rating, b.average_rating]; break;
+  //       case 'date_of_birth': [propertyA, propertyB] = [a.date_of_birth, b.date_of_birth]; break;
+  //       case 'date_of_register': [propertyA, propertyB] = [a.date_of_register, b.date_of_register]; break;
+  //     }
+
+  //     const valueA = isNaN(+propertyA) ? propertyA : +propertyA;
+  //     const valueB = isNaN(+propertyB) ? propertyB : +propertyB;
+
+  //     return (valueA < valueB ? -1 : 1) * (this.sort.direction === 'asc' ? 1 : -1);
+  //   });
+  // }
 }

@@ -28,27 +28,27 @@
               "src/.htaccess"
             ],
             "styles": [
-                "src/styles.scss",
-                "node_modules/ngx-toastr/toastr.css",
-                "node_modules/bootstrap/dist/css/bootstrap.css",
-                "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
-                "node_modules/socicon/css/socicon.css",
-                "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
-                "src/assets/plugins/line-awesome/css/line-awesome.css",
-                "src/assets/plugins/flaticon/flaticon.css",
-                "src/assets/plugins/flaticon2/flaticon.css",
-                "src/assets/sass/style.angular.scss"
+              "src/styles.scss",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/bootstrap/dist/css/bootstrap.css",
+              "node_modules/perfect-scrollbar/css/perfect-scrollbar.css",
+              "node_modules/socicon/css/socicon.css",
+              "node_modules/@fortawesome/fontawesome-free/css/all.min.css",
+              "src/assets/plugins/line-awesome/css/line-awesome.css",
+              "src/assets/plugins/flaticon/flaticon.css",
+              "src/assets/plugins/flaticon2/flaticon.css",
+              "src/assets/sass/style.angular.scss"
             ],
             "scripts": [
-                "node_modules/popper.js/dist/umd/popper.js",
-                "node_modules/tooltip.js/dist/umd/tooltip.min.js",
-                "node_modules/perfect-scrollbar/dist/perfect-scrollbar.js"
+              "node_modules/popper.js/dist/umd/popper.js",
+              "node_modules/tooltip.js/dist/umd/tooltip.min.js",
+              "node_modules/perfect-scrollbar/dist/perfect-scrollbar.js"
             ],
-		  	"stylePreprocessorOptions": {
-			  "includePaths": [
-				  "src/assets"
-			  ]
-		  	},
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/assets"
+              ]
+            },
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -59,8 +59,8 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
-			  "scripts": [],
-			  "optimization": true,
+              "scripts": [],
+              "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
@@ -155,5 +155,8 @@
       }
     }
   },
-  "defaultProject": "metronic"
+  "defaultProject": "metronic",
+  "cli": {
+    "analytics": "af458366-84e4-4415-9fff-a6f7f03c4c52"
+  }
 }

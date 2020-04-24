@@ -137,6 +137,6 @@ const routes: Routes = [
 		UserListComponent, 
 		UserEditComponent, 
 		ViewUserDetailsComponent
-	],
+	]
 })
 export class UserListManagementModule { }

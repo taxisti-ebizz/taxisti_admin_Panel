@@ -154,33 +154,40 @@ export class LoginComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		
+		this.loading = true;
 
 		const authData = {
 			email_id: controls.email.value,
 			password: controls.password.value
 		}; 
 
-		this.http.postRequest(this.api.login,authData).subscribe(res => {
-			const result : any = res;
-			if(result.status == true){
-				this.loading = true;
-				//this.store.dispatch(new Login({authToken: result.data.token}));
-				localStorage.setItem('token',result.data.token)
-				localStorage.setItem('userDetail',JSON.stringify(result.data))
-				//this.toastr.success(result.message);
-				this.spinner.hide();
-				this.router.navigate(['/dashboard']);
-			}
-			else{
-				if (result.errors.password) { 
-					this.toastr.error(result.errors.password[0]);
-				}
-				else{
-					this.toastr.error(result.message);
-				}
-			}
-		});
+
+		this.http
+			.postRequest(this.api.login,authData)
+			.pipe(
+				tap(user => {
+					
+					if (user.status == true) {
+						localStorage.setItem('token',user.data.token)
+						localStorage.setItem('userDetail',JSON.stringify(user.data))
+						this.spinner.hide();
+					 	this.router.navigate(['/dashboard']);
+					} else {
+						if (user.errors.password) { 
+							this.toastr.error(user.errors.password[0]);
+						}
+						else{
+							this.toastr.error(user.message);
+						}
+					}
+				}),
+				takeUntil(this.unsubscribe),
+				finalize(() => {
+					this.loading = false;
+					this.cdr.markForCheck();
+				})
+			)
+			.subscribe();
 	}
 
 	/**
