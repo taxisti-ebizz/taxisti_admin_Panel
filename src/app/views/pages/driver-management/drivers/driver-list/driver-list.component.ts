@@ -175,6 +175,9 @@ export class DriverListComponent implements OnInit {
     
     //Driver list search filter
     applyFilter(filterValue: string) {
+
+      console.log("filterValue ========>>>>>", this.dataSource.filter);
+
       this.dataSource.filter = filterValue.trim().toLowerCase();
 
       if (this.dataSource.paginator) {

@@ -2,19 +2,23 @@ import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {UserIssue} from '../../core/e-commerce/_models/user-issue.module';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
 
-    private readonly API_URL = 'http://3.20.203.125/api/api/getUserList'
+    private readonly API_URL = 'http://3.20.203.125/api/api/management/getUserList'
 
     dataChange: BehaviorSubject<UserIssue[]> = new BehaviorSubject<UserIssue[]>([]);
     // Temporarily stores data from dialogs
     dialogData: any;
+    page = 0;
+    count = 0;
 
-    constructor (private httpClient: HttpClient) {}
+    constructor (private httpClient: HttpClient,
+      private spinner : NgxSpinnerService) {}
 
     get data(): UserIssue[] {
       return this.dataChange.value;
@@ -25,6 +29,7 @@ export class DataService {
     }
 
     getAllIssues(page): void {
+      this.spinner.show();
 
       const data = {
         "page" : page
@@ -41,8 +46,9 @@ export class DataService {
             i++;
           });
           
-        
-          this.dataChange.next(result.data.data);
+          this.count = result.data.total;
+          this.dataChange.next(result.data);
+          this.spinner.hide();
       },
       (error: HttpErrorResponse) => {
         console.log (error.name + ' ' + error.message);

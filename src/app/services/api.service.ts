@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class ApiService {
 
-    path = 'api/';
+    path = 'api/management/';
 
     login = this.path+'adminLogin';
 

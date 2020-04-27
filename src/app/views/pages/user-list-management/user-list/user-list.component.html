@@ -13,8 +13,8 @@
 				<div class="row align-items-center">
 					<div class="col-md-4 kt-margin-bottom-10-mobile">
 						<mat-form-field>
-                            <!-- (keyup)="applyFilter($event.target.value)" -->
-							<input matInput #filter placeholder="Search product" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+                            <!-- #filter -->
+							<input matInput (keyup)="applyFilter($event.target.value)"  placeholder="Search product" placeholder="Search" class="mat-form-field mat-form-field-fluid">
 							<mat-hint align="start">
 								<strong>Search in all fields</strong>
 							</mat-hint>
@@ -129,13 +129,14 @@
               </mat-table>
             
             
-              <div class="no-results" [style.display]="dataSource.filteredData.length == 0 ? '' : 'none'">
+              <!-- <div class="no-results" [style.display]="dataSource.filteredData.length == 0 ? '' : 'none'">
                 No results
-              </div>
+              </div> -->
         </div>
 
         <div class="mat-table__bottom">
-			<ngb-pagination [collectionSize]="count" [(page)]="page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+      <ngb-pagination [collectionSize]="dataSource.totalUser" [(page)]="dataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+  
 		</div>
     </kt-portlet-body>
 </kt-portlet>         

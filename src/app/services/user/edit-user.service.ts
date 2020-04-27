@@ -15,7 +15,6 @@ export class EditUserService {
     private readonly API_URL = 'http://3.20.203.125/api/api/getUserList'
 
     mode: number;
-    page = 0;
     obj: any;
     userMap = new Map();
 
