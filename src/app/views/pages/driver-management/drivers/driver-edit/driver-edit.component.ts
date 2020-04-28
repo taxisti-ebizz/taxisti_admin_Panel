@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
+import { FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 //Http API Method
 import { HttpService } from '../../../../../services/http.service';
@@ -8,17 +8,24 @@ import { HttpService } from '../../../../../services/http.service';
 //API Service
 import { ApiService } from '../../../../../services/api.service';
 
-//Edit Driver Service
-import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
+//All Driver Data Service
+import { AllDriverDataService } from '../../../../../services/driver/all-driver-data.service';
 
 // Services
 import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
+
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
 
 // Models
 import { UserDeleted, User } from '../../../../../core/auth';
+
+//Operators
+import { finalize, takeUntil, tap } from 'rxjs/operators';
+
+import { DatePipe } from '@angular/common'; // Used for changed date format
+
 
 declare var $ : any;
 
@@ -34,6 +41,7 @@ export class DriverEditComponent implements OnInit {
     editDriverForm: FormGroup;
     hasFormErrors = false;
     viewLoading = false;
+    loading = false;
 
     form = new FormData();
     profile_img: File = null; //Store Profile Image
@@ -46,75 +54,80 @@ export class DriverEditComponent implements OnInit {
     fileStream = [];
     base64textString = [];
     certificateLength: number = 0;
+
+    //minDate = new Date(2000, 0, 1);
+    maxDate : Date;
+    month: any; //Used for store datepicker month
+    day: any; // Used for store datepicker days
+    year: any; // Used for store datepicker year
+
+    formControl = new FormControl('', [
+      Validators.required
+    ]);  
     
     constructor(public dialogRef: MatDialogRef<DriverEditComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private formBuilder : FormBuilder,
       private router: Router,
 		  private http: HttpService,
       private api: ApiService,
-      private editDriverService : EditDriverService,
       private layoutUtilsService: LayoutUtilsService,
-      private store: Store<AppState>) { }
+      private store: Store<AppState>,
+      private allDriverDataService : AllDriverDataService,
+      private datePipe : DatePipe) { }
 
     ngOnInit() {
-      this.editDriverForm = this.formBuilder.group({
-        driver_id : [''],
-        first_name : ['', Validators.required],
-        last_name : ['',Validators.required],
-        date_of_birth : ['',Validators.required],
-        car_brand : ['',Validators.required],
-        car_year : ['',Validators.required],
-        plate_no : ['',Validators.required],
-      })
 
-      this.editDriverForm.reset();
-      if (this.editDriverService.mode === 2) {
-          this.editDriverForm.patchValue(this.editDriverService.obj);
-      }
-    }
+      //Set max date into datepicker
+      this.maxDate = new Date();
 
-    updateDriverDetails(formData) {
-      //this.spinner.show();
-
-      this.hasFormErrors = false;
-      const controls = this.editDriverForm.controls;
-      /** check form */
-      if (this.editDriverForm.invalid) {
-        Object.keys(controls).forEach(controlName =>
-          controls[controlName].markAsTouched()
-        );
-
-        this.hasFormErrors = true;
-        return;
-      }      
-
-      const imgFormData = new FormData();
-      imgFormData.append('driver_id',formData.driver_id);
-      imgFormData.append('first_name',formData.first_name);
-      imgFormData.append('last_name',formData.last_name);
-      imgFormData.append('date_of_birth',formData.date_of_birth);
-      imgFormData.append('car_brand',formData.car_brand);
-      imgFormData.append('car_year',formData.car_year);
-      imgFormData.append('plate_no',formData.plate_no);
-      imgFormData.append('profile_pic',this.profile_img);
-      imgFormData.append('licence',this.lic_img);
-      imgFormData.append('car_image',this.requests);
-
-
-      this.http.postReq(this.api.editDriverDetail,imgFormData).subscribe(res => {
-        const result : any = res;
-        if(result.status == true){
-          //this.toastr.success('Member updated successfully');
-          
-          this.dialogRef.close();
-          //this.spinner.hide();
-        }
-      });
+      this.maxDate.setDate( this.maxDate.getDate() );
+      this.maxDate.setFullYear( this.maxDate.getFullYear() - 18 );
     }
 
     //Validate Form
-    get valid() { return this.editDriverForm.controls; }
+    //get valid() { return this.editDriverForm.controls; }
+    valid() { return this.formControl.hasError('required') ? 'Required field' : ''; }
+
+    updateDriverDetails() {
+      //this.spinner.show();
+
+      this.loading = true;
+      
+      const editDriverFD = new FormData();
+      editDriverFD.append('driver_id',this.data.driver.user_id);
+      editDriverFD.append('first_name',this.data.driver.first_name);
+      editDriverFD.append('last_name',this.data.driver.last_name);
+      editDriverFD.append('date_of_birth',this.changeDateFormat(this.data.driver.date_of_birth));
+      editDriverFD.append('car_brand',this.data.driver.car_brand);
+      editDriverFD.append('car_year',this.data.driver.car_year);
+      editDriverFD.append('plate_no',this.data.driver.plate_no);
+      editDriverFD.append('profile_pic',this.profile_img);
+      editDriverFD.append('licence',this.lic_img);
+      editDriverFD.append('car_image',this.requests);
+
+      this.http
+			.postReqForVerify(this.api.editDriverDetail,editDriverFD)
+			.pipe(
+				tap(driver => {
+					
+					if (driver.status == true) {
+              this.dialogRef.close();
+
+            if(this.data.driver.date_of_birth != ''){
+              this.data.driver.date_of_birth = this.changeDateFormat(this.data.driver.date_of_birth);
+            }
+            this.allDriverDataService.update(this.data);
+					}
+				}),
+				finalize(() => {
+					this.loading = false;
+				})
+			).subscribe();
+    }
+
+    changeDateFormat(myDate) {
+      return this.datePipe.transform(myDate, 'yyyy-MM-dd');
+    }
 
     //Upload Certificate of incorporation
     onUploadChange(evt,type) {
@@ -263,5 +276,9 @@ export class DriverEditComponent implements OnInit {
           this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
           this.dialogRef.close(true);
       })
+    }
+
+    submit() {
+      // emppty stuff
     }
 }

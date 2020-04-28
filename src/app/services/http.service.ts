@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class HttpService {
 
-    baseUrl = 'http://3.20.203.125/api/';
+    public baseUrl = 'http://3.20.203.125/api/';
 
     constructor(private http: HttpClient, 
         private authService: AdminAuthService,

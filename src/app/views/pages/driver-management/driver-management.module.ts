@@ -1,6 +1,6 @@
 // Angular
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -134,7 +134,8 @@ const routes: Routes = [
 		},
 		HttpUtilsService,
 		TypesUtilsService,
-		LayoutUtilsService
+		LayoutUtilsService,
+		DatePipe
 	],
 	entryComponents: [
 		ActionNotificationComponent,

@@ -2,10 +2,12 @@
 	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
 	<div class="kt-portlet__head kt-portlet__head__custom">
 		<div class="kt-portlet__head-label">
-			<h3 class="kt-portlet__head-title">{{data.mode == 2 ? 'Edit ': 'View '}} <strong>{{data.driver.first_name+' '+data.driver.last_name}}</strong> Details</h3>
+			<h3 class="kt-portlet__head-title">Edit <strong>{{data.driver.first_name+' '+data.driver.last_name}}</strong> Details</h3>
 		</div>
 	</div>
-	<form class="kt-form" [formGroup]="editDriverForm" (ngSubmit)="updateDriverDetails(editDriverForm.value)">
+
+	<!-- [formGroup]="editDriverForm" (ngSubmit)="updateDriverDetails(editDriverForm.value)" -->
+	<form class="kt-form" (ngSubmit)="submit" #formControl="ngForm">
 		<div class="kt-portlet__body">
 
 			<div class="kt-portlet__body-progress">
@@ -20,28 +22,33 @@
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<!-- <label for="ssn" class="form-label label document">First Name</label> -->
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter First Name" formControlName="first_name" />
-						<div *ngIf="valid.first_name.errors" class="validate">
+						<input matInput placeholder="Enter First Name" [(ngModel)]="data.driver.first_name" name="first_name" required/>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <div *ngIf="valid.first_name.errors" class="validate">
 							<div *ngIf="valid.first_name.errors.required">First name is required</div>
-						</div>
+						</div> -->
 					</mat-form-field>
 				</div>
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<!-- <label for="ssn" class="form-label label document">Last Name</label> -->
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Last Name" formControlName="last_name" />
-						<div *ngIf="valid.last_name.errors" class="validate">
+						<input matInput placeholder="Enter Last Name" [(ngModel)]="data.driver.last_name" name="last_name" required/>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <div *ngIf="valid.last_name.errors" class="validate">
 							<div *ngIf="valid.last_name.errors.required">Last name is required</div>
-						</div>
+						</div> -->
 					</mat-form-field>
                 </div>
                 <div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<!-- <label for="ssn" class="form-label label document">Date Of Birth</label> -->
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Last Name" formControlName="date_of_birth" />
-						<div *ngIf="valid.date_of_birth.errors" class="validate">
+						<input matInput [max]="maxDate" [matDatepicker]="picker" [(ngModel)]="data.driver.date_of_birth" placeholder="Choose Date Of Birth" name="date_of_birth" required>
+						<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+						<mat-datepicker #picker></mat-datepicker>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <div *ngIf="valid.date_of_birth.errors" class="validate">
 							<div *ngIf="valid.date_of_birth.errors.required">Date of birth is required</div>
-						</div>
+						</div> -->
 					</mat-form-field>
 				</div>
 			</div>
@@ -50,28 +57,31 @@
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<!-- <label for="ssn" class="form-label label document">Car Brand</label> -->
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Car Brand" formControlName="car_brand"/>
-						<div *ngIf="valid.car_brand.errors" class="validate">
+						<input matInput placeholder="Enter Car Brand" [(ngModel)]="data.driver.car_brand" name="car_brand" required/>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <div *ngIf="valid.car_brand.errors" class="validate">
 							<div *ngIf="valid.car_brand.errors.required">Car brand is required</div>
-						</div>
+						</div> -->
 					</mat-form-field>
 				</div>
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<!-- <label for="ssn" class="form-label label document">Car Year</label> -->
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Car Year" formControlName="car_year" />
-						<div *ngIf="valid.car_year.errors" class="validate">
+						<input matInput placeholder="Enter Car Year" [(ngModel)]="data.driver.car_year" name="car_year" required/>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <div *ngIf="valid.car_year.errors" class="validate">
 							<div *ngIf="valid.car_year.errors.required">Car year is required</div>
-						</div>
+						</div> -->
 					</mat-form-field>
                 </div>
                 <div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<!-- <label for="ssn" class="form-label label document">Plate Number</label> -->
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter Plate Number" formControlName="plate_no" />
-						<div *ngIf="valid.plate_no.errors" class="validate">
+						<input matInput placeholder="Enter Plate Number" [(ngModel)]="data.driver.plate_no" name="plate_no" required/>
+						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
+						<!-- <div *ngIf="valid.plate_no.errors" class="validate">
 							<div *ngIf="valid.plate_no.errors.required">Plate number is required</div>
-						</div>
+						</div> -->
 					</mat-form-field>
 				</div>
 			</div>
@@ -175,7 +185,24 @@
 				</div>
 			</div>
 		</div>
-		<input type="hidden" id="driverId" formControlName="driver_id">
+		<input matInput [(ngModel)]="data.driver.user_id" name="driver_id" hidden>
+		<input matInput [(ngModel)]="data.driver.mobile_no" name="mobile_no" hidden>
+		<input matInput [(ngModel)]="data.driver.complate_ride_count" name="driver_rides_count" hidden>
+		<input matInput [(ngModel)]="data.driver.cancel_ride_count" name="driver_cancel_ride_count" hidden>
+		<input matInput [(ngModel)]="data.driver.total_review_count" name="acceptance_ratio" hidden>
+		<input matInput [(ngModel)]="data.driver.avg_rating_count" name="rejected_ratio" hidden>
+		<input matInput [(ngModel)]="data.driver.date_of_birth" name="online_hours_last_week" hidden>
+		<input matInput [(ngModel)]="data.driver.date_of_birth" name="total_online_hours" hidden>
+		<input matInput [(ngModel)]="data.driver.date_of_birth" name="driver_total_review_count" hidden>
+		<input matInput [(ngModel)]="data.driver.date_of_birth" name="driver_avg_rating_count" hidden>
+		<input matInput [(ngModel)]="data.driver.created_date" name="date_of_register" hidden>
+		<ng-container *ngIf="data.driver.device_type == 0">
+			<input matInput [(ngModel)]="Unapproved" name="verify" hidden>
+		</ng-container>
+		<ng-container *ngIf="data.driver.device_type == 1">
+			<input matInput [(ngModel)]="Approved" name="verify" hidden>
+		</ng-container>
+
 		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
 			<div class="kt-form__actions kt-form__actions--solid">
 				<div class="row text-right">
@@ -183,9 +210,11 @@
 						<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
 							Cancel
 						</button>&nbsp;
-						<button type="submit" mat-raised-button color="primary" [disabled]="viewLoading" matTooltip="Save changes">
+						<button type="submit" mat-raised-button [disabled]="!formControl.valid" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" (click)="updateDriverDetails()" matTooltip="Save changes">Update</button>
+
+						<!-- <button type="submit" mat-raised-button color="primary" [disabled]="viewLoading" matTooltip="Save changes">
 							Save
-						</button>
+						</button> -->
 					</div>
 				</div>
 			</div>

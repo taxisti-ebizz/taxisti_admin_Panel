@@ -82,10 +82,10 @@
 			<input matInput [(ngModel)]="data.user.created_date" name="date_of_register" hidden>
 			<input matInput [(ngModel)]="data.user.device_type" name="device_type" hidden>
 			<ng-container *ngIf="data.user.device_type == 0">
-			<input matInput [(ngModel)]="Unapproved" name="verify" hidden>
+				<input matInput [(ngModel)]="Unapproved" name="verify" hidden>
 			</ng-container>
 			<ng-container *ngIf="data.user.device_type == 1">
-			<input matInput [(ngModel)]="Approved" name="verify" hidden>
+				<input matInput [(ngModel)]="Approved" name="verify" hidden>
 			</ng-container>
 		</div>
 		<!-- <input type="hidden" id="userId" formControlName="user_id"> -->

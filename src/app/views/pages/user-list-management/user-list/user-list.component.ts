@@ -33,8 +33,8 @@ import { AppState } from '../../../../core/reducers';
 import {DataSource} from '@angular/cdk/collections';
 import { fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import {UserIssue} from '../../../../core/e-commerce/_models/user-issue.module';
-import {map} from 'rxjs/operators';
+import { UserIssue } from '../../../../module/user-issue.module';
+import { map } from 'rxjs/operators';
 import { DataService } from '../../../../services/user/data.service';
 
 //===========================================End New============================================
@@ -54,17 +54,15 @@ export class UserListComponent implements OnInit {
     page = 0;
     pageSize = 10
 
-    //======================================New==============================================
-      exampleDatabase: DataService | null;
-      dataSource: ExampleDataSource | null;
-      index: number;
-      id: number;
 
-      @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //Old
-      @ViewChild(MatSort, { static: true }) sort: MatSort; // Old
-      @ViewChild('filter', {static: true}) filter: ElementRef;
-    //=========================================End New=========================================
+    exampleDatabase: DataService | null;
+    dataSource: ExampleDataSource | null;
+    index: number;
+    id: number;
 
+    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //Old
+    @ViewChild(MatSort, { static: true }) sort: MatSort; // Old
+    @ViewChild('filter', {static: true}) filter: ElementRef;
   
     constructor(private http: HttpService,
       private api: ApiService,
@@ -87,22 +85,16 @@ export class UserListComponent implements OnInit {
     //Load User Data
     loadData(){
     
-      //=============================New===============================================
-        this.exampleDatabase = new DataService(this.httpClient,this.spinner);
-        this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-        
-        fromEvent(this.filter.nativeElement, 'keyup')
-        // .debounceTime(150)
-        // .distinctUntilChanged()
-        .subscribe(() => {
-          if (!this.dataSource) {
-            return;
-          }
-          this.dataSource.filter = this.filter.nativeElement.value;
-        });
-        
-
-      //=============================End  New===============================================
+      this.exampleDatabase = new DataService(this.httpClient,this.spinner,this.http,this.api);
+      this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
+      
+      fromEvent(this.filter.nativeElement, 'keyup')
+      .subscribe(() => {
+        if (!this.dataSource) {
+          return;
+        }
+        this.dataSource.filter = this.filter.nativeElement.value;
+      });
     }
 
     //Handle Page
@@ -306,9 +298,6 @@ export class ExampleDataSource extends DataSource<UserIssue> {
       this.renderedData = res;
 
       this.renderedData = data.trim().toLowerCase();
-
-      console.log("filteredData ======>>>>>>",this.renderedData);
-      
 
     })
   }
