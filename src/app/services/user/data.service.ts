@@ -15,6 +15,7 @@ export class DataService {
     // Temporarily stores data from dialogs
     dialogData: any;
     page = 0;
+    total : any;
 
     constructor (private httpClient: HttpClient,
       private spinner : NgxSpinnerService,
@@ -27,6 +28,15 @@ export class DataService {
 
     getDialogData() {
       return this.dialogData;
+    }
+
+    deleteUser(index){
+      const foundIndex = this.dataChange.value.findIndex(x => x.id === index);
+  
+      this.dataChange.value.splice(foundIndex, 1);
+      console.log("dataChange ============>>>>>>>>>",this.dataChange.value);
+  
+      this.dataChange.next(this.dataChange.value);
     }
 
     getAllIssues(page): void {
@@ -46,7 +56,8 @@ export class DataService {
             i++;
           });
           
-          this.dataChange.next(result.data);
+          this.dataChange.next(result.data.data);
+          this.total = result.data.total;
           this.spinner.hide();
       },
       (error: HttpErrorResponse) => {

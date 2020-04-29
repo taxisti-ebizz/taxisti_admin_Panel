@@ -112,7 +112,7 @@
                         <mat-icon aria-label="Edit">edit</mat-icon>
                         </button>
                 
-                        <button mat-icon-button color="warn" matTooltip="Delete User" type="button" (click)="deleteUser(row.user_id)">
+                        <button mat-icon-button color="warn" matTooltip="Delete User" type="button" (click)="deleteUser(i,row.user_id)">
                             <mat-icon>delete</mat-icon>
                         </button>
                         <button mat-icon-button class="material-icons color_green" matTooltip="Verify User" type="button" *ngIf="row.verify == 1" (click)="verifyUser(row.user_id,0)">

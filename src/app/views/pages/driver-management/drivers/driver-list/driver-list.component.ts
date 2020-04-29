@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table'; 
 
 //Http API Method
@@ -68,13 +68,16 @@ export class DriverListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public allDriverDataService : AllDriverDataService) { }
+      public allDriverDataService : AllDriverDataService,
+      private changeDetectorRefs : ChangeDetectorRef) { }
 
     ngOnInit() {
         // Set title to page breadCrumbs
         this.subheaderService.setTitle('Driver Management');
 
         this.allDriverList();
+
+        
     }
 
     //Get all drivers
@@ -153,11 +156,6 @@ export class DriverListComponent implements OnInit {
       });
     }
 
-    private refreshTable() {
-      // Refreshing table using paginator
-      this.paginator._changePageSize(this.paginator.pageSize);
-    }
-
     // Vew Driver Details
     viewDriverDetails(driverData){
       this.editDriverService.obj = driverData;
@@ -220,9 +218,9 @@ export class DriverListComponent implements OnInit {
     //Delete Driver 
     deleteDriver(i,driver_id) {
 
-      this.index = i;
+      this.index = i+1;
       this.id = driver_id;
-      
+
       const _title = 'Delete Driver';
       const _description = 'Are you sure to permanently delete this driver?';
       const _waitDesciption = 'Driver is deleting...';
@@ -233,32 +231,23 @@ export class DriverListComponent implements OnInit {
         if (!res) {
           return;
         }
+
+        //this.refreshTable() //Refresh With API call than uncomment this
+
+        this.dataSource.deleteItem(this.index)
   
         this.store.dispatch(new UserDeleted({ id: driver_id }));
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-
         
-        
-        this.exampleDatabase.dataChange.subscribe(data => {
-          const result : any = data;
-
-          const foundIndex = result.data.findIndex(x => x.id === this.id);
-          // for delete we use splice in order to remove single object from DataService
-          console.log("foundIndex ======>>>>>",foundIndex);
-          console.log("deleet ======>>>>>",result.data.splice(foundIndex, 1));
-          if(result.data.splice(foundIndex, 1)){
-            console.log("heloooo ======>>>>>");
-            
-            this.allDriverDataService.dataChange.next(result.data);
-          }
-          else{
-            console.log("error ========>>>>>>>");
-            
-          }
-        })
-        
-
       });
+
+    }
+
+    
+    private refreshTable() {
+      // Refreshing table using paginator
+
+      // this.dataSource.refreshPage(this.allDriverDataService.page) // Refresh With API call than uncomment this 
     }
 
 }
@@ -279,7 +268,7 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
 
     filteredData: DriverIssue[] = [];
     renderedData: DriverIssue[] = [];
-    totalDriver = 0;
+    public totalDriver = 0;
 
     constructor(public exampleDatabase: AllDriverDataService,
                 public paginator: MatPaginator,
@@ -306,21 +295,16 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
 
           const result : any = res;
 
-          this.totalDriver = result.total;
-          var data = result.data;
+          this.totalDriver = this.exampleDatabase.total //result.total;
 
-
-          //this.exampleDatabase.dataChange = data;
-        
-
-          if(Array.isArray(data) == true){
-            this.filteredData =  data.slice().filter((issue: DriverIssue) => {
-              const searchStr = (issue.id + issue.first_name + issue.last_name + issue.mobile_no + issue.date_of_birth + issue.date_of_register).toLowerCase();
-              return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
-            });
+    
+          this.filteredData =  this.exampleDatabase.data.slice().filter((issue: DriverIssue) => {
+            const searchStr = (issue.id + issue.first_name + issue.last_name + issue.mobile_no + issue.date_of_birth + issue.date_of_register).toLowerCase();
+            return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
+          });
 
             // Sort filtered data
-          // const sortedData = this.sortData(this.filteredData.slice());
+          //const sortedData = this.sortData(this.filteredData.slice());
 
             // Grab the page's slice of the filtered sorted data.
             // const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
@@ -329,18 +313,15 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
             // console.log("=================>>>",this.renderedData);
 
             return this.filteredData;
-          }
+          //}
 
         }
       ));
     }
 
     changePage(pageNumber){
+      
       this.exampleDatabase.getAllDriverList(pageNumber);
-
-      // this.exampleDatabase.dataChange.subscribe(data => {
-      //   this.filteredData = data
-      // })
     }
 
     filterData(data){
@@ -353,6 +334,14 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
         this.renderedData = data.trim().toLowerCase();
 
       })
+    }
+
+    deleteItem(index){
+      this.exampleDatabase.deleteDriver(index)
+    }
+
+    refreshPage(pageNumber){
+      this.exampleDatabase.getDriverList(pageNumber);
     }
 
     disconnect() {}

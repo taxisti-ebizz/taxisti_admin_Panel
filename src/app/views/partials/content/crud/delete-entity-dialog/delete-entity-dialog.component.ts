@@ -20,6 +20,8 @@ export class DeleteEntityDialogComponent implements OnInit {
 	// Public properties
 	viewLoading = false;
 
+	deleteCallback;
+
 	/**
 	 * Component constructor
 	 *
@@ -42,6 +44,10 @@ export class DeleteEntityDialogComponent implements OnInit {
 	 * On init
 	 */
 	ngOnInit() {
+	}
+
+	public setDeleteCallback(onDelete): void{
+		this.deleteCallback = onDelete;
 	}
 
 	/**
@@ -74,6 +80,9 @@ export class DeleteEntityDialogComponent implements OnInit {
 					const result : any = res;
 					if(result.status == true){
 						setTimeout(() => {
+							if(this.deleteCallback != undefined){
+								this.deleteCallback()
+							}
 							this.dialogRef.close(true); // Keep only this row
 						}, 2500);
 					}

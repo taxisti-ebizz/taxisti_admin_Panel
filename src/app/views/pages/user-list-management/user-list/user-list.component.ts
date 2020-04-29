@@ -180,19 +180,25 @@ export class UserListComponent implements OnInit {
     }
 
     //Delete USer
-    deleteUser(_item: User) {
+    deleteUser(i,user_id) {
+
+      this.index = i+1;
+      this.id = user_id;
+
       const _title = 'User Delete';
       const _description = 'Are you sure to permanently delete this user?';
       const _waitDesciption = 'User is deleting...';
       const _deleteMessage = `User has been deleted`;
 
-      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, _item, 'user');
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, user_id, 'user');
       dialogRef.afterClosed().subscribe(res => {
         if (!res) {
           return;
         }
 
-        this.store.dispatch(new UserDeleted({ id: _item.id }));
+        this.dataSource.deleteItem(this.index)
+
+        this.store.dispatch(new UserDeleted({ id: user_id }));
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
       });
     }
@@ -253,15 +259,15 @@ export class ExampleDataSource extends DataSource<UserIssue> {
 
         const result : any = res;
 
-        this.totalUser = result.total;
-        var data = result.data;
+        this.totalUser = this.exampleDatabase.total;
+        //var data = result.data;
 
 
         //this.exampleDatabase.dataChange = data;
       
 
-        if(Array.isArray(data) == true){
-           this.filteredData =  data.slice().filter((issue: UserIssue) => {
+        //if(Array.isArray(data) == true){
+           this.filteredData =  this.exampleDatabase.data.slice().filter((issue: UserIssue) => {
             const searchStr = (issue.id + issue.first_name + issue.last_name + issue.mobile_no + issue.date_of_birth + issue.date_of_register).toLowerCase();
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
@@ -276,7 +282,7 @@ export class ExampleDataSource extends DataSource<UserIssue> {
           // console.log("=================>>>",this.renderedData);
 
           return this.filteredData;
-        }
+        //}
 
       }
     ));
@@ -284,10 +290,6 @@ export class ExampleDataSource extends DataSource<UserIssue> {
 
   changePage(pageNumber){
     this.exampleDatabase.getAllIssues(pageNumber);
-
-    this.exampleDatabase.dataChange.subscribe(data => {
-      this.filteredData = data
-    })
   }
 
   filterData(data){
@@ -300,6 +302,10 @@ export class ExampleDataSource extends DataSource<UserIssue> {
       this.renderedData = data.trim().toLowerCase();
 
     })
+  }
+
+  deleteItem(index){
+    this.exampleDatabase.deleteUser(index)
   }
 
   disconnect() {}
