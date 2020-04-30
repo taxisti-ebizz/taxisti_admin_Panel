@@ -53,9 +53,9 @@
 						</div>
 					</div>
 
-					<div class="col-md-12" *ngIf="data.profile_pic!=''">
+					<div class="col-md-12" *ngIf="data.user.profile_pic!=''">
 						<div class="displayDocument">
-							<img [src]="data.profile_pic" class="rounded mb-3 displayImage">
+							<img [src]="data.user.profile_pic" class="rounded mb-3 displayImage">
 
 							<!-- <a class="delete" href="javascript:void()"
 								(click)="deleteCertificate(data.user_id)"
@@ -81,6 +81,7 @@
 			<input matInput [(ngModel)]="data.user.date_of_birth" name="date_of_birth" hidden>
 			<input matInput [(ngModel)]="data.user.created_date" name="date_of_register" hidden>
 			<input matInput [(ngModel)]="data.user.device_type" name="device_type" hidden>
+			<input matInput name="profile_pic" id="profile_pic" hidden>
 			<ng-container *ngIf="data.user.device_type == 0">
 				<input matInput [(ngModel)]="Unapproved" name="verify" hidden>
 			</ng-container>

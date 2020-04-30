@@ -12,7 +12,7 @@ import { ApiService } from '../../../../../services/api.service';
 import { AllDriverDataService } from '../../../../../services/driver/all-driver-data.service';
 
 // Services
-import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
+import { LayoutUtilsService, MessageType } from '../../../../../core/_base/crud';
 
 
 import { Store } from '@ngrx/store';
@@ -85,7 +85,6 @@ export class DriverEditComponent implements OnInit {
     }
 
     //Validate Form
-    //get valid() { return this.editDriverForm.controls; }
     valid() { return this.formControl.hasError('required') ? 'Required field' : ''; }
 
     updateDriverDetails() {
@@ -116,6 +115,19 @@ export class DriverEditComponent implements OnInit {
             if(this.data.driver.date_of_birth != ''){
               this.data.driver.date_of_birth = this.changeDateFormat(this.data.driver.date_of_birth);
             }
+
+            var profile_pic = (<HTMLInputElement>document.getElementById('profile_pic')).value;
+
+            if(profile_pic!=''){
+              this.data.driver.profile = profile_pic;
+            }
+
+            var licence = (<HTMLInputElement>document.getElementById('licence')).value;
+
+            if(licence!=''){
+              this.data.driver.licence = licence;
+            }
+
             this.allDriverDataService.update(this.data);
 					}
 				}),
@@ -186,6 +198,8 @@ export class DriverEditComponent implements OnInit {
 
                 $("#certificate").append("<div class=\"custImage\" style=\"float: left;display: inline-block;width: 100%;height: 150px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
 
+                (<HTMLInputElement>document.getElementById('profile_pic')).value = filePath;
+
                 this.certificateLength = j;
                 var self = this;
                 $(".remove").click(function () {
@@ -211,6 +225,8 @@ export class DriverEditComponent implements OnInit {
               }
               else{
                 $("#displyLicImg").append("<div class=\"licImage\" style=\"float: left;display: inline-block;width: 100%;height: 150px;overflow: hidden;position: relative;padding: 8px;margin: 4px;border: 1px solid #eae6e6;\"><img class=\"imageThumb\" style=\"width: 100%;height: 100%;object-fit: cover;margin-bottom: 10px;\" src=\"" + filePath + "\" title=\"" + fileName + "\"/>" + "<br/><a href=\"javascript:void(0)\" class=\"remove\" style=\"color: #ff0000;position: absolute;top: 3px;right: 10px;font-size: 16px;\"><i class=\"fas fa-minus-circle\"></i></a></div>");
+
+                (<HTMLInputElement>document.getElementById('licence')).value = filePath;
 
                 this.certificateLength = j;
                 var self = this;

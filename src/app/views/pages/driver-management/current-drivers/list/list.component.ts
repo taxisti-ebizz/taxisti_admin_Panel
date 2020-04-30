@@ -12,6 +12,7 @@ import { SubheaderService } from '../../../../../core/_base/layout';
 
 //Component
 import { ViewComponent } from '../view/view.component';
+import { EditComponent } from '../edit/edit.component';
 
 //Service
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service'
@@ -115,6 +116,36 @@ export class ListComponent implements OnInit {
       });
     }
 
+    /*
+      Edit Driver detail
+    */
+   editDriver(i: number, driverData) {
+      
+    this.id = driverData.id;
+    // index row is used just for debugging proposes and can be removed
+    this.index = i;
+    const dialogRef = this.dialog.open(EditComponent, {
+      data: { driver : driverData }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        // When using an edit things are little different, firstly we find record inside DataService by id
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        // Then you update that record using data from dialogData (values you enetered)
+        this.exampleDatabase.dataChange.value[foundIndex] = this.curDriverDataService.getDialogData();
+        // And lastly refresh table
+        this.refreshTable();
+      }
+    });
+  }
+
+  private refreshTable() {
+    // Refreshing table using paginator
+
+    // this.dataSource.refreshPage(this.allDriverDataService.page) // Refresh With API call than uncomment this 
+  }
+
 }
 
 //DataSource ===============================
@@ -171,15 +202,7 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
         // Sort filtered data
         this.renderedData = this.sortData(this.filteredData.slice());
 
-        // Grab the page's slice of the filtered sorted data.
-        // const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
-        // this.renderedData = this.filteredData.splice(startIndex, this.paginator.pageSize);
-
-        // console.log("=================>>>",this.renderedData);
-
         return this.renderedData;
-        
-
       }
     ));
   }
@@ -188,18 +211,6 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
   changePage(pageNumber){
     
     this.exampleDatabase.getCurrentDriverList(pageNumber);
-  }
-
-  /*Change Pagination and get next page data */
-  filterData(data){
-
-    this.exampleDatabase.dataChange.subscribe(res => {
-
-      this.renderedData = res;
-
-      this.renderedData = data.trim().toLowerCase();
-
-    })
   }
 
   /* Delete Item From List */

@@ -191,11 +191,13 @@
 		<input matInput [(ngModel)]="data.driver.cancel_ride_count" name="driver_cancel_ride_count" hidden>
 		<input matInput [(ngModel)]="data.driver.total_review_count" name="acceptance_ratio" hidden>
 		<input matInput [(ngModel)]="data.driver.avg_rating_count" name="rejected_ratio" hidden>
-		<input matInput [(ngModel)]="data.driver.date_of_birth" name="online_hours_last_week" hidden>
-		<input matInput [(ngModel)]="data.driver.date_of_birth" name="total_online_hours" hidden>
-		<input matInput [(ngModel)]="data.driver.date_of_birth" name="driver_total_review_count" hidden>
-		<input matInput [(ngModel)]="data.driver.date_of_birth" name="driver_avg_rating_count" hidden>
+		<input matInput [(ngModel)]="data.driver.online_hours_last_week" name="online_hours_last_week" hidden>
+		<input matInput [(ngModel)]="data.driver.total_online_hours" name="total_online_hours" hidden>
+		<input matInput [(ngModel)]="data.driver.driver_total_review_count" name="driver_total_review_count" hidden>
+		<input matInput [(ngModel)]="data.driver.driver_avg_rating_count" name="driver_avg_rating_count" hidden>
 		<input matInput [(ngModel)]="data.driver.created_date" name="date_of_register" hidden>
+		<input matInput name="profile_pic" id="profile_pic" hidden>
+		<input matInput name="licence" id="licence" hidden>
 		<ng-container *ngIf="data.driver.device_type == 0">
 			<input matInput [(ngModel)]="Unapproved" name="verify" hidden>
 		</ng-container>

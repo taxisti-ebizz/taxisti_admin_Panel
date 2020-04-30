@@ -138,7 +138,7 @@
                         <button (click)="viewDriverDetails(driver)" mat-icon-button color="primary" matTooltip="view Driver Details">
 							<mat-icon>remove_red_eye</mat-icon>
 						</button>
-						<button (click)="editDriver(driver)" mat-icon-button color="primary" matTooltip="Edit driver">
+						<button (click)="editDriver(i,driver)" mat-icon-button color="primary" matTooltip="Edit driver">
 							<mat-icon style="color: #040404;" aria-label="Edit">create</mat-icon>
 						</button>
 						<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deletedriver(driver.driver_id)">
