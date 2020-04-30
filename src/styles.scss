@@ -54,8 +54,12 @@
 	position: static;
 }
 
-
-.mat-table__wrapper .mat-table {
+.mat-table__wrapper .mat-table.alluser {
     min-width: 1100px !important;
-    width: 150% !important;
+    width: 130% !important;
+}
+
+.mat-table__wrapper .mat-table.driverList {
+    min-width: 1100px !important;
+    width: 180% !important;
 }

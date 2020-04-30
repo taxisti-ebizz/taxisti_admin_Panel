@@ -35,7 +35,7 @@
                 </mat-form-field>
             </div> -->
 
-            <mat-table #table [dataSource]="dataSource" matSort class="mat-cell">
+            <mat-table #table [dataSource]="dataSource" matSort class="mat-cell alluser">
                 ng update @angular/cli @angular/core
                 <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
@@ -109,16 +109,16 @@
                         </button>
 
                         <button mat-icon-button color="accent" (click)="startEdit(i, row)">
-                        <mat-icon aria-label="Edit">edit</mat-icon>
+                        <mat-icon style="color: #040404;" aria-label="Edit">edit</mat-icon>
                         </button>
                 
                         <button mat-icon-button color="warn" matTooltip="Delete User" type="button" (click)="deleteUser(i,row.user_id)">
                             <mat-icon>delete</mat-icon>
                         </button>
-                        <button mat-icon-button class="material-icons color_green" matTooltip="Verify User" type="button" *ngIf="row.verify == 1" (click)="verifyUser(row.user_id,0)">
+                        <button mat-icon-button class="material-icons color_green" matTooltip="Verify User" type="button" *ngIf="row.verify == 1" (click)="verifyUser(i,row.user_id,0)">
                             <mat-icon style="color: green;">thumb_up</mat-icon>
                         </button>
-                        <button mat-icon-button color="warn" matTooltip="Verify User" type="button" *ngIf="row.verify == 0" (click)="verifyUser(row.user_id,1)">
+                        <button mat-icon-button color="warn" matTooltip="Verify User" type="button" *ngIf="row.verify == 0" (click)="verifyUser(i,row.user_id,1)">
                             <mat-icon style="color: red;">thumb_down</mat-icon>
                         </button>
                     </mat-cell>

@@ -66,33 +66,6 @@ export class AllDriverDataService {
     });
   }
 
-  getDriverList(page){
-    const data = {
-      "page" : page,
-      "type" : "all"
-    }
-
-    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
-   
-    this.httpClient.post<DriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
-        const result : any = res;
-
-        var i = 1;
-        result.data.data.forEach(element => {
-          element.id = i;
-          i++;
-        });
-        
-        this.dataChange.next(result.data.data);
-        this.total = result.data.total;
-        //console.log("totalNumber ======>>>>",this.total);
-      
-    },
-    (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
-    });
-  }
-
   // DEMO ONLY, you can find working methods below
   add (data: DriverIssue): void {
     this.dialogData = data;

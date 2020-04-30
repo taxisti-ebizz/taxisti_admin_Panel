@@ -151,7 +151,10 @@ export class UserListComponent implements OnInit {
     }
 
     //Verify User 
-    verifyUser(userId,status){
+    verifyUser(i,userId,status){
+
+      this.id = i + 1;
+
       var _title = '';
       var _description = '';
       var _waitDesciption = '';
@@ -176,6 +179,12 @@ export class UserListComponent implements OnInit {
 
         this.store.dispatch(new UserDeleted({ id: userId }));
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        this.exampleDatabase.dataChange.subscribe(res => {
+          const result : any = res;
+            result[foundIndex].verify = status;
+        });
       });
     }
 
@@ -273,7 +282,7 @@ export class ExampleDataSource extends DataSource<UserIssue> {
           });
 
           // Sort filtered data
-         // const sortedData = this.sortData(this.filteredData.slice());
+          this.renderedData = this.sortData(this.filteredData.slice());
 
           // Grab the page's slice of the filtered sorted data.
           // const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
@@ -281,7 +290,7 @@ export class ExampleDataSource extends DataSource<UserIssue> {
 
           // console.log("=================>>>",this.renderedData);
 
-          return this.filteredData;
+          return this.renderedData;
         //}
 
       }

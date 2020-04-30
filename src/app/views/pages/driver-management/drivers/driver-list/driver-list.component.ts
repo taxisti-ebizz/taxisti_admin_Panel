@@ -76,8 +76,6 @@ export class DriverListComponent implements OnInit {
         this.subheaderService.setTitle('Driver Management');
 
         this.allDriverList();
-
-        
     }
 
     //Get all drivers
@@ -93,16 +91,6 @@ export class DriverListComponent implements OnInit {
         this.dataSource.filter = this.filter.nativeElement.value;
       })
     }
-
-    //Load driver data
-    // loadData(data){
-    
-    //   this.dataSource = new MatTableDataSource(data.data);
-    //   this.paginator = this.paginator;
-    //   this.sort = this.sort;
-    //   this.spinner.hide();
-      
-    // }
 
     //Handle Page
     handlePage(event){
@@ -176,7 +164,10 @@ export class DriverListComponent implements OnInit {
     }
 
     //Verify Driver
-    verifyDriver(driverId,status){
+    verifyDriver(i,driverId,status){
+
+      this.id = i + 1;
+      
       var _title = '';
       var _description = '';
       var _waitDesciption = '';
@@ -201,7 +192,13 @@ export class DriverListComponent implements OnInit {
 
         this.store.dispatch(new UserDeleted({ id: driverId }));
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-        this.allDriverList();
+        
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        this.exampleDatabase.dataChange.subscribe(res => {
+          const result : any = res;
+            result[foundIndex].verify = status;
+        });
+
       });
     }
     
@@ -303,8 +300,8 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
             return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
           });
 
-            // Sort filtered data
-          //const sortedData = this.sortData(this.filteredData.slice());
+          // Sort filtered data
+          this.renderedData = this.sortData(this.filteredData.slice());
 
             // Grab the page's slice of the filtered sorted data.
             // const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
@@ -312,40 +309,30 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
 
             // console.log("=================>>>",this.renderedData);
 
-            return this.filteredData;
+            return this.renderedData;
           //}
 
         }
       ));
     }
 
+    /*Change Pagination and get next page data */
     changePage(pageNumber){
       
       this.exampleDatabase.getAllDriverList(pageNumber);
     }
 
-    filterData(data){
-
-    
-      this.exampleDatabase.dataChange.subscribe(res => {
-
-        this.renderedData = res;
-
-        this.renderedData = data.trim().toLowerCase();
-
-      })
-    }
-
+    /* Delete Item From List */
     deleteItem(index){
       this.exampleDatabase.deleteDriver(index)
     }
 
-    refreshPage(pageNumber){
-      this.exampleDatabase.getDriverList(pageNumber);
-    }
+    /* Refresh perticular page */
+    // refreshPage(pageNumber){
+    //   this.exampleDatabase.getDriverList(pageNumber);
+    // }
 
     disconnect() {}
-
 
     /** Returns a sorted copy of the database data. */
     sortData(data: DriverIssue[]): DriverIssue[] {
