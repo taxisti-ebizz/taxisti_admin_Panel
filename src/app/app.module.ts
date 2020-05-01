@@ -73,6 +73,9 @@ import {DataService} from './services/user/data.service';
 //Toastr Message
 import { ToastrModule } from 'ngx-toastr';
 
+// import { RatingModule } from 'ng-starrating';
+// import {StarRatingModule} from 'angular-star-rating';
+
 //import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 // tslint:disable-next-line:class-name
@@ -127,6 +130,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		InlineSVGModule.forRoot(),
 		ThemeModule,
 		NgxSpinnerModule,
+		//RatingModule
 		//NgxDaterangepickerMd.forRoot()
 	],
 	exports: [],

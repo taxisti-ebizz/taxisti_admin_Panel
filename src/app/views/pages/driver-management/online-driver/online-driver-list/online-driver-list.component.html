@@ -1,9 +1,7 @@
 <kt-portlet>
 
-	<kt-portlet-header [sticky]="true" [title]="'Current Driver List'" [class]="'kt-portlet__head--lg'">
-		<!-- <ng-container ktPortletTools>
-			<button (click)="createProduct()" mat-raised-button color="primary" matTooltip="Create new product">New product</button>
-		</ng-container> -->
+	<kt-portlet-header [sticky]="true" [title]="'Online Driver List'" [class]="'kt-portlet__head--lg'">
+
 	</kt-portlet-header>
 	<!-- end::Header -->
 
@@ -138,9 +136,6 @@
                         <button (click)="viewDriverDetails(driver)" mat-icon-button color="primary" matTooltip="view Driver Details">
 							<mat-icon>remove_red_eye</mat-icon>
 						</button>
-						<button (click)="editDriver(i,driver)" mat-icon-button color="primary" matTooltip="Edit driver">
-							<mat-icon style="color: #040404;" aria-label="Edit">create</mat-icon>
-						</button>
 						<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i,driver.user_id)">
 							<mat-icon>delete</mat-icon>
 						</button>
@@ -160,7 +155,7 @@
 
         <!-- start: BOTTOM -->
 		<div class="mat-table__bottom">
-			<ngb-pagination [collectionSize]="dataSource.totalDriver" [(page)]="curDriverDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+			<ngb-pagination [collectionSize]="dataSource.totalDriver" [(page)]="onlineDriverDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
         </div>
 		<!-- end: BOTTOM -->
 	</kt-portlet-body>

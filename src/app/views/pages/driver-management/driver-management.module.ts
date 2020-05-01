@@ -17,13 +17,20 @@ import { ActionNotificationComponent } from '../../partials/content/crud';
 // Components
 import { DriverManagementComponent } from './driver-management.component';
 
+//All Driver
 import { AllDriverListComponent } from './drivers/all-driver-list/all-driver-list.component';
 import { DriverListComponent } from './drivers/driver-list/driver-list.component';
 import { DriverEditComponent } from './drivers/driver-edit/driver-edit.component';
 import { ViewDriverDetailsComponent } from './drivers/view-driver-details/view-driver-details.component';
+
+//Current Driver 
 import { ListComponent } from './current-drivers/list/list.component';
 import { EditComponent } from './current-drivers/edit/edit.component';
 import { ViewComponent } from './current-drivers/view/view.component';
+
+//Online Driver 
+import { OnlineDriverListComponent } from './online-driver/online-driver-list/online-driver-list.component';
+import { ViewOnlineDriverComponent } from './online-driver/view-online-driver/view-online-driver.component';
 
 // Material
 import {
@@ -57,6 +64,7 @@ import {
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
+//import { RatingModule } from 'ng-starrating';
 
 
 
@@ -77,6 +85,10 @@ const routes: Routes = [
 			{
 				path: 'current-drivers-list',
 				component: ListComponent
+			},
+			{
+				path: 'online-drivers-list',
+				component: OnlineDriverListComponent
 			},
 		]
 	}
@@ -114,7 +126,8 @@ const routes: Routes = [
 		MatTabsModule,
 		MatTooltipModule,
 		MatDialogModule,
-		NgbPaginationModule
+		NgbPaginationModule,
+		//RatingModule
   ],
   providers: [
 		InterceptService,
@@ -142,7 +155,8 @@ const routes: Routes = [
 		ViewDriverDetailsComponent,
 		DriverEditComponent,
 		ViewComponent,
-		EditComponent
+		EditComponent,
+		ViewOnlineDriverComponent
 	],
 	declarations: [
 		DriverManagementComponent,
@@ -152,7 +166,9 @@ const routes: Routes = [
 		ListComponent,
 		EditComponent,
 		ViewComponent,
-		DriverListComponent
+		DriverListComponent,
+		OnlineDriverListComponent,
+		ViewOnlineDriverComponent
 	]
 })
 export class DriverManagementModule { }

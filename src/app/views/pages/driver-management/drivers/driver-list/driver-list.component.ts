@@ -16,13 +16,13 @@ import { UserDeleted, User } from '../../../../../core/auth';
 // Services
 import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
 
-//Edit User Modal
+//Edit Driver Modal
 import { DriverEditComponent } from '../driver-edit/driver-edit.component';
 
-//View User details
+//View Driver details
 import { ViewDriverDetailsComponent } from '../view-driver-details/view-driver-details.component';
 
-// Edit User Service
+// Edit Driver Service
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
 import { AllDriverDataService } from '../../../../../services/driver/all-driver-data.service';
 
@@ -68,8 +68,7 @@ export class DriverListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public allDriverDataService : AllDriverDataService,
-      private changeDetectorRefs : ChangeDetectorRef) { }
+      public allDriverDataService : AllDriverDataService) { }
 
     ngOnInit() {
         // Set title to page breadCrumbs
@@ -97,28 +96,6 @@ export class DriverListComponent implements OnInit {
       this.allDriverDataService.page = event;
       this.dataSource.changePage(event);
     }
-
-    
-    // editDriver(driverData) {
-    //   this.editDriverService.obj = driverData;
-    //   this.editDriverService.mode = 2;
-
-    //   const dialogRef = this.dialog.open(DriverEditComponent, {
-    //     width: '800px',
-    //     height: 'auto',
-    //     backdropClass: 'masterModalPopup',
-    //     data: { mode: 2, driver : driverData }
-    //   });
-    //   dialogRef.afterClosed().subscribe(result => {
-        
-    //     if (result === "close" || result === undefined) {
-    //       this.allDriverList();
-          
-    //     } else if (result === false) {
-    //       this.spinner.hide();
-    //     }
-    //   });
-    // }
 
     /*
       Edit Driver detail
@@ -181,7 +158,7 @@ export class DriverListComponent implements OnInit {
         _title = 'Driver Approve';
         _description = 'Are you sure want to Approve?';
         _waitDesciption = 'Driver is aprroving...';
-        _deleteMessage = `Driver has been Approve`;
+        _deleteMessage = `Driver has been Approved`;
       }
 
       const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, driverId, status, 'driver');

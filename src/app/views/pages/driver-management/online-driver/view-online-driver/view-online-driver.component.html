@@ -1,0 +1,109 @@
+<div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">View <strong>{{data.driverData.first_name+' '+data.driverData.last_name}}</strong> Details</h3>
+		</div>
+    </div>
+    
+    <div class="kt-form">
+        <div class="kt-portlet__body">
+
+            <div class="kt-portlet__body-progress">
+                <mat-spinner [diameter]="20"></mat-spinner>
+            </div>
+
+            <div class="col-sm-12">
+                <label class="col-sm-4">Driver Name :</label>
+                <span>{{ data.driverData.first_name+' '+data.driverData.last_name }}</span>
+            </div>
+            <br/>
+
+            <div class="col-sm-12">
+                <label class="col-sm-4">Licence  :</label>
+                <ng-container *ngIf="data.driverData.profile_pic!=''"><img src="{{data.driverData.licence}}"></ng-container> 
+                <ng-container *ngIf="data.driverData.profile_pic==''"><img src="assets/img/driver-license.png"></ng-container> 
+            </div>
+            <br/>
+
+            <div class="col-sm-12">
+                <label class="col-sm-4">Driver Pic :</label>
+                <ng-container *ngIf="data.driverData.profile_pic!=''"><img src="{{data.driverData.profile}}"></ng-container> 
+                <ng-container *ngIf="data.driverData.profile_pic==''"><img src="assets/img/driver.png"></ng-container> 
+            </div>
+            <br/>
+            
+            <div class="col-sm-12">
+                <label class="col-sm-4">Car Brand :</label>
+                <span>{{data.driverData.car_brand}}</span>
+            </div>
+            
+            <br/>
+          
+            <div class="col-sm-12">
+                <label class="col-sm-4">Car Year :</label>
+                <span>{{data.driverData.car_year}}</span>
+            </div>
+            <br/>
+
+            <div class="col-sm-12">
+                <label class="col-sm-4">Plate No :</label>
+                <span>{{data.driverData.plate_no}}</span>
+            </div>
+            <br/> 
+
+            <div class="col-sm-12">
+                <label class="col-sm-4">Driver Availability :</label>
+                <span>{{data.driverData.availability}}</span>
+            </div>
+            <br/>
+
+            <div class="col-sm-12">
+                <label class="col-sm-4">Current Location :</label>
+                <span>{{data.driverData.current_location?data.driverData.current_location:'Location not added'}}</span>
+            </div>
+            <br/>
+            
+            <div class="col-sm-12">
+                <label class="col-sm-4">Car Images :</label>
+                <ng-container *ngIf="data.driverData.car_images.length > 0">
+                    <ng-container *ngFor="let carImg of data.driverData.car_images">
+                        <img src="{{carImg.image}}">&nbsp;
+                    </ng-container>
+                </ng-container>
+                <ng-container *ngIf="data.driverData.car_images.length == 0"><img src="assets/img/car.png"></ng-container> 
+            </div>
+            <br/>
+            <div class="kt-separator kt-separator--dashed"></div>
+
+            <ng-container *ngIf="data.driverData.reviews.length > 0">
+                <div class="col-sm-12">
+                    <label class="col-sm-4">Driver Review :</label>
+                    <ng-container *ngFor="let reviews of data.driverData.reviews">
+                        <div>
+                            <!-- <span ng-bind-html="reviews.ratting"></span> -->
+                            <!-- <star-rating value="{{reviews.ratting}}" totalstars="5" checkedcolor="gold" uncheckedcolor="gray" size="24px" readonly="true"></star-rating> -->
+                            <img src="{{reviews.profile_pic?reviews.profile_pic:'assets/img/user.png'}}" style="height:5%;width:5%;border-radius: 30px;"> {{reviews.user_name}}
+                            <br/>
+                            <span>{{reviews.review}}</span> 
+                            <hr/>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container> 
+            <!-- style="float: left; margin:5px; border:1px thin;" -->
+           
+        </div>
+        
+        <div class="kt-portlet__foot kt-portlet__foot--fit kt-portlet__no-border">
+            <div class="kt-form__actions kt-form__actions--solid">
+                <div class="row text-right">
+                    <div class="col-lg-12">
+                        <button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -410,7 +410,7 @@ export class MenuConfig {
 						},
 						{
 							title: 'Online Drivers',
-							page: '/driver-management/online-drivers'
+							page: '/driver-management/online-drivers-list'
 						},
 						{
 							title: 'Location',

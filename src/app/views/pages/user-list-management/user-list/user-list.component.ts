@@ -168,7 +168,7 @@ export class UserListComponent implements OnInit {
         _title = 'User Approve';
         _description = 'Are you sure want to Approve?';
         _waitDesciption = 'User is aprroving...';
-        _deleteMessage = `User has been Approve`;
+        _deleteMessage = `User has been Approved`;
       }
 
       const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, userId, status, 'user');

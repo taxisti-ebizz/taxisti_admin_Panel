@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table'; 
 
 //Http API Method
 import { HttpService } from '../../../../../services/http.service';
@@ -10,137 +9,99 @@ import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
-//Component
-import { ViewComponent } from '../view/view.component';
-import { EditComponent } from '../edit/edit.component';
-
-//Service
-import { EditDriverService } from '../../../../../services/driver/edit-driver.service'
-import { CurDriverDataService } from '../../../../../services/driver/cur-driver-data.service';
-import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
-
 // Models
 import { UserDeleted, User } from '../../../../../core/auth';
+
+// Services
+import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
+
+//View Driver details
+import { ViewOnlineDriverComponent } from '../view-online-driver/view-online-driver.component';
+
+// Edit Driver Service
+import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
+import { OnlineDriverDataService } from '../../../../../services/driver/online-driver-data.service';
+
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
-import { CurrentDriverIssue } from '../../../../../module/current-driver-issue.module';
+import { OnlineDriverIssue } from '../../../../../module/online-driver-issue.module';
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'kt-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  selector: 'kt-online-driver-list',
+  templateUrl: './online-driver-list.component.html',
+  styleUrls: ['./online-driver-list.component.scss']
 })
-export class ListComponent implements OnInit {
+export class OnlineDriverListComponent implements OnInit {
 
-    displayedColumns = ['id', 'username', 'mobile_no', 'rides', 'cancelled_ride', 'acceptance_ratio', 'rejected_ratio', 'last_week_online_hours', 'current_week_online_hours', 'total_online_hours', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
+  displayedColumns = ['id', 'username', 'mobile_no', 'rides', 'cancelled_ride', 'acceptance_ratio', 'rejected_ratio', 'last_week_online_hours', 'current_week_online_hours', 'total_online_hours', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
 
-    exampleDatabase : CurDriverDataService | null;
-    dataSource : ExampleDataSource | null;
-    index: number;
-    id: number;
+  exampleDatabase : OnlineDriverDataService | null;
+  dataSource : ExampleDataSource | null;
+  index: number;
+  id: number;
 
-    //dataSource: MatTableDataSource<any>;
-    @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-    @ViewChild(MatSort, { static: true }) sort: MatSort;
-    @ViewChild('filter', {static: true}) filter: ElementRef;
+  //dataSource: MatTableDataSource<any>;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild('filter', {static: true}) filter: ElementRef;
 
-    page = 1
-    pageSize = 10
-    count = 0;
+  page = 1
+  pageSize = 10
+  count = 0;
 
-    constructor(private http: HttpService,
-      private api: ApiService,
-      private spinner: NgxSpinnerService,
-      private subheaderService: SubheaderService,
-      private editDriverService : EditDriverService,
-      public dialog: MatDialog,
-      private layoutUtilsService: LayoutUtilsService,
-      private store: Store<AppState>,
-      private httpClient : HttpClient,
-      public curDriverDataService : CurDriverDataService) { }
+  constructor(private http: HttpService,
+    private api: ApiService,
+    private spinner: NgxSpinnerService,
+    private subheaderService: SubheaderService,
+    private editDriverService : EditDriverService,
+    public dialog: MatDialog,
+    private layoutUtilsService: LayoutUtilsService,
+    private store: Store<AppState>,
+    private httpClient : HttpClient,
+    public onlineDriverDataService : OnlineDriverDataService) { }
 
-    ngOnInit() {
+  ngOnInit() {
+      // Set title to page breadCrumbs
+      this.subheaderService.setTitle('Driver Management');
 
-        // Set title to page breadCrumbs
-    	  this.subheaderService.setTitle('Driver Management');
+      this.onlineDriverList();
+  }
 
-        this.driverList();
-    }
+  //Get online driver list
+  onlineDriverList(){
 
-    driverList(){
-
-      this.exampleDatabase = new CurDriverDataService(this.httpClient,this.spinner,this.http,this.api);
-      this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      })
-    }
-
-    //Driver list search filter
-    applyFilter(filterValue: string) {
-      this.dataSource.filter = filterValue.trim().toLowerCase();
-
-      if (this.dataSource.paginator) {
-        this.dataSource.paginator.firstPage();
+    this.exampleDatabase = new OnlineDriverDataService(this.httpClient,this.spinner,this.http,this.api);
+    this.dataSource = new ExampleDataSource(this.exampleDatabase,this.paginator,this.sort);
+    fromEvent(this.filter.nativeElement,'keyup')
+    .subscribe(() => {
+      if(!this.dataSource){
+        return;
       }
+
+      this.dataSource.filteredData = this.filter.nativeElement.value;
+    })
+
+  }
+
+  //Handle Page
+  handlePage(event){
+    this.onlineDriverDataService.page = event;
+    this.dataSource.changePage(event);
+  }
+
+  //Driver list search filter
+  applyFilter(filterValue: string) {
+
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
     }
-
-    //Handle Page
-    handlePage(event){
-      this.curDriverDataService.page = event;
-      this.dataSource.changePage(event);
-    }
-
-    // Vew Driver Details
-    viewDriverDetails(driverData){
-      this.editDriverService.obj = driverData;
-      this.editDriverService.mode = 3;
-
-      const dialogRef = this.dialog.open(ViewComponent, {
-        width: '700px',
-        height: 'auto',
-        backdropClass: 'masterModalPopup',
-        data: { mode: 3, driverData : driverData }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        
-       if (result === false) {
-          this.spinner.hide();
-        }
-      });
-    }
-
-    /*
-      Edit Driver detail
-    */
-   editDriver(i: number, driverData) {
-      
-    this.id = driverData.id;
-    // index row is used just for debugging proposes and can be removed
-    this.index = i;
-    const dialogRef = this.dialog.open(EditComponent, {
-      data: { driver : driverData }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        // Then you update that record using data from dialogData (values you enetered)
-        this.exampleDatabase.dataChange.value[foundIndex] = this.curDriverDataService.getDialogData();
-        // And lastly refresh table
-        this.refreshTable();
-      }
-    });
   }
 
   //Delete Driver 
@@ -171,11 +132,10 @@ export class ListComponent implements OnInit {
 
   }
 
-  //Verify Driver
-  verifyDriver(i,driverId,status){
+  //Verify Driver 
+  verifyDriver(i,driver_id,status){
+    this.index = i+1;
 
-    this.id = i + 1;
-    
     var _title = '';
     var _description = '';
     var _waitDesciption = '';
@@ -192,35 +152,48 @@ export class ListComponent implements OnInit {
       _deleteMessage = `Driver has been Approved`;
     }
 
-    const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, driverId, status, 'driver');
-    dialogRef.afterClosed().subscribe(res => {
-      if (!res) {
-        return;
-      }
+    const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, driver_id, status, 'driver');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
 
-      this.store.dispatch(new UserDeleted({ id: driverId }));
-      this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-      
-      const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-      this.exampleDatabase.dataChange.subscribe(res => {
-        const result : any = res;
-          result[foundIndex].verify = status;
+        this.store.dispatch(new UserDeleted({ id: driver_id }));
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+        
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.index);
+        this.exampleDatabase.dataChange.subscribe(res => {
+          const result : any = res;
+            result[foundIndex].verify = status;
+        });
+
       });
-
-    });
   }
 
+  // Vew Driver Details
+  viewDriverDetails(driverData){
 
-  private refreshTable() {
-    // Refreshing table using paginator
+    this.editDriverService.obj = driverData;
+    this.editDriverService.mode = 3;
 
-    // this.dataSource.refreshPage(this.allDriverDataService.page) // Refresh With API call than uncomment this 
+    const dialogRef = this.dialog.open(ViewOnlineDriverComponent, {
+      width: '700px',
+      height: 'auto',
+      backdropClass: 'masterModalPopup',
+      data: { mode: 3, driverData : driverData }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      
+      if (result === false) {
+        this.spinner.hide();
+      }
+    });
   }
 
 }
 
-//DataSource ===============================
-export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
+
+export class ExampleDataSource extends DataSource<OnlineDriverIssue>{
   _filterChange = new BehaviorSubject('');
 
   pageSize = 10
@@ -233,20 +206,18 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
     this._filterChange.next(filter);
   }
 
-  filteredData: CurrentDriverIssue[] = [];
-  renderedData: CurrentDriverIssue[] = [];
+  filteredData: OnlineDriverIssue[] = [];
+  renderedData: OnlineDriverIssue[] = [];
   public totalDriver = 0;
 
-  constructor(public exampleDatabase: CurDriverDataService,
+  constructor(public exampleDatabase: OnlineDriverDataService,
               public paginator: MatPaginator,
               public sort: MatSort) {
     super();
-    // Reset to the first page when the user changes the filter.
-    //this._filterChange.subscribe(() => this._paginator.page = 0);
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<CurrentDriverIssue[]> {
+  connect(): Observable<OnlineDriverIssue[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this.exampleDatabase.dataChange,
@@ -255,7 +226,7 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
       //this.paginator.page
     ];
 
-    this.exampleDatabase.getCurrentDriverList(this.exampleDatabase.page);
+    this.exampleDatabase.getOnlineDriverList(this.exampleDatabase.page);
 
     return merge(...displayDataChanges).pipe(map( (res) => {
         // Filter data
@@ -265,7 +236,7 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
         this.totalDriver = this.exampleDatabase.total //result.total;
 
   
-        this.filteredData =  this.exampleDatabase.data.slice().filter((issue: CurrentDriverIssue) => {
+        this.filteredData =  this.exampleDatabase.data.slice().filter((issue: OnlineDriverIssue) => {
           const searchStr = (issue.id + issue.first_name + issue.last_name + issue.mobile_no + issue.date_of_birth + issue.date_of_register).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
@@ -281,23 +252,23 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
   /*Change Pagination and get next page data */
   changePage(pageNumber){
     
-    this.exampleDatabase.getCurrentDriverList(pageNumber);
+    this.exampleDatabase.getOnlineDriverList(pageNumber);
   }
 
   /* Delete Item From List */
   deleteItem(index){
-    this.exampleDatabase.deleteDriver(index)
+    this.exampleDatabase.deleteOnlineDriver(index)
   }
 
   /* Refresh perticular page */
   // refreshPage(pageNumber){
-  //   this.exampleDatabase.getCurrentDriverList(pageNumber);
+  //   this.exampleDatabase.getDriverList(pageNumber);
   // }
 
   disconnect() {}
 
   /** Returns a sorted copy of the database data. */
-  sortData(data: CurrentDriverIssue[]): CurrentDriverIssue[] {
+  sortData(data: OnlineDriverIssue[]): OnlineDriverIssue[] {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }
