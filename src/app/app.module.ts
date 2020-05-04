@@ -73,6 +73,10 @@ import {DataService} from './services/user/data.service';
 //Toastr Message
 import { ToastrModule } from 'ngx-toastr';
 
+// Firebase modules
+
+
+
 // import { RatingModule } from 'ng-starrating';
 // import {StarRatingModule} from 'angular-star-rating';
 
@@ -130,6 +134,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		InlineSVGModule.forRoot(),
 		ThemeModule,
 		NgxSpinnerModule,
+		//AngularFireModule.initializeApp(environment.firebaseConfig),
 		//RatingModule
 		//NgxDaterangepickerMd.forRoot()
 	],

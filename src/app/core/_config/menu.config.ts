@@ -426,7 +426,7 @@ export class MenuConfig {
 					submenu: [
 						{
 							title: 'Pending',
-							page: '/ride-management/pending-ride'
+							page: '/ride-management/pending-rides'
 						},
 						{
 							title: 'Running',

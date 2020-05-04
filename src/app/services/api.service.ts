@@ -22,4 +22,7 @@ export class ApiService {
     editDriverDetail = this.path+'editDriverDetail';
     deleteCarImage = this.path+'deleteCarImage/';
 
+    //Ride
+    getPendingRideList = this.path+'getPendingRideList';
+
 }

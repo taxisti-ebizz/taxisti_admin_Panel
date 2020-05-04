@@ -1,0 +1,121 @@
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Pending Ride List'" [class]="'kt-portlet__head--lg'">
+	
+	</kt-portlet-header>
+	<!-- end::Header -->
+
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+			<!-- end::FILTERS -->
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+
+            <mat-table mat-table [dataSource]="dataSource" class="mat-cell rideList" matSort>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.id}}</mat-cell>
+                </ng-container>
+            
+                <!-- Username Column -->
+                <ng-container matColumnDef="rider_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Name</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.first_name+' '+driver.last_name}}</mat-cell>
+                </ng-container>
+            
+                <!-- Mobile No Column -->
+                <ng-container matColumnDef="driver_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.mobile_no}}</mat-cell>
+                </ng-container>
+            
+                <!-- Rides Column -->
+                <ng-container matColumnDef="start_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.driver_rides_count}}</mat-cell>
+                </ng-container>
+
+                <!-- Cancelled Ride Column -->
+                <ng-container matColumnDef="end_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.driver_cancel_ride_count}}</mat-cell>
+                </ng-container>
+
+                <!-- Acceptance Ratio Column -->
+                <ng-container matColumnDef="start_location">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Start Location</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.acceptance_ratio}}</mat-cell>
+                </ng-container>
+
+                <!-- Rejected Ratio Column -->
+                <ng-container matColumnDef="end_location">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>End Location</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.rejected_ratio}}</mat-cell>
+                </ng-container>
+
+                <!-- Last Week Online Hours Column -->
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.online_hours_last_week}}</mat-cell>
+                </ng-container>
+
+                <!-- Current Week Online Hours Column -->
+                <ng-container matColumnDef="distance">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Distance</mat-header-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.online_hours_current_week}}</mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let driver; let i=index;">
+                        <button (click)="viewDriverDetails(driver)" mat-icon-button color="primary" matTooltip="view Driver Details">
+							<mat-icon>remove_red_eye</mat-icon>
+						</button>
+						<button (click)="editDriver(i,driver)" mat-icon-button color="primary" matTooltip="Edit driver">
+							<mat-icon style="color: #040404;" aria-label="Edit">create</mat-icon>
+						</button>
+						<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i,driver.user_id)">
+							<mat-icon>delete</mat-icon>
+						</button>
+						<button mat-icon-button class="material-icons color_green" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 1" (click)="verifyDriver(i,driver.user_id,0)">
+							<mat-icon style="color: green;">thumb_up</mat-icon>
+						</button>
+						<button mat-icon-button color="warn" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 0" (click)="verifyDriver(i,driver.user_id,1)">
+							<mat-icon style="color: red;">thumb_down</mat-icon>
+						</button>
+                    </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<ngb-pagination [collectionSize]="dataSource.totalDriver" [(page)]="pendingRideDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

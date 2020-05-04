@@ -1,0 +1,16 @@
+<kt-portlet>
+	<kt-portlet-header [sticky]="true" [title]="'Online Location'" [class]="'kt-portlet__head--lg'">
+
+	</kt-portlet-header>
+
+    <kt-portlet-body>
+        <agm-map [latitude]="lat" [longitude]="lng" [zoom]="2"> 
+            <agm-marker *ngFor="let marker of donors"
+            [latitude]="marker.currentLat"
+            [longitude]="marker.currentLong"
+            [label]="marker.label"
+            [iconUrl]="marker.icon">
+            </agm-marker> 
+        </agm-map>
+    </kt-portlet-body>
+</kt-portlet>    

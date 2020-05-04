@@ -51,6 +51,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/driver-management/driver-management.module').then(m => m.DriverManagementModule),
 			},
 			{
+				path: 'ride-management',
+				loadChildren: () => import('../app/views/pages/ride-management/ride-management.module').then(m => m.RideManagementModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

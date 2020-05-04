@@ -32,6 +32,9 @@ import { ViewComponent } from './current-drivers/view/view.component';
 import { OnlineDriverListComponent } from './online-driver/online-driver-list/online-driver-list.component';
 import { ViewOnlineDriverComponent } from './online-driver/view-online-driver/view-online-driver.component';
 
+//Location
+import { LocationComponent } from './location/location.component';
+
 // Material
 import {
 	MatInputModule,
@@ -64,8 +67,9 @@ import {
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
-//import { RatingModule } from 'ng-starrating';
+import { AgmCoreModule } from '@agm/core';
 
+//import { RatingModule } from 'ng-starrating';
 
 
 const routes: Routes = [
@@ -90,46 +94,53 @@ const routes: Routes = [
 				path: 'online-drivers-list',
 				component: OnlineDriverListComponent
 			},
+			{
+				path: 'location',
+				component: LocationComponent
+			}
 		]
 	}
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-		HttpClientModule,
-		PartialsModule,
-		RouterModule.forChild(routes),
-		StoreModule.forFeature('users', usersReducer),
-        EffectsModule.forFeature([UserEffects]),
-		FormsModule,
-		ReactiveFormsModule,
-		TranslateModule.forChild(),
-		MatButtonModule,
-		MatMenuModule,
-		MatSelectModule,
-        MatInputModule,
-		MatTableModule,
-		MatAutocompleteModule,
-		MatRadioModule,
-		MatIconModule,
-		MatNativeDateModule,
-		MatProgressBarModule,
-		MatDatepickerModule,
-		MatCardModule,
-		MatPaginatorModule,
-		MatSortModule,
-		MatCheckboxModule,
-		MatProgressSpinnerModule,
-		MatSnackBarModule,
-		MatExpansionModule,
-		MatTabsModule,
-		MatTooltipModule,
-		MatDialogModule,
-		NgbPaginationModule,
-		//RatingModule
-  ],
-  providers: [
+	imports: [
+			CommonModule,
+			HttpClientModule,
+			PartialsModule,
+			RouterModule.forChild(routes),
+			StoreModule.forFeature('users', usersReducer),
+			EffectsModule.forFeature([UserEffects]),
+			FormsModule,
+			ReactiveFormsModule,
+			TranslateModule.forChild(),
+			MatButtonModule,
+			MatMenuModule,
+			MatSelectModule,
+			MatInputModule,
+			MatTableModule,
+			MatAutocompleteModule,
+			MatRadioModule,
+			MatIconModule,
+			MatNativeDateModule,
+			MatProgressBarModule,
+			MatDatepickerModule,
+			MatCardModule,
+			MatPaginatorModule,
+			MatSortModule,
+			MatCheckboxModule,
+			MatProgressSpinnerModule,
+			MatSnackBarModule,
+			MatExpansionModule,
+			MatTabsModule,
+			MatTooltipModule,
+			MatDialogModule,
+			NgbPaginationModule,
+			AgmCoreModule.forRoot({
+				apiKey: 'AIzaSyCyHzLEsS3Obyncia4v8idZ3RENsUKiWDs'
+			})
+			//RatingModule
+	],
+	providers: [
 		InterceptService,
 		{
         	provide: HTTP_INTERCEPTORS,
@@ -168,7 +179,8 @@ const routes: Routes = [
 		ViewComponent,
 		DriverListComponent,
 		OnlineDriverListComponent,
-		ViewOnlineDriverComponent
+		ViewOnlineDriverComponent,
+		LocationComponent
 	]
 })
 export class DriverManagementModule { }

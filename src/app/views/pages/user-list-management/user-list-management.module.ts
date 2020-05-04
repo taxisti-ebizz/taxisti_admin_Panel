@@ -54,20 +54,19 @@ import {
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 
-
 const routes: Routes = [
 	{
 		path: '',
 		component: UserListManagementComponent,
 		children: [
 			{
-          path: '',
-          redirectTo: 'roles',
-          pathMatch: 'full'
-      },
-      {
-          path: 'users-list',
-          component: UserListComponent,
+				path: '',
+				redirectTo: 'roles',
+				pathMatch: 'full'
+			},
+			{
+				path: 'users-list',
+				component: UserListComponent,
 			}
 		]
 	}
