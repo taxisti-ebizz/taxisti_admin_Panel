@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import { PendingRideIssue } from '../../module/pending-ride-issue.module';
+import { RunningRideIssue } from '../../module/running-ride-issue.module';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpService } from './../http.service';
@@ -9,9 +9,9 @@ import { ApiService } from './../api.service'
 @Injectable({
   providedIn: 'root'
 })
-export class PendingRideDataService {
+export class RunningRideDataService {
 
-  dataChange : BehaviorSubject<PendingRideIssue[]> = new BehaviorSubject<PendingRideIssue[]>([]);
+  dataChange : BehaviorSubject<RunningRideIssue[]> = new BehaviorSubject<RunningRideIssue[]>([]);
 
   dialogData : any;
   page = 0;
@@ -23,12 +23,12 @@ export class PendingRideDataService {
     private http : HttpService,
     private api : ApiService) { }
 
-  get data() : PendingRideIssue[] {
+  get data() : RunningRideIssue[] {
     return this.dataChange.value
   }
 
   //Delete single ride
-  deletePendingRide(index){
+  deleteRunningRide(index){
     const foundIndex = this.dataChange.value.findIndex(x => x.id === index);
 
     this.dataChange.value.splice(foundIndex, 1);
@@ -50,7 +50,7 @@ export class PendingRideDataService {
   }
 
   //Get Pending Ride Data
-  getPendingRideList(page) : void {
+  getRunningRideList(page) : void {
     this.spinner.show();
 
     const data = {
@@ -59,7 +59,7 @@ export class PendingRideDataService {
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
    
-    this.httpClient.post<PendingRideIssue>(this.http.baseUrl+this.api.getPendingRideList,data,{ headers }).subscribe(res => {
+    this.httpClient.post<RunningRideIssue>(this.http.baseUrl+this.api.getRunningRideList,data,{ headers }).subscribe(res => {
         const result : any = res;
 
         if(result.status == true){
@@ -84,11 +84,11 @@ export class PendingRideDataService {
   }
 
   // DEMO ONLY, you can find working methods below
-  add (data: PendingRideIssue): void {
+  add (data: RunningRideIssue): void {
     this.dialogData = data;
   }
 
-  update (data: PendingRideIssue): void {
+  update (data: RunningRideIssue): void {
     this.dialogData = data;
   }
 
@@ -99,8 +99,4 @@ export class PendingRideDataService {
   getDialogData() {
     return this.dialogData;
   }
-
-  // isObject(value) {
-	// 	return value && typeof value === 'object' && value.constructor === Object;
-	// }
 }

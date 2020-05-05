@@ -18,27 +18,26 @@ import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../c
 import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 
 // Service
-import { PendingRideDataService } from '../../../../services/ride/pending-ride-data.service';
+import { RunningRideDataService } from '../../../../services/ride/running-ride-data.service';
 
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
-import { PendingRideIssue } from '../../../../module/pending-ride-issue.module';
+import { RunningRideIssue } from '../../../../module/running-ride-issue.module';
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-
 @Component({
-  selector: 'kt-pending-list',
-  templateUrl: './pending-list.component.html',
-  styleUrls: ['./pending-list.component.scss']
+  selector: 'kt-running-list',
+  templateUrl: './running-list.component.html',
+  styleUrls: ['./running-list.component.scss']
 })
-export class PendingListComponent implements OnInit {
+export class RunningListComponent implements OnInit {
 
     displayedColumns = ['select', 'id', 'rider_name', 'driver_name', 'start_date', 'end_date', 'start_location', 'end_location', 'amount', 'distance', 'actions'];
 
-    exampleDatabase : PendingRideDataService | null;
+    exampleDatabase : RunningRideDataService | null;
     dataSource : ExampleDataSource | null;
     index: number;
     id: number;
@@ -60,17 +59,17 @@ export class PendingListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public pendingRideDataService : PendingRideDataService) { }
+      public runningRideDataService : RunningRideDataService) { }
 
     ngOnInit() {
-       // Set title to page breadCrumbs
-       this.subheaderService.setTitle('Ride Management');
+      // Set title to page breadCrumbs
+      this.subheaderService.setTitle('Ride Management');
 
-       this.getPendingRideList();
+      this.getPendingRideList();
     }
 
     getPendingRideList(){
-      this.exampleDatabase = new PendingRideDataService(this.httpClient,this.spinner,this.http,this.api);
+      this.exampleDatabase = new RunningRideDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
       fromEvent(this.filter.nativeElement, 'keyup')
       .subscribe(() => {
@@ -92,7 +91,7 @@ export class PendingListComponent implements OnInit {
 
     //Handle Page
     handlePage(event){
-      this.pendingRideDataService.page = event;
+      this.runningRideDataService.page = event;
       this.dataSource.changePage(event);
     }
 
@@ -154,7 +153,7 @@ export class PendingListComponent implements OnInit {
       const _waitDesciption = 'Ride is deleting...';
       const _deleteMessage = 'Ride have been deleted';
 
-      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, ride_id, 'deleteRide');
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, ride_id, 'deleteRides');
       dialogRef.afterClosed().subscribe(res => {
         if (!res) {
           return;
@@ -170,10 +169,10 @@ export class PendingListComponent implements OnInit {
 }
 
 //DataSource ===============================
-export class ExampleDataSource extends DataSource<PendingRideIssue>{
+export class ExampleDataSource extends DataSource<RunningRideIssue>{
   _filterChange = new BehaviorSubject('');
 
-  selection = new SelectionModel<PendingRideIssue>(true, []);
+  selection = new SelectionModel<RunningRideIssue>(true, []);
 
   pageSize = 10
 
@@ -185,12 +184,12 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
     this._filterChange.next(filter);
   }
 
-  filteredData: PendingRideIssue[] = [];
-  renderedData: PendingRideIssue[] = [];
-  pendingRideResult: PendingRideIssue[] = [];
+  filteredData: RunningRideIssue[] = [];
+  renderedData: RunningRideIssue[] = [];
+  pendingRideResult: RunningRideIssue[] = [];
   public totalDriver = 0;
 
-  constructor(public exampleDatabase: PendingRideDataService,
+  constructor(public exampleDatabase: RunningRideDataService,
               public paginator: MatPaginator,
               public sort: MatSort) {
     super();
@@ -199,7 +198,7 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
-  connect(): Observable<PendingRideIssue[]> {
+  connect(): Observable<RunningRideIssue[]> {
     // Listen for any changes in the base data, sorting, filtering, or pagination
     const displayDataChanges = [
       this.exampleDatabase.dataChange,
@@ -208,7 +207,7 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
       //this.paginator.page
     ];
 
-    this.exampleDatabase.getPendingRideList(this.exampleDatabase.page);
+    this.exampleDatabase.getRunningRideList(this.exampleDatabase.page);
 
 
     return merge(...displayDataChanges).pipe(map( (res) => {
@@ -217,7 +216,7 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
         this.totalDriver = this.exampleDatabase.total //result.total;
         this.pendingRideResult = this.exampleDatabase.data;
 
-        this.filteredData =  this.exampleDatabase.data.slice().filter((issue: PendingRideIssue) => {
+        this.filteredData =  this.exampleDatabase.data.slice().filter((issue: RunningRideIssue) => {
           const searchStr = (issue.id + issue.driver_name + issue.rider_name + issue.start_datetime + issue.end_datetime + issue.start_location + issue.end_location + issue.distance).toLowerCase();
           return searchStr.indexOf(this.filter.toLowerCase()) !== -1;
         });
@@ -234,12 +233,12 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
   /*Change Pagination and get next page data */
   changePage(pageNumber){
     
-    this.exampleDatabase.getPendingRideList(pageNumber);
+    this.exampleDatabase.getRunningRideList(pageNumber);
   }
 
   /* Delete Item From List */
   deleteItem(index){
-    this.exampleDatabase.deletePendingRide(index)
+    this.exampleDatabase.deleteRunningRide(index)
   }
 
   deleteSelectedItem(ids){
@@ -254,7 +253,7 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
   disconnect() {}
 
   /** Returns a sorted copy of the database data. */
-  sortData(data: PendingRideIssue[]): PendingRideIssue[] {
+  sortData(data: RunningRideIssue[]): RunningRideIssue[] {
     if (!this.sort.active || this.sort.direction === '') {
       return data;
     }

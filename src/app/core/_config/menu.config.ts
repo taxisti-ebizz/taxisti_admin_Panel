@@ -430,7 +430,27 @@ export class MenuConfig {
 						},
 						{
 							title: 'Running',
-							page: '/ride-management/running-ride'
+							page: '/ride-management/running-rides'
+						},
+						{
+							title: 'Complete',
+							page: '/ride-management/complete-rides'
+						},
+						{
+							title: 'No Response',
+							page: '/ride-management/no-response-rides'
+						},
+						{
+							title: 'Canceled',
+							page: '/ride-management/canceled-rides'
+						},
+						{
+							title: 'No Driver Available',
+							page: '/ride-management/no-driver-available-rides'
+						},
+						{
+							title: 'Fake Ride',
+							page: '/ride-management/fake-rides'
 						}
 					]
 				},

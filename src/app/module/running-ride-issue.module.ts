@@ -1,4 +1,4 @@
-export class PendingRideIssue {
+export class RunningRideIssue { 
     id: number;
     driver_name: string;
     rider_name: string;

@@ -24,5 +24,7 @@ export class ApiService {
 
     //Ride
     getPendingRideList = this.path+'getPendingRideList';
+    getRunningRideList = this.path+'getRunningRideList';
+    deleteRide = this.path+'deleteRide';
 
 }

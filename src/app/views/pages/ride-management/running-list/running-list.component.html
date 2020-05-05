@@ -1,6 +1,6 @@
 <kt-portlet>
 
-	<kt-portlet-header [sticky]="true" [title]="'Pending Ride List'" [class]="'kt-portlet__head--lg'">
+	<kt-portlet-header [sticky]="true" [title]="'Running Ride List'" [class]="'kt-portlet__head--lg'">
 	
 	</kt-portlet-header>
 	<!-- end::Header -->
@@ -139,7 +139,7 @@
 
         <!-- start: BOTTOM -->
 		<div class="mat-table__bottom">
-			<ngb-pagination [collectionSize]="dataSource.totalDriver" [(page)]="pendingRideDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+			<ngb-pagination [collectionSize]="dataSource.totalDriver" [(page)]="runningRideDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
         </div>
 		<!-- end: BOTTOM -->
 	</kt-portlet-body>

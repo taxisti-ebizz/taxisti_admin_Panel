@@ -19,6 +19,13 @@ import { RideManagementComponent } from './ride-management.component';
 
 //All Ride 
 import { PendingListComponent } from './pending-list/pending-list.component';
+import { RunningListComponent } from './running-list/running-list.component';
+import { CompleteListComponent } from './complete-list/complete-list.component';
+import { NoResponseListComponent } from './no-response-list/no-response-list.component';
+import { CanceledListComponent } from './canceled-list/canceled-list.component';
+import { NoDriverAvailableListComponent } from './no-driver-available-list/no-driver-available-list.component';
+import { FakeRideListComponent } from './fake-ride-list/fake-ride-list.component';
+
 
 // Material
 import {
@@ -66,6 +73,14 @@ const routes: Routes = [
       {
 				path: 'pending-rides',
 				component: PendingListComponent
+      },
+      {
+				path: 'running-rides',
+				component: RunningListComponent
+      },
+      {
+				path: 'complete-rides',
+				component: CompleteListComponent
 			}
 		]
 	}
@@ -128,7 +143,13 @@ const routes: Routes = [
     ],
     declarations: [
       RideManagementComponent,
-      PendingListComponent
+      PendingListComponent,
+      RunningListComponent,
+      CompleteListComponent,
+      NoResponseListComponent,
+      CanceledListComponent,
+      NoDriverAvailableListComponent,
+      FakeRideListComponent
     ],
 })
 export class RideManagementModule { }

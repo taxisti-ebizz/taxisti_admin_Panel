@@ -11,6 +11,9 @@ import { ApiService } from '../../../../../services/api.service';
 //Ngx Spinner
 import { NgxSpinnerService } from 'ngx-spinner';
 
+//Http Header
+import { HttpHeaders } from '@angular/common/http';
+
 
 @Component({
 	selector: 'kt-delete-entity-dialog',
@@ -97,6 +100,45 @@ export class DeleteEntityDialogComponent implements OnInit {
 						}, 2500);
 					}
 				})
+			break;
+			case 'deleteRides': 
+				var ids = '';
+
+				id.forEach(element => {
+					if(ids!=''){
+						ids += ',';
+					}
+					ids += element;
+				});
+
+				const data = {
+					'id' : ids
+				}
+
+				this.http.postReqForVerify(this.api.deleteRide, data).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+			break;
+			case 'deleteRide' :
+
+				const deleteData = {
+					'id' : id
+				}
+
+				this.http.postReqForVerify(this.api.deleteRide, deleteData).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+
 			break;
 		}
 
