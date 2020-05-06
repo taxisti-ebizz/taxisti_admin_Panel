@@ -69,6 +69,11 @@
     width: 140% !important;
 }
 
+.mat-table__wrapper .mat-table.noDriverAvail {
+    min-width: 980px !important;
+    width: 100% !important;
+}
+
 .mat-form-field-infix {
     display: block;
     position: relative;

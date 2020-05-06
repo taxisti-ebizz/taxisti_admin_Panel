@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class CompleteRideIssueModule { }
+export class CompleteRideIssue { 
+    id: number;
+    driver_name: string;
+    rider_name: string;
+    start_datetime: string;
+    end_datetime : string;
+    start_location: string;
+    end_location: string;
+    amount: number;
+    distance: string;
+}

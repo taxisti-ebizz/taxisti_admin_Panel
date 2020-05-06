@@ -125,7 +125,7 @@ export class DeleteEntityDialogComponent implements OnInit {
 				})
 			break;
 			case 'deleteRide' :
-
+					
 				const deleteData = {
 					'id' : id
 				}

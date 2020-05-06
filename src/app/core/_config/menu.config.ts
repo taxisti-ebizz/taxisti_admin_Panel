@@ -438,7 +438,7 @@ export class MenuConfig {
 						},
 						{
 							title: 'No Response',
-							page: '/ride-management/no-response-rides'
+							page: '/ride-management/auto-canceled-rides'
 						},
 						{
 							title: 'Canceled',
@@ -446,7 +446,7 @@ export class MenuConfig {
 						},
 						{
 							title: 'No Driver Available',
-							page: '/ride-management/no-driver-available-rides'
+							page: '/ride-management/driver-not-available'
 						},
 						{
 							title: 'Fake Ride',

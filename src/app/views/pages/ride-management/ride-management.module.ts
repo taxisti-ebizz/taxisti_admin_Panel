@@ -81,6 +81,22 @@ const routes: Routes = [
       {
 				path: 'complete-rides',
 				component: CompleteListComponent
+      },
+      {
+				path: 'auto-canceled-rides',
+				component: NoResponseListComponent
+      },
+      {
+				path: 'canceled-rides',
+				component: CanceledListComponent
+      },
+      {
+				path: 'driver-not-available',
+				component: NoDriverAvailableListComponent
+      },
+      {
+				path: 'fake-rides',
+				component: FakeRideListComponent
 			}
 		]
 	}

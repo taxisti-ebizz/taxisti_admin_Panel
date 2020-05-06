@@ -1,12 +1,7 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-
-
-@NgModule({
-  declarations: [],
-  imports: [
-    CommonModule
-  ]
-})
-export class NoDriverAvailableRideModule { }
+export class NoDriverAvailableRide {
+    id: number;
+    rider_name: string;
+    rider_mobile : string
+    start_location: string;
+    created_date : Date;
+}

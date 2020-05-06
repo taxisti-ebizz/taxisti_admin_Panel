@@ -69,6 +69,7 @@ export class PendingListComponent implements OnInit {
        this.getPendingRideList();
     }
 
+    //Get Pending Ride List
     getPendingRideList(){
       this.exampleDatabase = new PendingRideDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
@@ -120,7 +121,7 @@ export class PendingListComponent implements OnInit {
      * Delete Selected Rides
      */
     deleteRides() {
-      const _title = 'Ride Delete';
+      const _title = 'Pending Ride Delete';
       const _description = 'Are you sure to permanently delete selected ride?';
       const _waitDesciption = 'Rides are deleting...';
       const _deleteMessage = 'Selected rides have been deleted';
@@ -149,10 +150,10 @@ export class PendingListComponent implements OnInit {
      * Delete Perticular Ride
     */
     deleteRide(ride_id){
-      const _title = 'Ride Delete';
-      const _description = 'Are you sure to permanently delete selected ride?';
+      const _title = 'Pending Ride Delete';
+      const _description = 'Are you sure to permanently delete this ride?';
       const _waitDesciption = 'Ride is deleting...';
-      const _deleteMessage = 'Ride have been deleted';
+      const _deleteMessage = 'Ride has been deleted';
 
       const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, ride_id, 'deleteRide');
       dialogRef.afterClosed().subscribe(res => {

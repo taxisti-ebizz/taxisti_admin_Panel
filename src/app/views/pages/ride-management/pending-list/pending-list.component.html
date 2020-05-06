@@ -25,7 +25,7 @@
 
 
             <!-- start::GROUP ACTIONS -->
-			<!-- Group actions list: 'Delete selected' | 'Fetch selected' | 'Update status for selected' -->
+			<!-- Group actions list: 'Delete selected' -->
 			<!-- Group actions are shared for all LISTS | See '../../_shared' folder -->
 			<div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20" [ngClass]="{'show' : dataSource.selection.selected.length > 0}">
 				<div class="col-xl-12">
@@ -75,49 +75,49 @@
                     <mat-cell *matCellDef="let ride">{{ride.index}}</mat-cell>
                 </ng-container>
             
-                <!-- Username Column -->
+                <!-- Rider Name Column -->
                 <ng-container matColumnDef="rider_name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Name</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.rider_name}}</mat-cell>
                 </ng-container>
             
-                <!-- Mobile No Column -->
+                <!--Driver Name Column -->
                 <ng-container matColumnDef="driver_name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.driver_name}}</mat-cell>
                 </ng-container>
             
-                <!-- Rides Column -->
+                <!-- Start Date Column -->
                 <ng-container matColumnDef="start_date">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.start_datetime}}</mat-cell>
                 </ng-container>
 
-                <!-- Cancelled Ride Column -->
+                <!-- End Date Column -->
                 <ng-container matColumnDef="end_date">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.end_datetime}}</mat-cell>
                 </ng-container>
 
-                <!-- Acceptance Ratio Column -->
+                <!-- Start Location Column -->
                 <ng-container matColumnDef="start_location">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Start Location</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.start_location}}</mat-cell>
                 </ng-container>
 
-                <!-- Rejected Ratio Column -->
+                <!-- End Location Column -->
                 <ng-container matColumnDef="end_location">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>End Location</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.end_location}}</mat-cell>
                 </ng-container>
 
-                <!-- Last Week Online Hours Column -->
+                <!-- Amount Column -->
                 <ng-container matColumnDef="amount">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.amount}}</mat-cell>
                 </ng-container>
 
-                <!-- Current Week Online Hours Column -->
+                <!-- Distance Column -->
                 <ng-container matColumnDef="distance">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Distance</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.distance}}</mat-cell>

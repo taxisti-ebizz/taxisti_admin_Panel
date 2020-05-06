@@ -25,6 +25,12 @@ export class ApiService {
     //Ride
     getPendingRideList = this.path+'getPendingRideList';
     getRunningRideList = this.path+'getRunningRideList';
+    getCompletedRideList = this.path+'getCompletedRideList';
+    getNoResponseRideList = this.path+'getNoResponseRideList';
+    getCanceledRideList = this.path+'getCanceledRideList';
+    getNoDriverAvailableList = this.path+'getNoDriverAvailableList';
+    getFakeRideList = this.path+'getFakeRideList';
+    completeRide = this.path+'completeRide';
     deleteRide = this.path+'deleteRide';
 
 }

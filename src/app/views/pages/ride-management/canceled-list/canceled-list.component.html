@@ -1,1 +1,148 @@
-<p>canceled-list works!</p>
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Canceled Ride List'" [class]="'kt-portlet__head--lg'">
+	
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+            <!-- end::FILTERS -->
+
+
+            <!-- start::GROUP ACTIONS -->
+			<!-- Group actions list: 'Delete selected' -->
+			<!-- Group actions are shared for all LISTS | See '../../_shared' folder -->
+			<div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20" [ngClass]="{'show' : dataSource.selection.selected.length > 0}">
+				<div class="col-xl-12">
+					<div class="kt-form__group kt-form__group--inline">
+						<!-- <div class="kt-form__label kt-form__label-no-wrap">
+							<label class="kt--font-bold kt-font-danger-">Selected records count: {{ dataSource.selection.selected.length }}</label>
+						</div> -->
+						<div class="kt-form__control kt-form__group--inline">
+							<button mat-raised-button color="accent" (click)="deleteRides()" matTooltip="Delete selected Rides"  class="mat-button-mt-4">
+								<mat-icon>delete</mat-icon>								Delete Selected
+							</button>&nbsp;<!-- Call 'delete-entity-dialog' from _shared folder -->
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- end::GROUP ACTIONS -->
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+
+            <mat-table mat-table [dataSource]="dataSource" class="mat-cell rideList" matSort>
+
+                <ng-container matColumnDef="select">
+					<mat-header-cell *matHeaderCellDef class="mat-column-checkbox">
+						<mat-checkbox (change)="$event ? masterToggle() : null"
+							[checked]="dataSource.selection.hasValue() && isAllSelected()"
+							[indeterminate]="dataSource.selection.hasValue() && !isAllSelected()"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-header-cell>
+					<mat-cell *matCellDef="let row" class="mat-column-checkbox">
+						<mat-checkbox (click)="$event.stopPropagation()"
+							(change)="$event ? dataSource.selection.toggle(row) : null"
+							[checked]="dataSource.selection.isSelected(row)"
+							[color]="'primary'">
+						</mat-checkbox>
+					</mat-cell>
+				</ng-container>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.index}}</mat-cell>
+                </ng-container>
+            
+                <!-- User Name Column -->
+                <ng-container matColumnDef="rider_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.rider_name}}</mat-cell>
+                </ng-container>
+
+                <!-- User Mobile Column -->
+                <ng-container matColumnDef="rider_mobile">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Mobile</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.rider_mobile}}</mat-cell>
+                </ng-container>
+            
+                <!-- Driver Name Column -->
+                <ng-container matColumnDef="driver_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.driver_name}}</mat-cell>
+                </ng-container>
+
+                <!-- Driver Mobile Column -->
+                <ng-container matColumnDef="driver_mobile">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Mobile</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.driver_mobile}}</mat-cell>
+                </ng-container>
+            
+                <!-- Start Location Column -->
+                <ng-container matColumnDef="start_location">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Start Location</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.start_location}}</mat-cell>
+                </ng-container>
+
+                <!-- End Location Column -->
+                <ng-container matColumnDef="end_location">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>End Location</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.end_location}}</mat-cell>
+                </ng-container>
+
+                <!-- Amount Column -->
+                <ng-container matColumnDef="amount">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Amount</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.amount}}</mat-cell>
+                </ng-container>
+
+                <!-- Start Date Column -->
+                <ng-container matColumnDef="start_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date Of Ride</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.start_datetime}}</mat-cell>
+                </ng-container>
+
+                <!-- End Date Column -->
+                <ng-container matColumnDef="end_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date Of Cancel</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.end_datetime}}</mat-cell>
+                </ng-container>
+
+                <!-- Cancel By Column -->
+                <ng-container matColumnDef="cancel_by">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Cancel By</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.cancel_by_name}}</mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<ngb-pagination [collectionSize]="dataSource.totalRides" [(page)]="canceledRideDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

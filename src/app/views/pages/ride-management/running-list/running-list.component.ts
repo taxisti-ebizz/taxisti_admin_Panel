@@ -119,7 +119,7 @@ export class RunningListComponent implements OnInit {
      * Delete Selected Rides
      */
     deleteRides() {
-      const _title = 'Ride Delete';
+      const _title = 'Running Ride Delete';
       const _description = 'Are you sure to permanently delete selected ride?';
       const _waitDesciption = 'Rides are deleting...';
       const _deleteMessage = 'Selected rides have been deleted';
@@ -148,10 +148,10 @@ export class RunningListComponent implements OnInit {
      * Delete Perticular Ride
     */
     deleteRide(ride_id){
-      const _title = 'Ride Delete';
+      const _title = 'Running Ride Delete';
       const _description = 'Are you sure to permanently delete selected ride?';
       const _waitDesciption = 'Ride is deleting...';
-      const _deleteMessage = 'Ride have been deleted';
+      const _deleteMessage = 'Ride has been deleted';
 
       const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, ride_id, 'deleteRides');
       dialogRef.afterClosed().subscribe(res => {
