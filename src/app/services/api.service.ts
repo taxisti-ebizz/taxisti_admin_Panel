@@ -33,4 +33,8 @@ export class ApiService {
     completeRide = this.path+'completeRide';
     deleteRide = this.path+'deleteRide';
 
+    //Reviews
+    getDriverReviews = this.path+'getDriverReviews';
+    getRiderReviews = this.path+'getRiderReviews';
+
 }

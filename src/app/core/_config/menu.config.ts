@@ -454,6 +454,22 @@ export class MenuConfig {
 						}
 					]
 				},
+				{
+					title: 'Review Management',
+					root: true,
+					bullet: 'dot',	
+					icon: 'flaticon-review',
+					submenu: [
+						{
+							title: 'Drivers Review',
+							page: '/review-management/drivers-review'
+						},
+						{
+							title: 'Riders Review',
+							page: '/review-management/riders-review'
+						}
+					]
+				},
 				// {
 				// 	title: 'Layout Builder',
 				// 	root: true,

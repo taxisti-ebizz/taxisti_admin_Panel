@@ -166,6 +166,27 @@ export class RunningListComponent implements OnInit {
       });
     } 
 
+
+    //Complete Ride
+    completeRide(ride_id){
+      const _title = 'Complete Ride';
+      const _description = 'Are you sure to permanently complete this ride?';
+      const _waitDesciption = 'Ride is completing...';
+      const _deleteMessage = 'Ride has been completed';
+
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, ride_id, 'completeRide');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
+
+        this.dataSource.deleteItem(ride_id)
+            
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+        this.dataSource.selection.clear();
+      });
+    }
+
 }
 
 //DataSource ===============================

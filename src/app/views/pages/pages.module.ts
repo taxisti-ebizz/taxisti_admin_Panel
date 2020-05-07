@@ -12,6 +12,7 @@ import { ECommerceModule } from './apps/e-commerce/e-commerce.module';
 import { UserManagementModule } from './user-management/user-management.module';
 import { MyPageComponent } from './my-page/my-page.component';
 import { RideManagementModule } from './ride-management/ride-management.module';
+import { ReviewManagementModule } from './review-management/review-management.module';
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -25,7 +26,8 @@ import { RideManagementModule } from './ride-management/ride-management.module';
 		MailModule,
 		ECommerceModule,
 		UserManagementModule,
-		RideManagementModule
+		RideManagementModule,
+		ReviewManagementModule
 	],
 	providers: []
 })

@@ -55,6 +55,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/ride-management/ride-management.module').then(m => m.RideManagementModule),
 			},
 			{
+				path: 'review-management',
+				loadChildren: () => import('../app/views/pages/review-management/review-management.module').then(m => m.ReviewManagementModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

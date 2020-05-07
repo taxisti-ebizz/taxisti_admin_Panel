@@ -140,6 +140,48 @@ export class DeleteEntityDialogComponent implements OnInit {
 				})
 
 			break;
+			case 'dltDriverNotAvail' :
+
+				var ids = '';
+
+				id.forEach(element => {
+					if(ids!=''){
+						ids += ',';
+					}
+					ids += element;
+				});
+
+				const param = {
+					'id' : ids,
+					'type' : 'driver_notavailable'
+				}
+
+				this.http.postReqForVerify(this.api.deleteRide, param).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+
+			break;
+			case 'completeRide' :
+
+				const completeData = {
+					'id' : id
+				}
+
+				this.http.postReqForVerify(this.api.completeRide, completeData).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+
+			break;
 		}
 
 		

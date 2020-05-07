@@ -166,6 +166,6 @@ const routes: Routes = [
       CanceledListComponent,
       NoDriverAvailableListComponent,
       FakeRideListComponent
-    ],
+    ]
 })
 export class RideManagementModule { }

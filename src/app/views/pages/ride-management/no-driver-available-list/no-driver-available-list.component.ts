@@ -120,7 +120,7 @@ export class NoDriverAvailableListComponent implements OnInit {
      * Delete Selected Rides
      */
     deleteRides() {
-      const _title = 'Driver Not Available Delete';
+      const _title = 'Delete Driver Not Available';
       const _description = 'Are you sure to permanently delete selected driver?';
       const _waitDesciption = 'Drivers are deleting...';
       const _deleteMessage = 'Selected drivers have been deleted';
@@ -131,7 +131,7 @@ export class NoDriverAvailableListComponent implements OnInit {
         idsForDeletion.push(this.dataSource.selection.selected[i].id);
       }    
 
-      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, idsForDeletion, 'deleteRides');
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, idsForDeletion, 'dltDriverNotAvail');
       dialogRef.afterClosed().subscribe(res => {
         if (!res) {
           return;
@@ -149,12 +149,12 @@ export class NoDriverAvailableListComponent implements OnInit {
      * Delete Perticular Ride
     */
     deleteRide(ride_id){
-      const _title = 'Driver Not Available Delete';
+      const _title = 'Delete Driver Not Available';
       const _description = 'Are you sure to permanently delete this driver?';
       const _waitDesciption = 'Driver is deleting...';
       const _deleteMessage = 'Driver has been deleted';
 
-      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, ride_id, 'deleteRide');
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, ride_id, 'dltDriverNotAvail');
       dialogRef.afterClosed().subscribe(res => {
         if (!res) {
           return;
@@ -193,8 +193,6 @@ export class ExampleDataSource extends DataSource<NoDriverAvailableRide>{
               public paginator: MatPaginator,
               public sort: MatSort) {
     super();
-    // Reset to the first page when the user changes the filter.
-    //this._filterChange.subscribe(() => this._paginator.page = 0);
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
