@@ -9,17 +9,9 @@ import { MatPaginator, MatSort, MatDialog } from '@angular/material';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SubheaderService } from '../../../../../core/_base/layout';
 
-// Models
-import { UserDeleted, User } from '../../../../../core/auth';
-import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../../core/_base/crud';
-// Services and Models
-import {	ManyProductsDeleted } from '../../../../../core/e-commerce';
-
 // Service
 import { DriverReviewDataService } from '../../../../../services/review/driver-review-data.service';
 
-import { Store, select } from '@ngrx/store';
-import { AppState } from '../../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
 import { DriverReview } from '../../../../../module/review/driver-review.module';
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
@@ -57,8 +49,6 @@ export class DriverReviewListComponent implements OnInit {
       private spinner: NgxSpinnerService,
       private subheaderService: SubheaderService,
       public dialog: MatDialog,
-      private layoutUtilsService: LayoutUtilsService,
-      private store: Store<AppState>,
       private httpClient : HttpClient,
       public driverReviewDataService : DriverReviewDataService) { }
 
@@ -97,23 +87,33 @@ export class DriverReviewListComponent implements OnInit {
       this.dataSource.changePage(event);
     }
 
-     //View User Details
-     viewReview(userData){
-      this.driverReviewDataService.obj = userData;
+   //View Driver Review Details
+    viewReview(driver_id){
       this.driverReviewDataService.mode = 3;
 
-      const dialogRef = this.dialog.open(ViewDriverReviewDetailComponent, {
-        width: '700px',
-        height: 'auto',
-        backdropClass: 'masterModalPopup',
-        data: { mode: 3, userData : userData }
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        
-        if (result === false) {
-          this.spinner.hide();
-        }
-      });
+      const data = {
+        'driver_id' : driver_id
+      }
+
+      this.http.postReqForVerify(this.api.viewDriverReviews,data).subscribe(res => {
+          const result : any = res;
+          if(result.status == true){
+
+            const dialogRef = this.dialog.open(ViewDriverReviewDetailComponent, {
+              width: '700px',
+              height: 'auto',
+              backdropClass: 'masterModalPopup',
+              data: { mode: 3, reviewData : result.data }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              
+              if (result === false) {
+                this.spinner.hide();
+              }
+            });
+            
+          }
+      })
     }
 }
 

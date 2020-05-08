@@ -1,1 +1,92 @@
-<p>rider-review-list works!</p>
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Riders Review List'" [class]="'kt-portlet__head--lg'">
+	
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+            <!-- end::FILTERS -->
+            
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+
+            <mat-table mat-table [dataSource]="dataSource" class="mat-cell noDriverAvail" matSort>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</mat-header-cell>
+                    <mat-cell *matCellDef="let review">{{review.index}}</mat-cell>
+                </ng-container>
+            
+                <!-- Driver Name Column -->
+                <ng-container matColumnDef="rider_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Name</mat-header-cell>
+                    <mat-cell *matCellDef="let review">{{review.rider_name}}</mat-cell>
+                </ng-container>
+
+                <!-- Driver Mobile Column -->
+                <ng-container matColumnDef="rider_mobile">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Mobile</mat-header-cell>
+                    <mat-cell *matCellDef="let review">{{review.rider_mobile}}</mat-cell>
+                </ng-container>
+            
+                <!-- Reviews Column -->
+                <ng-container matColumnDef="reviews">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Reviews</mat-header-cell>
+                    <mat-cell *matCellDef="let review">{{review.total_review_count}}</mat-cell>
+                </ng-container>
+
+                <!-- Average Rattings Column -->
+                <ng-container matColumnDef="avg_ratting">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Average Rattings</mat-header-cell>
+                    <mat-cell *matCellDef="let review">{{review.avg_rating_count}}</mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let review; let i=index;">
+                        <ng-container *ngIf="review.total_review_count!='' && review.total_review_count!=0">
+                            <button (click)="viewReview(review.rider_id)" mat-icon-button color="primary" matTooltip="View Review Details">
+                                <mat-icon>remove_red_eye</mat-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="review.total_review_count=='' && review.total_review_count==0">
+                            <button mat-icon-button color="primary" matTooltip="View Review Details" disabled>
+                                <mat-icon>remove_red_eye</mat-icon>
+                            </button>
+                        </ng-container>
+                    </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<ngb-pagination [collectionSize]="dataSource.totalRides" [(page)]="riderReviewDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

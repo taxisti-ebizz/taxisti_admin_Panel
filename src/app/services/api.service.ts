@@ -36,5 +36,7 @@ export class ApiService {
     //Reviews
     getDriverReviews = this.path+'getDriverReviews';
     getRiderReviews = this.path+'getRiderReviews';
+    viewDriverReviews = this.path+'viewDriverReviews';
+    viewRiderReviews = this.path+'viewRiderReviews';
 
 }

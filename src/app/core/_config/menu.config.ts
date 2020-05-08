@@ -458,7 +458,7 @@ export class MenuConfig {
 					title: 'Review Management',
 					root: true,
 					bullet: 'dot',	
-					icon: 'flaticon-review',
+					icon: 'flaticon-speech-bubble',
 					submenu: [
 						{
 							title: 'Drivers Review',
@@ -467,6 +467,42 @@ export class MenuConfig {
 						{
 							title: 'Riders Review',
 							page: '/review-management/riders-review'
+						}
+					]
+				},
+				{
+					title: 'Ride Area Settings',
+					root: true,
+					bullet: 'dot',	
+					icon: 'fas fa-car',
+					submenu: [
+						{
+							title: 'Ride Area List',
+							page: '/ride-area-settings/drivers-review'
+						},
+						{
+							title: 'Add Ride Area',
+							page: '/ride-area-settings/riders-review'
+						}
+					]
+				},
+				{
+					title: 'Promotion Management',
+					root: true,
+					bullet: 'dot',	
+					icon: 'flaticon-medal',
+					submenu: [
+						{
+							title: 'Promotion User List',
+							page: '/promotion-management/promotion-user-list'
+						},
+						{
+							title: 'Promotion List',
+							page: '/promotion-management/promotion-list'
+						},
+						{
+							title: 'Add Promotion',
+							page: '/promotion-management/add-promotion'
 						}
 					]
 				},

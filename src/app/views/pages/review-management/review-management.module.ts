@@ -137,7 +137,8 @@ const routes: Routes = [
     ViewRiderReviewDetailComponent
   ],
   entryComponents: [
-    ViewDriverReviewDetailComponent
+    ViewDriverReviewDetailComponent,
+    ViewRiderReviewDetailComponent
   ]
 })
 export class ReviewManagementModule { }

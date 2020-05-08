@@ -1,6 +1,6 @@
 <kt-portlet>
 
-	<kt-portlet-header [sticky]="true" [title]="'Driver Review List'" [class]="'kt-portlet__head--lg'">
+	<kt-portlet-header [sticky]="true" [title]="'Drivers Review List'" [class]="'kt-portlet__head--lg'">
 	
 	</kt-portlet-header>
 	<!-- end::Header -->
@@ -65,7 +65,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
                     <mat-cell *matCellDef="let review; let i=index;">
                         <ng-container *ngIf="review.driver_total_review_count!='' && review.driver_total_review_count!=0">
-                            <button (click)="viewReview(review)" mat-icon-button color="primary" matTooltip="View Review Details">
+                            <button (click)="viewReview(review.driver_id)" mat-icon-button color="primary" matTooltip="View Review Details">
                                 <mat-icon>remove_red_eye</mat-icon>
                             </button>
                         </ng-container>

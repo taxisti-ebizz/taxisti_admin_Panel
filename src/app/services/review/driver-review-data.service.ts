@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { DriverReview } from '../../module/review/driver-review.module';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpService } from './../http.service';
 import { ApiService } from './../api.service'
@@ -61,22 +61,5 @@ export class DriverReviewDataService {
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);
     });
-  }
-
-  // DEMO ONLY, you can find working methods below
-  add (data: DriverReview): void {
-    this.dialogData = data;
-  }
-
-  update (data: DriverReview): void {
-    this.dialogData = data;
-  }
-
-  delete (id: number): void {
-    console.log(id);
-  }
-
-  getDialogData() {
-    return this.dialogData;
   }
 }
