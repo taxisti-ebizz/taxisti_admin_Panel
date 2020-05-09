@@ -1,17 +1,18 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import { PendingRideIssue } from '../../module/pending-ride-issue.module';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { RideArea } from '../../module/ride-area/ride-area.module';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpService } from './../http.service';
 import { ApiService } from './../api.service'
 
+
 @Injectable({
   providedIn: 'root'
 })
-export class PendingRideDataService {
+export class RideAreaDataService {
 
-  dataChange : BehaviorSubject<PendingRideIssue[]> = new BehaviorSubject<PendingRideIssue[]>([]);
+  dataChange : BehaviorSubject<RideArea[]> = new BehaviorSubject<RideArea[]>([]);
 
   dialogData : any;
   page = 0;
@@ -23,12 +24,12 @@ export class PendingRideDataService {
     private http : HttpService,
     private api : ApiService) { }
 
-  get data() : PendingRideIssue[] {
+  get data() : RideArea[] {
     return this.dataChange.value
   }
 
   //Delete single ride
-  deletePendingRide(index){
+  deleteArea(index){
     const foundIndex = this.dataChange.value.findIndex(x => x.id === index);
 
     this.dataChange.value.splice(foundIndex, 1);
@@ -36,21 +37,8 @@ export class PendingRideDataService {
     this.dataChange.next(this.dataChange.value);
   }
 
-  // Delete selected rides
-  deleteSelectedRides(ids){
-
-    ids.forEach(element => {
-      const foundIndex = this.dataChange.value.findIndex(x => x.id === element);
-
-      this.dataChange.value.splice(foundIndex, 1);
-      
-      this.dataChange.next(this.dataChange.value);
-    });
-
-  }
-
   //Get Pending Ride Data
-  getPendingRideList(page) : void {
+  getRideAreaList(page) : void {
     this.spinner.show();
 
     const data = {
@@ -59,7 +47,7 @@ export class PendingRideDataService {
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
    
-    this.httpClient.post<PendingRideIssue>(this.http.baseUrl+this.api.getPendingRideList,data,{ headers }).subscribe(res => {
+    this.httpClient.post<RideArea>(this.http.baseUrl+this.api.getRideAreaList,data,{ headers }).subscribe(res => {
         const result : any = res;
 
         if(result.status == true){
@@ -71,8 +59,12 @@ export class PendingRideDataService {
               i++;
             });
 
-            this.dataChange.next(result.data.data);
+            console.log("resultData =========>>>>>",result.data.data);
+            
+
             this.total = result.data.total;
+            this.dataChange.next(result.data.data);
+            
           }
         }
 
@@ -84,11 +76,11 @@ export class PendingRideDataService {
   }
 
   // DEMO ONLY, you can find working methods below
-  add (data: PendingRideIssue): void {
+  add (data: RideArea): void {
     this.dialogData = data;
   }
 
-  update (data: PendingRideIssue): void {
+  update (data: RideArea): void {
     this.dialogData = data;
   }
 

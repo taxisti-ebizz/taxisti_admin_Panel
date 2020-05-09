@@ -1,0 +1,77 @@
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Ride Area List'" [class]="'kt-portlet__head--lg'">
+	
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+            <!-- end::FILTERS -->
+            
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+
+            <mat-table mat-table [dataSource]="dataSource" class="mat-cell noDriverAvail" matSort>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</mat-header-cell>
+                    <mat-cell *matCellDef="let area">{{area.index}}</mat-cell>
+                </ng-container>
+            
+                <!-- Area Name Column -->
+                <ng-container matColumnDef="area_name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Area Name</mat-header-cell>
+                    <mat-cell *matCellDef="let area">{{area.area_name}}</mat-cell>
+                </ng-container>
+
+                <!-- Created Date Column -->
+                <ng-container matColumnDef="created_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Created Date</mat-header-cell>
+                    <mat-cell *matCellDef="let area">{{area.created_date}}</mat-cell>
+                </ng-container>
+            
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let area; let i=index;">
+                        <button (click)="viewAreaBoundaries(area.id)" mat-icon-button color="primary" matTooltip="View Area Boundaries">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                    
+                        <button mat-icon-button color="warn" matTooltip="Delete Boundaries" type="button" (click)="deleteArea(i,area.id)">
+							<mat-icon>delete</mat-icon>
+						</button>
+                    </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<ngb-pagination [collectionSize]="dataSource.totalRides" [(page)]="rideAreaDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

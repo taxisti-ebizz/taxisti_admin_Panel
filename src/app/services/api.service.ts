@@ -39,4 +39,8 @@ export class ApiService {
     viewDriverReviews = this.path+'viewDriverReviews';
     viewRiderReviews = this.path+'viewRiderReviews';
 
+    //Ride Area Setting
+    getRideAreaList = this.path+'getRideAreaList';
+    addAreaBoundaries = this.path+'addAreaBoundaries';
+
 }

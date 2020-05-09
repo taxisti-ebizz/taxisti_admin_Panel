@@ -59,6 +59,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/review-management/review-management.module').then(m => m.ReviewManagementModule),
 			},
 			{
+				path: 'ride-area-settings',
+				loadChildren: () => import('../app/views/pages/ride-area-settings/ride-area-settings.module').then(m => m.RideAreaSettingsModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

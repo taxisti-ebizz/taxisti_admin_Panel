@@ -478,7 +478,7 @@ export class MenuConfig {
 					submenu: [
 						{
 							title: 'Ride Area List',
-							page: '/ride-area-settings/drivers-review'
+							page: '/ride-area-settings/ride-area-list'
 						},
 						{
 							title: 'Add Ride Area',
