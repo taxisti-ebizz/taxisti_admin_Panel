@@ -16,6 +16,7 @@ import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsServi
 import { RideAreaSettingsComponent } from './ride-area-settings.component';
 import { RideAreaListComponent } from './ride-area-list/ride-area-list.component';
 import { AddRideAreaComponent } from './add-ride-area/add-ride-area.component';
+import { ViewRideAreaComponent } from './view-ride-area/view-ride-area.component';
 
 // Material
 import {
@@ -48,6 +49,8 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { AgmCoreModule } from '@agm/core';
+
 
 const routes: Routes = [
 	{
@@ -103,7 +106,10 @@ const routes: Routes = [
     MatTabsModule,
     MatTooltipModule,
     MatDialogModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyCyHzLEsS3Obyncia4v8idZ3RENsUKiWDs'
+    })
   ],
   providers: [
     InterceptService,
@@ -129,8 +135,9 @@ const routes: Routes = [
   declarations: [
     RideAreaSettingsComponent,
     RideAreaListComponent,
-    AddRideAreaComponent
+    AddRideAreaComponent,
+    ViewRideAreaComponent
   ],
-  entryComponents: []
+  entryComponents: [ViewRideAreaComponent]
 })
 export class RideAreaSettingsModule { }

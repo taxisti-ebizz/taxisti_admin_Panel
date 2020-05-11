@@ -18,6 +18,9 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 // Service
 import { RideAreaDataService } from '../../../../services/ride-area/ride-area-data.service';
 
+//Component
+import { ViewRideAreaComponent } from '../view-ride-area/view-ride-area.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -95,15 +98,15 @@ export class RideAreaListComponent implements OnInit {
     }
 
     /**
-     * Delete Perticular Ride
+     * Delete Perticular Ride Area
     */
     deleteArea(area_id){
-      const _title = 'Pending Ride Delete';
-      const _description = 'Are you sure to permanently delete this ride?';
-      const _waitDesciption = 'Ride is deleting...';
-      const _deleteMessage = 'Ride has been deleted';
+      const _title = 'Delete Ride Area';
+      const _description = 'Are you sure to permanently delete this ride area?';
+      const _waitDesciption = 'Ride area is deleting...';
+      const _deleteMessage = 'Ride area has been deleted';
 
-      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, area_id, 'deleteRide');
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, area_id, 'deleteRideArea');
       dialogRef.afterClosed().subscribe(res => {
         if (!res) {
           return;
@@ -114,6 +117,35 @@ export class RideAreaListComponent implements OnInit {
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
       });
     } 
+
+    //View Driver Review Details
+    viewAreaBoundaries(area_id){
+      this.rideAreaDataService.mode = 3;
+
+      const data = {
+        'id' : area_id
+      }
+
+      this.http.postReqForVerify(this.api.viewAreaBoundaries,data).subscribe(res => {
+          const result : any = res;
+          if(result.status == true){
+
+            const dialogRef = this.dialog.open(ViewRideAreaComponent, {
+              width: '1000px',
+              height: 'auto',
+              backdropClass: 'masterModalPopup',
+              data: { mode: 3, zoom : 8, area : JSON.parse(result.data.coordinates), latitude : parseFloat(result.data.lat), longitude : parseFloat(result.data.long) }
+            });
+            dialogRef.afterClosed().subscribe(result => {
+              
+              if (result === false) {
+                this.spinner.hide();
+              }
+            });
+            
+          }
+      })
+    }
 
 }
 

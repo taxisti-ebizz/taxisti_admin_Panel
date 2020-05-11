@@ -42,5 +42,7 @@ export class ApiService {
     //Ride Area Setting
     getRideAreaList = this.path+'getRideAreaList';
     addAreaBoundaries = this.path+'addAreaBoundaries';
+    viewAreaBoundaries = this.path+'viewAreaBoundaries';
+    deleteAreaBoundaries = this.path+'deleteAreaBoundaries/';
 
 }

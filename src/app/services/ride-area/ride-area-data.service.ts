@@ -14,6 +14,8 @@ export class RideAreaDataService {
 
   dataChange : BehaviorSubject<RideArea[]> = new BehaviorSubject<RideArea[]>([]);
 
+  mode = 0;
+  obj = {};
   dialogData : any;
   page = 0;
   count = 0;
@@ -58,9 +60,6 @@ export class RideAreaDataService {
               element.index = i;
               i++;
             });
-
-            console.log("resultData =========>>>>>",result.data.data);
-            
 
             this.total = result.data.total;
             this.dataChange.next(result.data.data);
