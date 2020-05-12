@@ -233,9 +233,6 @@ export class UserEditComponent implements OnInit {
 
               this.dataService.updateIssue(this.data);
 
-              console.log("data ========>>>>>>>>",this.dataService.getDialogData());
-              
-
 					}
 				}),
 				finalize(() => {

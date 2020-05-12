@@ -482,7 +482,7 @@ export class MenuConfig {
 						},
 						{
 							title: 'Add Ride Area',
-							page: '/ride-area-settings/riders-review'
+							page: '/ride-area-settings/add-ride-area'
 						}
 					]
 				},

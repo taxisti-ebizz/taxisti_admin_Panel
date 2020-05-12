@@ -64,7 +64,7 @@ export class RideAreaListComponent implements OnInit {
 
     ngOnInit() {
         // Set title to page breadCrumbs
-        this.subheaderService.setTitle('Ride Management');
+        this.subheaderService.setTitle('Ride Area Settings');
 
         this.getRideAreaList();
     }
