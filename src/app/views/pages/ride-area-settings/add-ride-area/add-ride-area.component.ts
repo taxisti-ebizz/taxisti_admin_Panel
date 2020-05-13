@@ -12,7 +12,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ApiService } from '../../../../services/api.service';
 import { MapLoaderService } from '../../../../services/ride-area/map-loader.service'
 import { tap, finalize } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 declare var google: any;
 
@@ -39,7 +39,8 @@ export class AddRideAreaComponent implements OnInit {
       private subheaderService: SubheaderService,
       private formBuilder: FormBuilder,
       private router: Router,
-      private spinner : NgxSpinnerService) { }
+      private spinner : NgxSpinnerService,
+      private activatedRoute: ActivatedRoute) { }
 
     ngOnInit() {
        // Set title to page breadCrumbs
@@ -71,7 +72,7 @@ export class AddRideAreaComponent implements OnInit {
           drawingModes: ['polygon']
         },
         polygonOptions: {
-          strokeColor: "#c41495",
+          strokeColor: "#e80c51",
           fillColor : "#e3caca",
           fillOpacity: 0.8
         },
@@ -121,7 +122,7 @@ export class AddRideAreaComponent implements OnInit {
 
       const data = {
         'area_name' : formData.area_name,
-        'coordinates' : this.coordinates
+        'coordinates' : JSON.stringify(this.coordinates) 
       }  
 
       this.http
@@ -131,7 +132,7 @@ export class AddRideAreaComponent implements OnInit {
 					
 					if (result.status == true) {
               this.spinner.hide();
-              this.router.navigate['/ride-area-settings/ride-area-list'];
+              this.router.navigateByUrl('/ride-area-settings/ride-area-list', { relativeTo: this.activatedRoute });
 					}
 				}),
 				finalize(() => {

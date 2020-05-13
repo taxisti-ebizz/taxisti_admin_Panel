@@ -45,4 +45,10 @@ export class ApiService {
     viewAreaBoundaries = this.path+'viewAreaBoundaries';
     deleteAreaBoundaries = this.path+'deleteAreaBoundaries/';
 
+    //Promotion
+    getPromotionList = this.path+'getPromotionList';
+    updatePromotionDetail = this.path+'updatePromotionDetail';
+    deletePromotion = this.path+'deletePromotion/';
+    addPromotion = this.path+'addPromotion';
+    
 }

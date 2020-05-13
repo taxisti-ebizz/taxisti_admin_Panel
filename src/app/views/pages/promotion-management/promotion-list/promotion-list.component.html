@@ -1,0 +1,106 @@
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Promotion List'" [class]="'kt-portlet__head--lg'">
+        <ng-container ktPortletTools>
+			<button (click)="addPromotion(promotion)" mat-raised-button matTooltip="Add New Promotion" color="primary" type="button">
+				<span>Add Promotion</span>
+			</button>
+		</ng-container>
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+            <!-- end::FILTERS -->
+            
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+
+            <mat-table mat-table [dataSource]="dataSource" class="mat-cell noDriverAvail" matSort>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.index}}</mat-cell>
+                </ng-container>
+
+                 <!-- Promo Image -->
+                 <ng-container matColumnDef="promo_image">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Promo Image</mat-header-cell>
+                    <mat-cell *matCellDef="let promo"><img src="{{promo.promo_image}}"></mat-cell>
+                </ng-container>
+            
+                <!-- Type Column -->
+                <ng-container matColumnDef="type">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Type</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.type}}</mat-cell>
+                </ng-container>
+
+                <!-- Code Column -->
+                <ng-container matColumnDef="code">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Code</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.code}}</mat-cell>
+                </ng-container>
+
+                <!-- User Limit Column -->
+                <ng-container matColumnDef="user_limit">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Limit</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.user_limit}}</mat-cell>
+                </ng-container>
+
+                <!-- Start Date Column -->
+                <ng-container matColumnDef="start_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.start_date}}</mat-cell>
+                </ng-container>
+
+                <!-- End Date Column -->
+                <ng-container matColumnDef="end_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>End Date</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.end_date}}</mat-cell>
+                </ng-container>
+                
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let promo; let i=index;">
+                        <button mat-icon-button color="accent" (click)="editPromotion(i, promo)">
+                            <mat-icon style="color: #040404;" aria-label="Edit">edit</mat-icon>
+                        </button>
+                    
+                        <button mat-icon-button color="warn" matTooltip="Delete Promotion" type="button" (click)="deletePromotion(promo.id)">
+							<mat-icon>delete</mat-icon>
+						</button>
+                    </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let promo; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<ngb-pagination [collectionSize]="dataSource.totalPromotion" [(page)]="promotionDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

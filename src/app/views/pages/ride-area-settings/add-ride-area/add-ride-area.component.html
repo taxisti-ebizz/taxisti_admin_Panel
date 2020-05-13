@@ -19,7 +19,8 @@
                 <div class="form-group kt-form__group row">
                     <label class="col-md-2">Area Name</label>
                     <div class="col-md-10">
-                        <input type="text" class="form-control" formControlName="area_name" placeholder="Enter Area Name" [ngClass]="{ 'is-invalid': isControlHasError('area_name','required') }" onkeypress="return /[A-Za-z ]/i.test(event.key)" autocomplete="off"/>
+                        <input type="text" class="form-control" formControlName="area_name" placeholder="Enter Area Name" [ngClass]="{ 'is-invalid': isControlHasError('area_name','required') }" autocomplete="off"/>
+                        <!-- onkeypress="return /[A-Za-z ]/i.test(event.key)" -->
                         <mat-error *ngIf="isControlHasError('area_name','required')">
                             <strong>Area name is required</strong>
                         </mat-error>

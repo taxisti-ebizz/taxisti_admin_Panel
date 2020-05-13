@@ -63,6 +63,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/ride-area-settings/ride-area-settings.module').then(m => m.RideAreaSettingsModule),
 			},
 			{
+				path: 'promotion-management',
+				loadChildren: () => import('../app/views/pages/promotion-management/promotion-management.module').then(m => m.PromotionManagementModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

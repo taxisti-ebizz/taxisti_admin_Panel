@@ -121,7 +121,7 @@ export class UserEditComponent implements OnInit {
     //Validate Form
     valid() { return this.formControl.hasError('required') ? 'Required field' : ''; }
 
-    //Upload Certificate of incorporation
+    //Upload User Image
     onUploadChange(evt) {
 
       if (evt.target.files.length < 0) {

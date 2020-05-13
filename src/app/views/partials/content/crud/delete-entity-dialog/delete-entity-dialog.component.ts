@@ -194,6 +194,18 @@ export class DeleteEntityDialogComponent implements OnInit {
 				})
 
 			break;
+			case 'deletePromotion' : 
+
+				this.http.deleteReq(this.api.deletePromotion+id).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+
+			break;
 		}
 
 		

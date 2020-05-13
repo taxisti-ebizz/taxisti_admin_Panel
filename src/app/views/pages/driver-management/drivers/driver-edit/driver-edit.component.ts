@@ -141,7 +141,7 @@ export class DriverEditComponent implements OnInit {
       return this.datePipe.transform(myDate, 'yyyy-MM-dd');
     }
 
-    //Upload Certificate of incorporation
+    //Upload Images
     onUploadChange(evt,type) {
 
       if (evt.target.files.length < 0) {

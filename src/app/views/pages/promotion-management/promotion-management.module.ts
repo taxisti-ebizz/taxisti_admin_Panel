@@ -14,6 +14,9 @@ import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsServi
 
 // Components
 import { PromotionManagementComponent } from './promotion-management.component';
+import { PromotionListComponent } from './promotion-list/promotion-list.component';
+import { EditPromotionComponent } from './edit-promotion/edit-promotion.component';
+import { AddPromotionComponent } from './add-promotion/add-promotion.component';
 
 // Material
 import {
@@ -47,6 +50,7 @@ import {
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
+
 const routes: Routes = [
 	{
 		path: '',
@@ -56,6 +60,10 @@ const routes: Routes = [
 				path: '',
 				redirectTo: 'roles',
 				pathMatch: 'full'
+      },
+      {
+				path: 'promotion-list',
+				component: PromotionListComponent
       }
 		]
 	}
@@ -117,7 +125,14 @@ const routes: Routes = [
     DatePipe
   ],
   declarations: [
-    PromotionManagementComponent
+    PromotionManagementComponent,
+    PromotionListComponent,
+    EditPromotionComponent,
+    AddPromotionComponent
   ],
+  entryComponents: [
+    EditPromotionComponent,
+    AddPromotionComponent
+  ]
 })
 export class PromotionManagementModule { }
