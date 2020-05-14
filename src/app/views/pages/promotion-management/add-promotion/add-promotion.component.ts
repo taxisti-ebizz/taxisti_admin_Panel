@@ -47,6 +47,7 @@ export class AddPromotionComponent implements OnInit {
 
     form = new FormData();
     promo_img: File = null; //Store Profile Image
+    promo_pic = '';
 
     formControl = new FormControl('', [
       Validators.required
@@ -83,14 +84,13 @@ export class AddPromotionComponent implements OnInit {
       if(this.promo_img!=null){
         addData.append('promo_image',this.promo_img);
       }
-      
-     
+    
       this.http
 			.postReqForVerify(this.api.addPromotion,addData)
 			.pipe(
-				tap(driver => {
+				tap(result => {
 					
-					if (driver.status == true) {
+					if (result.status == true) {
               this.dialogRef.close();
 
             if(this.data.start_date != ''){
@@ -101,13 +101,17 @@ export class AddPromotionComponent implements OnInit {
               this.data.end_date = this.changeDateFormat(this.data.end_date);
             }
 
-            var promo_pic = (<HTMLInputElement>document.getElementById('promo_pic')).value;
-
-            if(promo_pic!=''){
-              this.data.promo_image = promo_pic;
+            if(this.promo_pic!=''){
+              this.data.promo_image = this.promo_pic;
             }
 
             this.promotionDataService.add(this.data);
+            
+          }
+          else {
+						if (result.errors.code) { 
+							this.hasFormErrors = true;
+						}
 					}
 				}),
 				finalize(() => {
@@ -164,6 +168,8 @@ export class AddPromotionComponent implements OnInit {
 
               (<HTMLInputElement>document.getElementById('promo_pic')).value = filePath;
 
+              this.promo_pic = filePath;
+
               this.certificateLength = j;
               var self = this;
               $(".remove").click(function () {
@@ -183,6 +189,10 @@ export class AddPromotionComponent implements OnInit {
     }
 
     submit(){
+    }
 
+    /** Alect Close event */
+    onAlertClose($event) {
+      this.hasFormErrors = false;
     }
 }

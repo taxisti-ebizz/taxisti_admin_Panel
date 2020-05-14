@@ -67,6 +67,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/promotion-management/promotion-management.module').then(m => m.PromotionManagementModule),
 			},
 			{
+				path: 'options',
+				loadChildren: () => import('../app/views/pages/options/options.module').then(m => m.OptionsModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

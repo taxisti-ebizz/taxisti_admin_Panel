@@ -1,0 +1,104 @@
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Promotion User List'" [class]="'kt-portlet__head--lg'">
+       
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+            <!-- end::FILTERS -->
+            
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<!-- See off.documentations 'https://material.angular.io/components/table/overview' -->
+		<div class="mat-table__wrapper">
+
+            <mat-table mat-table [dataSource]="dataSource" class="mat-cell noDriverAvail" matSort>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.index}}</mat-cell>
+                </ng-container>
+
+                 <!-- Profile Pic Column -->
+                 <ng-container matColumnDef="profile_pic">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Profile Pic</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">
+                        <ng-container *ngIf="promo.profile_pic!=''">
+                            <img src="{{promo.profile_pic}}">
+                        </ng-container>
+                        <ng-container *ngIf="promo.profile_pic==''">
+                            <img src="assets/img/user_image.png">
+                        </ng-container>
+                    </mat-cell>
+                </ng-container>
+            
+                <!-- Username Column -->
+                <ng-container matColumnDef="username">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.name}}</mat-cell>
+                </ng-container>
+
+                <!-- Mobile Column -->
+                <ng-container matColumnDef="mobile">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Mobile</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.mobile_no}}</mat-cell>
+                </ng-container>
+
+                <!-- Description Column -->
+                <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Description</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.description}}</mat-cell>
+                </ng-container>
+
+                <!-- Apply Date Column -->
+                <ng-container matColumnDef="created_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Apply Date</mat-header-cell>
+                    <mat-cell *matCellDef="let promo">{{promo.created_at}}</mat-cell>
+                </ng-container>
+                
+                <!-- Actions Column -->
+                <ng-container matColumnDef="action">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let promo; let i=index;">
+                        <ng-container *ngIf="promo.redeem==0">
+                            <button mat-icon-button color="warn" matTooltip="Redeem" type="button" (click)="redeemCoupon(promo.id)">
+                                <mat-icon>redeem</mat-icon>
+                            </button>
+                        </ng-container>
+                        <ng-container *ngIf="promo.redeem==1">
+                            <img src="assets/img/check.png" class="checked">
+                        </ng-container>
+                    </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let promo; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<ngb-pagination [collectionSize]="dataSource.totalPromotionUser" [(page)]="promotionUserDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

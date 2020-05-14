@@ -30,7 +30,7 @@ export class PromotionDataService {
   }
 
   //Delete single ride
-  deleteArea(index){
+  deletePromotion(index){
     const foundIndex = this.dataChange.value.findIndex(x => x.id === index);
 
     this.dataChange.value.splice(foundIndex, 1);
@@ -38,7 +38,7 @@ export class PromotionDataService {
     this.dataChange.next(this.dataChange.value);
   }
 
-  //Get Pending Ride Data
+  //Get Promotion Data
   getPromotionList(page) : void {
     this.spinner.show();
 

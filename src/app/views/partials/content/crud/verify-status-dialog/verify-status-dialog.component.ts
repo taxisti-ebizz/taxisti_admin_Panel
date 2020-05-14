@@ -94,6 +94,21 @@ export class VerifyStatusDialogComponent implements OnInit {
 					}
 				})
 			break;
+			case 'redeemCoupon':
+
+				const redeemData = {
+					"id" : id
+				}
+
+				this.http.postReqForVerify(this.api.redeemPromotionList,redeemData).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+			break;
 		}
 	}
 }

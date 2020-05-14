@@ -13,12 +13,8 @@ import { PartialsModule } from '../../partials/partials.module';
 import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService} from '../../../core/_base/crud';
 
 // Components
-import { PromotionManagementComponent } from './promotion-management.component';
-import { PromotionListComponent } from './promotion-list/promotion-list.component';
-import { EditPromotionComponent } from './edit-promotion/edit-promotion.component';
-import { AddPromotionComponent } from './add-promotion/add-promotion.component';
-import { PromotionUserListComponent } from './promotion-user-list/promotion-user-list.component';
-
+import { OptionsComponent } from './options.component';
+import { OptionsDetailsComponent } from './options-details/options-details.component';
 
 // Material
 import {
@@ -56,20 +52,16 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 const routes: Routes = [
 	{
 		path: '',
-		component: PromotionManagementComponent,
-		children: [
+    component: OptionsComponent,
+    children: [
       {
 				path: '',
 				redirectTo: 'roles',
 				pathMatch: 'full'
       },
       {
-				path: 'promotion-list',
-				component: PromotionListComponent
-      },
-      {
-				path: 'promotion-user-list',
-				component: PromotionUserListComponent
+				path: 'option-details',
+				component: OptionsDetailsComponent
       }
 		]
 	}
@@ -131,15 +123,8 @@ const routes: Routes = [
     DatePipe
   ],
   declarations: [
-    PromotionManagementComponent,
-    PromotionListComponent,
-    EditPromotionComponent,
-    AddPromotionComponent,
-    PromotionUserListComponent
+    OptionsComponent,
+    OptionsDetailsComponent
   ],
-  entryComponents: [
-    EditPromotionComponent,
-    AddPromotionComponent
-  ]
 })
-export class PromotionManagementModule { }
+export class OptionsModule { }

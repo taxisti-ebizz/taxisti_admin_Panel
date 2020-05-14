@@ -13,6 +13,10 @@
 				<mat-spinner [diameter]="20"></mat-spinner>
 			</div>
 
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				The code has already been taken
+			</kt-alert>
+
 			<div class="form-group kt-form__group row">
 
 				<!-- Type Column -->
@@ -48,7 +52,7 @@
 				<!-- User Limit Column -->
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 					<mat-form-field class="mat-form-field-fluid">
-						<input matInput placeholder="Enter User Limit" [(ngModel)]="data.user_limit" name="user_limit" required/>
+						<input matInput placeholder="Enter User Limit" [(ngModel)]="data.user_limit" name="user_limit" onkeypress="return /[0-9]/i.test(event.key)" required/>
 						<mat-error *ngIf="formControl.invalid">{{valid()}}</mat-error>
 					</mat-form-field>
 				</div>
@@ -77,7 +81,7 @@
 			<div class="form-group kt-form__group row">
 				<div class="col-lg-4 kt-margin-bottom-20-mobile">
 				
-					<label for="ssn" class="form-label label document">Profile Pic</label>
+					<label for="ssn" class="form-label label document">Promotion Image</label>
 
 					<div class="upload-image">
 						<div #image class="image-wrapper"></div>
@@ -105,7 +109,7 @@
 			<div class="kt-form__actions kt-form__actions--solid">
 				<div class="row text-right">
 					<div class="col-lg-12">
-						<button type="button" mat-raised-button cdkFocusInitial matTooltip="Cancel changes">
+						<button type="button" mat-raised-button [mat-dialog-close]="2" cdkFocusInitial matTooltip="Cancel changes">
 							Cancel
 						</button>&nbsp;
 						<button type="submit" mat-raised-button [disabled]="!formControl.valid" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" (click)="addPromotion()" matTooltip="Save changes">Save</button>

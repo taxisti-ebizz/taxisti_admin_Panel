@@ -2,7 +2,7 @@
 
 	<kt-portlet-header [sticky]="true" [title]="'Promotion List'" [class]="'kt-portlet__head--lg'">
         <ng-container ktPortletTools>
-			<button (click)="addPromotion(promotion)" mat-raised-button matTooltip="Add New Promotion" color="primary" type="button">
+			<button (click)="addPromotion()" mat-raised-button matTooltip="Add New Promotion" color="primary" type="button">
 				<span>Add Promotion</span>
 			</button>
 		</ng-container>
@@ -44,7 +44,14 @@
                  <!-- Promo Image -->
                  <ng-container matColumnDef="promo_image">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Promo Image</mat-header-cell>
-                    <mat-cell *matCellDef="let promo"><img src="{{promo.promo_image}}"></mat-cell>
+                    <mat-cell *matCellDef="let promo">
+                        <ng-container *ngIf="promo.promo_image!=''">
+                            <img src="{{promo.promo_image}}">
+                        </ng-container>
+                        <ng-container *ngIf="promo.promo_image==''">
+                            <img src="assets/img/user_image.png">
+                        </ng-container>
+                    </mat-cell>
                 </ng-container>
             
                 <!-- Type Column -->

@@ -50,5 +50,13 @@ export class ApiService {
     updatePromotionDetail = this.path+'updatePromotionDetail';
     deletePromotion = this.path+'deletePromotion/';
     addPromotion = this.path+'addPromotion';
+
+    //Promotion User List
+    getUserPromotionList = this.path+'getUserPromotionList';
+    redeemPromotionList = this.path+'redeemPromotionList';
+
+    //Options
+    getOptionsDetail = this.path+'getOptions';
+    updateOptions = this.path+'updateOptions';
     
 }

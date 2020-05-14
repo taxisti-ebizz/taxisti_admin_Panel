@@ -50,6 +50,7 @@ export class PromotionListComponent implements OnInit {
   page = 1
   pageSize = 10
   count = 0;
+  promotion : any;
 
   constructor(private http: HttpService,
     private api: ApiService,
@@ -59,14 +60,14 @@ export class PromotionListComponent implements OnInit {
     private layoutUtilsService: LayoutUtilsService,
     private store: Store<AppState>,
     private httpClient : HttpClient,
-    public promotionDataService : PromotionDataService,
-    public promotion : Promotion) { }
+    public promotionDataService : PromotionDataService) { }
 
   ngOnInit() {
       // Set title to page breadCrumbs
       this.subheaderService.setTitle('Promotion Management');
-
+      this.promotion = Promotion;
       this.getPromotionList();
+
   }
 
   //Get Promotion List
@@ -121,17 +122,19 @@ export class PromotionListComponent implements OnInit {
   /*
     Add Promotion detail
   */
-  addPromotion(promotion : Promotion) {
-    
+  addPromotion() {
+
     const dialogRef = this.dialog.open(AddPromotionComponent, {
-      data: { promotion : promotion }
+      data: { promotion : this.promotion }
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
+
+      if(result != 2){
         // After dialog is closed we're doing frontend updates
         // For add we're just pushing a new row inside DataService
         this.exampleDatabase.dataChange.value.push(this.promotionDataService.getDialogData());
+        this.getPromotionList();
       }
     });
   }
@@ -223,7 +226,7 @@ export class ExampleDataSource extends DataSource<Promotion>{
 
   /* Delete Item From List */
   deleteItem(index){
-    this.exampleDatabase.deleteArea(index)
+    this.exampleDatabase.deletePromotion(index)
   }
 
   disconnect() {}
@@ -243,7 +246,7 @@ export class ExampleDataSource extends DataSource<Promotion>{
         case 'id': [propertyA, propertyB] = [a.id, b.id]; break;
         case 'type': [propertyA, propertyB] = [a.type, b.type]; break;
         case 'code': [propertyA, propertyB] = [a.code, b.code]; break;
-        case 'end_date': [propertyA, propertyB] = [a.user_limit, b.user_limit]; break;
+        case 'user_limit': [propertyA, propertyB] = [a.user_limit, b.user_limit]; break;
         case 'start_date': [propertyA, propertyB] = [a.start_date, b.start_date]; break;
         case 'end_date': [propertyA, propertyB] = [a.end_date, b.end_date]; break;
       }

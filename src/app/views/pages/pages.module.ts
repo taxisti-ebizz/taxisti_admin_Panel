@@ -14,6 +14,7 @@ import { MyPageComponent } from './my-page/my-page.component';
 import { RideManagementModule } from './ride-management/ride-management.module';
 import { ReviewManagementModule } from './review-management/review-management.module';
 import { RideAreaSettingsModule } from './ride-area-settings/ride-area-settings.module';
+import { OptionsModule } from './options/options.module';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { RideAreaSettingsModule } from './ride-area-settings/ride-area-settings.
 		UserManagementModule,
 		RideManagementModule,
 		ReviewManagementModule,
-		RideAreaSettingsModule
+		RideAreaSettingsModule,
+		OptionsModule
 	],
 	providers: []
 })

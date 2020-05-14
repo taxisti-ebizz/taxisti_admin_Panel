@@ -499,12 +499,22 @@ export class MenuConfig {
 						{
 							title: 'Promotion List',
 							page: '/promotion-management/promotion-list'
-						},
-						{
-							title: 'Add Promotion',
-							page: '/promotion-management/add-promotion'
 						}
 					]
+				},
+				{
+					title: 'Options',
+					root: true,
+					icon: 'flaticon2-settings',
+					page: '/options/option-details',
+					bullet: 'dot',
+				},
+				{
+					title: 'Notification',
+					root: true,
+					icon: 'flaticon2-notification',
+					page: '/options',
+					bullet: 'dot',
 				},
 				// {
 				// 	title: 'Layout Builder',
