@@ -513,7 +513,7 @@ export class MenuConfig {
 					title: 'Notification',
 					root: true,
 					icon: 'flaticon2-notification',
-					page: '/options',
+					page: '/notification-management/send-notification',
 					bullet: 'dot',
 				},
 				// {

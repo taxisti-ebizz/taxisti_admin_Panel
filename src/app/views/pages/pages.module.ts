@@ -15,6 +15,7 @@ import { RideManagementModule } from './ride-management/ride-management.module';
 import { ReviewManagementModule } from './review-management/review-management.module';
 import { RideAreaSettingsModule } from './ride-area-settings/ride-area-settings.module';
 import { OptionsModule } from './options/options.module';
+import { NotificationManagementModule } from './notification-management/notification-management.module';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { OptionsModule } from './options/options.module';
 		RideManagementModule,
 		ReviewManagementModule,
 		RideAreaSettingsModule,
-		OptionsModule
+		OptionsModule,
+		NotificationManagementModule
 	],
 	providers: []
 })

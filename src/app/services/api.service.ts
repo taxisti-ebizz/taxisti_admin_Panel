@@ -58,5 +58,9 @@ export class ApiService {
     //Options
     getOptionsDetail = this.path+'getOptions';
     updateOptions = this.path+'updateOptions';
+
+    //Send Notification
+    sendNotification = this.path+'sendNotification';
+    getSpecificUserList = this.path+'getSpecificUserList';
     
 }
