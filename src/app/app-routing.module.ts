@@ -75,6 +75,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/notification-management/notification-management.module').then(m => m.NotificationManagementModule),
 			},
 			{
+				path: 'contact-us-management',
+				loadChildren: () => import('../app/views/pages/contact-us-management/contact-us-management.module').then(m => m.ContactUsManagementModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

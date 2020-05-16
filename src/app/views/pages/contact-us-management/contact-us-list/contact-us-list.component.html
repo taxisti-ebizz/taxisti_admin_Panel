@@ -1,0 +1,89 @@
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Contact Us List'" [class]="'kt-portlet__head--lg'">
+	
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+		<!-- start::FILTERS & GROUP ACTIONS -->
+		<div class="kt-form kt-margin-b-30">
+			<!-- start::FILTERS -->
+			<div class="kt-form__filtration">
+				<div class="row align-items-center">
+					<div class="col-md-4 kt-margin-bottom-10-mobile">
+						<mat-form-field>
+							<input matInput placeholder="Search product" (keyup)="applyFilter($event.target.value)" placeholder="Search" class="mat-form-field mat-form-field-fluid">
+							<mat-hint align="start">
+								<strong>Search in all fields</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+			</div>
+            <!-- end::FILTERS -->
+            
+		</div>
+		<!-- end::FILTERS & GROUP ACTIONS -->
+
+		<!-- MATERIAL TABLE | Binded to datasources -->
+		<div class="mat-table__wrapper">
+
+            <mat-table mat-table [dataSource]="dataSource" class="mat-cell noDriverAvail" matSort>
+
+                <!-- Id Column -->
+                <ng-container matColumnDef="id">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Sr.No</mat-header-cell>
+                    <mat-cell *matCellDef="let contact">{{contact.index}}</mat-cell>
+                </ng-container>
+            
+                <!-- User Name Column -->
+                <ng-container matColumnDef="name">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
+                    <mat-cell *matCellDef="let contact">{{contact.name}}</mat-cell>
+                </ng-container>
+
+                <!-- Message Column -->
+                <ng-container matColumnDef="message">
+                    &nbsp;&nbsp;<mat-header-cell *matHeaderCellDef mat-sort-header>Message</mat-header-cell>
+                    &nbsp;&nbsp;<mat-cell *matCellDef="let contact">{{contact.message}}</mat-cell>
+                </ng-container>
+
+                <!-- Message Column -->
+                <ng-container matColumnDef="status">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Status</mat-header-cell>
+                    <mat-cell *matCellDef="let contact">{{ contact.status == 1 ? 'Pending' : contact.status == 2 ? 'Seen' : 'Replied' }}</mat-cell>
+                </ng-container>
+
+                <!-- Created Date Column -->
+                <ng-container matColumnDef="created_date">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Date & Time</mat-header-cell>
+                    <mat-cell *matCellDef="let contact">{{contact.created_date}}</mat-cell>
+                </ng-container>
+                
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
+                    <mat-cell *matCellDef="let contact; let i=index;">
+                        <button (click)="viewContactMessages(contact.message)" mat-icon-button color="primary" matTooltip="View Contact Messages">
+                            <mat-icon>remove_red_eye</mat-icon>
+                        </button>
+                    
+                        <button mat-icon-button color="warn" matTooltip="Delete Contact" type="button" (click)="deleteContact(contact.id)">
+							<mat-icon>delete</mat-icon>
+						</button>
+                    </mat-cell>
+                </ng-container>
+            
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
+            </mat-table>
+        </div>
+
+        <!-- start: BOTTOM -->
+		<div class="mat-table__bottom">
+			<ngb-pagination [collectionSize]="dataSource.totalContacts" [(page)]="contactUsDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
+        </div>
+		<!-- end: BOTTOM -->
+	</kt-portlet-body>
+	<!-- end::Body -->
+</kt-portlet>

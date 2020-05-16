@@ -62,5 +62,10 @@ export class ApiService {
     //Send Notification
     sendNotification = this.path+'sendNotification';
     getSpecificUserList = this.path+'getSpecificUserList';
+
+    //Contact Us
+    getContactUsList = this.path+'getContactUsList';
+    viewContactUsMessage = this.path+'viewContactUsMessage';
+    deleteContactUs = this.path+'deleteContactUs/'
     
 }

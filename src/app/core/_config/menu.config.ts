@@ -516,6 +516,13 @@ export class MenuConfig {
 					page: '/notification-management/send-notification',
 					bullet: 'dot',
 				},
+				{
+					title: 'Contact Us',
+					root: true,
+					icon: 'flaticon2-phone',
+					page: '/contact-us-management/contact-us-list',
+					bullet: 'dot',
+				},
 				// {
 				// 	title: 'Layout Builder',
 				// 	root: true,

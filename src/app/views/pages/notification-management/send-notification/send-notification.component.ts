@@ -30,6 +30,7 @@ import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { MatPaginator, MatSort } from '@angular/material';
 
+declare var $ : any;
 
 @Component({
   selector: 'kt-send-notification',
@@ -85,10 +86,21 @@ export class SendNotificationComponent implements OnInit {
     var data;
 
     if(formData.status == 'user'){
+
+      var ids = '';
+      
+      for (let i = 0; i < this.dataSource.selection.selected.length; i++) {
+
+        if(ids!=''){
+          ids += ',';
+        }
+        ids += this.dataSource.selection.selected[i].id;
+      }    
+
       data = {
         'to' : formData.status,
         'notification_message' : formData.message,
-        'user_id' : ''
+        'user_id' : ids
       }
     }else{
       data = {
@@ -104,6 +116,8 @@ export class SendNotificationComponent implements OnInit {
       {
         this.spinner.hide();
         this.loading = false;
+        
+        this.notificationForm.get('message').setValue('');
         this.toastr.success('Notification has been send successfully.');
       }
       else{
@@ -115,7 +129,11 @@ export class SendNotificationComponent implements OnInit {
   //Checked Status
   checkStatus(){
     if(this.notificationForm.get('status').value=='user'){
-
+      (<HTMLDivElement>document.getElementById('specificUser')).hidden = false;
+    } 
+    else{
+      (<HTMLDivElement>document.getElementById('specificUser')).hidden = true;
+      this.dataSource.selection.clear();
     }
   }
 
@@ -215,8 +233,6 @@ export class ExampleDataSource extends DataSource<Notification>{
               public paginator: MatPaginator,
               public sort: MatSort) {
     super();
-    // Reset to the first page when the user changes the filter.
-    //this._filterChange.subscribe(() => this._paginator.page = 0);
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
@@ -245,11 +261,13 @@ export class ExampleDataSource extends DataSource<Notification>{
         
         // Sort filtered data
         this.renderedData = this.sortData(this.filteredData.slice());
-
+        
         return this.renderedData;
       }
     ));
   }
+
+  
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){

@@ -1,0 +1,37 @@
+<div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">Contact Data</h3>
+		</div>
+    </div>
+    
+    <div class="kt-form">
+        <div class="kt-portlet__body">
+
+            <div class="kt-portlet__body-progress">
+                <mat-spinner [diameter]="20"></mat-spinner>
+            </div>
+
+            <div class="col-sm-12">
+                <label class="col-sm-4">Message :</label>
+                <span>{{ data.messages }}</span>
+            </div>
+            <br/>
+
+         
+            <div class="kt-separator kt-separator--dashed"></div>
+           
+        </div>
+        <div class="kt-portlet__foot kt-portlet__foot--fit kt-portlet__no-border">
+            <div class="kt-form__actions kt-form__actions--solid">
+                <div class="row text-right">
+                    <div class="col-lg-12">
+                        <button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

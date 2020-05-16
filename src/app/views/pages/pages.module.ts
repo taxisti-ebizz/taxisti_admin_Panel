@@ -16,7 +16,7 @@ import { ReviewManagementModule } from './review-management/review-management.mo
 import { RideAreaSettingsModule } from './ride-area-settings/ride-area-settings.module';
 import { OptionsModule } from './options/options.module';
 import { NotificationManagementModule } from './notification-management/notification-management.module';
-
+import { ContactUsManagementModule } from './contact-us-management/contact-us-management.module';
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -34,7 +34,8 @@ import { NotificationManagementModule } from './notification-management/notifica
 		ReviewManagementModule,
 		RideAreaSettingsModule,
 		OptionsModule,
-		NotificationManagementModule
+		NotificationManagementModule,
+		ContactUsManagementModule
 	],
 	providers: []
 })
