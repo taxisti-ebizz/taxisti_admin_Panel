@@ -79,6 +79,14 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/contact-us-management/contact-us-management.module').then(m => m.ContactUsManagementModule),
 			},
 			{
+				path: 'page-management',
+				loadChildren: () => import('../app/views/pages/page-management/page-management.module').then(m => m.PageManagementModule),
+			},
+			{
+				path: 'sub-admin',
+				loadChildren: () => import('../app/views/pages/sub-admin/sub-admin.module').then(m => m.SubAdminModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

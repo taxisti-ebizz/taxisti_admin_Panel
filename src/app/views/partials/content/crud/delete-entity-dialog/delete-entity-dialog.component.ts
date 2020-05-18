@@ -218,6 +218,18 @@ export class DeleteEntityDialogComponent implements OnInit {
 				})
 
 			break;
+			case 'deletePage':
+
+				this.http.deleteReq(this.api.deletePage+id).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+
+			break;
 		}
 
 		

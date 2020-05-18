@@ -50,6 +50,7 @@
         "material-design-icons": "^3.0.1",
         "moment": "^2.24.0",
         "ng-inline-svg": "^9.2.2",
+        "ng2-ckeditor": "^1.2.7",
         "ngrx-store-freeze": "^0.2.4",
         "ngx-clipboard": "^12.3.0",
         "ngx-highlightjs": "^3.0.3",

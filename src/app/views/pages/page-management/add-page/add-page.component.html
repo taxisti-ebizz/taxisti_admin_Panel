@@ -1,0 +1,76 @@
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">Add Page Details</h3>
+		</div>
+	</div>
+
+	<form class="kt-form" [formGroup]="pageForm" (ngSubmit)="addPage(pageForm.value)">
+		<div class="kt-portlet__body">
+
+			<div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				The code has already been taken
+			</kt-alert>
+
+            <!-- Page Title Column -->
+            <div class="form-group kt-form__group row">
+                <label class="col-md-2">Page Title</label>
+                <div class="col-md-10">
+                    <input class="form-control" formControlName="page_title" placeholder="Enter Page Title" required/>
+                    <mat-error *ngIf="isControlHasError('page_title','required')">
+                        <strong>Page title is required</strong>
+                    </mat-error>
+                </div>
+            </div>
+
+            <!-- Page Slug Column -->
+            <div class="form-group kt-form__group row">
+                <label class="col-md-2">Page Slug</label>
+                <div class="col-md-10">
+                    <input class="form-control" placeholder="Enter Page Slug" formControlName="page_slug" required/>
+                    <mat-error *ngIf="isControlHasError('page_slug','required')">
+                        <strong>Page slug is required</strong>
+                    </mat-error>
+                </div>
+            </div>
+            
+            <!-- Page Content Column -->
+            <div class="form-group kt-form__group row">
+                <label class="col-md-2">Page Content</label>
+                <div class="col-md-10">
+                    <ckeditor formControlName="content" 
+                            #myckeditor
+                            name="content"
+                            required
+                            [config]="ckeConfig" 
+                            debounce="500">
+                    </ckeditor>
+                    <mat-error *ngIf="isControlHasError('content','required')">
+                        <strong>Page content is required</strong>
+                    </mat-error>
+                </div>
+            </div>    
+			
+			<div class="kt-separator kt-separator--dashed"></div>
+		</div>
+		
+
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button [mat-dialog-close]="2" cdkFocusInitial matTooltip="Cancel changes">
+							Cancel
+						</button>&nbsp;
+						<button type="submit" mat-raised-button [disabled]="!pageForm.valid" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Save changes">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

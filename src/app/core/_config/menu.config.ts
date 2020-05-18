@@ -523,6 +523,20 @@ export class MenuConfig {
 					page: '/contact-us-management/contact-us-list',
 					bullet: 'dot',
 				},
+				{
+					title: 'Page Management',
+					root: true,
+					icon: 'flaticon-notepad',
+					page: '/page-management/page-list',
+					bullet: 'dot',
+				},
+				{
+					title: 'Sub Admin',
+					root: true,
+					icon: 'flaticon-user-add',
+					page: '/sub-admin/list',
+					bullet: 'dot',
+				},
 				// {
 				// 	title: 'Layout Builder',
 				// 	root: true,

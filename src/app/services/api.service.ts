@@ -67,5 +67,17 @@ export class ApiService {
     getContactUsList = this.path+'getContactUsList';
     viewContactUsMessage = this.path+'viewContactUsMessage';
     deleteContactUs = this.path+'deleteContactUs/'
+
+    //Page
+    getPageList = this.path+'getPageList';
+    addPage = this.path+'addPage';
+    editPage = this.path+'editPage';
+    deletePage = this.path+'deletePage/';
+
+    //Sub Admin
+    getSubAdminList = this.path+'getSubAdminList';
+    updateSubAdminStatus = this.path+'updateSubAdminStatus';
+    addSubAdmin = this.path+'addSubAdmin';
+    deleteSubAdmin = this.path+'deleteSubAdmin/';
     
 }

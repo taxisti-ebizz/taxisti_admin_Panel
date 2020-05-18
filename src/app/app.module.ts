@@ -73,6 +73,8 @@ import {DataService} from './services/user/data.service';
 //Toastr Message
 import { ToastrModule } from 'ngx-toastr';
 
+import { CKEditorModule } from 'ng2-ckeditor';
+
 // Firebase modules
 
 
@@ -134,6 +136,7 @@ export function hljsLanguages(): HighlightLanguage[] {
 		InlineSVGModule.forRoot(),
 		ThemeModule,
 		NgxSpinnerModule,
+		CKEditorModule
 		//AngularFireModule.initializeApp(environment.firebaseConfig),
 		//RatingModule
 		//NgxDaterangepickerMd.forRoot()

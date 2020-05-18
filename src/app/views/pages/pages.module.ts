@@ -17,6 +17,8 @@ import { RideAreaSettingsModule } from './ride-area-settings/ride-area-settings.
 import { OptionsModule } from './options/options.module';
 import { NotificationManagementModule } from './notification-management/notification-management.module';
 import { ContactUsManagementModule } from './contact-us-management/contact-us-management.module';
+import { PageManagementModule } from './page-management/page-management.module';
+import { SubAdminModule } from './sub-admin/sub-admin.module';
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -35,7 +37,9 @@ import { ContactUsManagementModule } from './contact-us-management/contact-us-ma
 		RideAreaSettingsModule,
 		OptionsModule,
 		NotificationManagementModule,
-		ContactUsManagementModule
+		ContactUsManagementModule,
+		PageManagementModule,
+		SubAdminModule
 	],
 	providers: []
 })
