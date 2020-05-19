@@ -56,6 +56,14 @@
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Action</mat-header-cell>
                     <mat-cell *matCellDef="let sub; let i=index;">
+
+						<button mat-icon-button class="material-icons color_green" matTooltip="Verify User" type="button" *ngIf="sub.status == 1" (click)="activeInactiveSubAdmin(sub.user_id,0)">
+                            <mat-icon style="color: green;">thumb_up</mat-icon>
+						</button>
+						
+                        <button mat-icon-button color="warn" matTooltip="Verify User" type="button" *ngIf="sub.status == 0" (click)="activeInactiveSubAdmin(sub.user_id,1)">
+                            <mat-icon style="color: red;">thumb_down</mat-icon>
+                        </button>
                         
                         <button mat-icon-button color="warn" matTooltip="Delete Sub Admin" type="button" (click)="deleteSubAdmin(sub.user_id)">
 							<mat-icon>delete</mat-icon>

@@ -1,1 +1,88 @@
-<p>add-sub-admin works!</p>
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">Add Sub Admin</h3>
+		</div>
+	</div>
+
+	<form class="kt-form" [formGroup]="subAdminForm" (ngSubmit)="addSubAdmin(subAdminForm.value)">
+		<div class="kt-portlet__body">
+
+			<div class="kt-portlet__body-progress">
+				<mat-spinner [diameter]="20"></mat-spinner>
+			</div>
+
+			<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+				The code has already been taken
+			</kt-alert>
+
+            <!-- User Name Column -->
+            <div class="form-group kt-form__group row">
+                <label class="col-md-2">User Name</label>
+                <div class="col-md-10">
+                    <input class="form-control" formControlName="name" placeholder="Enter User Name" [ngClass]="{ 'is-invalid': submitted && valid.name.errors }" tabindex="1" required/>
+                    <div *ngIf="submitted && valid.name.errors" class="invalid-feedback">
+                        <mat-error *ngIf="valid.name.errors.required">
+                            <strong>User name is required</strong>
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email Id Column -->
+            <div class="form-group kt-form__group row">
+                <label class="col-md-2">Email Id</label>
+                <div class="col-md-10">
+                    <input class="form-control" placeholder="Enter Email Id" formControlName="email_id" [ngClass]="{ 'is-invalid': submitted && valid.email_id.errors }" tabindex="2" required/>
+                    <div *ngIf="submitted && valid.email_id.errors" class="invalid-feedback">
+                        <mat-error *ngIf="valid.email_id.errors.required">
+                            <strong>Email id is required</strong>
+                        </mat-error>
+                        <mat-error *ngIf="valid.email_id.errors.email">
+                            <strong>Email must be a valid email address</strong>
+                        </mat-error>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Password Column -->
+            <div class="form-group kt-form__group row">
+                <label class="col-md-2">Password</label>
+                <div class="col-md-10">
+                    <div style="position: relative;width:100%;height: auto;">
+                        <div class="eye_ps">
+                            <input type="checkbox" (click)="changePasswordType()">
+                            <i></i>
+                        </div>
+                        <input [type]="show ? 'text' : 'password'" class="form-control" placeholder="Enter Password" formControlName="password" [ngClass]="{ 'is-invalid': submitted && valid.password.errors }" tabindex="4" required/>
+                        <div *ngIf="submitted && valid.password.errors" class="invalid-feedback">
+                            <mat-error *ngIf="valid.password.errors.required">
+                                <strong>Password is required</strong>
+                            </mat-error>
+                            <mat-error *ngIf="valid.password.errors.minlength">
+                                <strong>Password must be at least 8 characters</strong>
+                            </mat-error>
+                        </div>
+                    </div>    
+                </div>
+            </div>
+            
+			<div class="kt-separator kt-separator--dashed"></div>
+		</div>
+		
+
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button [mat-dialog-close]="2" cdkFocusInitial matTooltip="Cancel changes">
+							Cancel
+						</button>&nbsp;
+						<button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Save changes">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

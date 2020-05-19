@@ -19,6 +19,7 @@ import { NotificationManagementModule } from './notification-management/notifica
 import { ContactUsManagementModule } from './contact-us-management/contact-us-management.module';
 import { PageManagementModule } from './page-management/page-management.module';
 import { SubAdminModule } from './sub-admin/sub-admin.module';
+import { DriverOnlineLogModule } from './driver-online-log/driver-online-log.module';
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -39,7 +40,8 @@ import { SubAdminModule } from './sub-admin/sub-admin.module';
 		NotificationManagementModule,
 		ContactUsManagementModule,
 		PageManagementModule,
-		SubAdminModule
+		SubAdminModule,
+		DriverOnlineLogModule
 	],
 	providers: []
 })

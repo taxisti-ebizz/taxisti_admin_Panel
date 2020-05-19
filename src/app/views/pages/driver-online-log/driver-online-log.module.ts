@@ -13,9 +13,8 @@ import { PartialsModule } from '../../partials/partials.module';
 import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsService} from '../../../core/_base/crud';
 
 // Components
-import { SubAdminComponent } from './sub-admin.component';
-import { SubAdminListComponent } from './sub-admin-list/sub-admin-list.component';
-import { AddSubAdminComponent } from './add-sub-admin/add-sub-admin.component';
+import { DriverOnlineLogComponent } from './driver-online-log.component';
+import { LogDetailsComponent } from './log-details/log-details.component';
 
 // Material
 import {
@@ -48,11 +47,13 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 const routes: Routes = [
 	{
 		path: '',
-		component: SubAdminComponent,
+		component: DriverOnlineLogComponent,
 		children: [
       {
 				path: '',
@@ -60,8 +61,8 @@ const routes: Routes = [
 				pathMatch: 'full'
       },
       {
-				path: 'list',
-				component: SubAdminListComponent
+				path: 'report',
+				component: LogDetailsComponent
       }
 		]
 	}
@@ -99,7 +100,8 @@ const routes: Routes = [
     MatTabsModule,
     MatTooltipModule,
     MatDialogModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     InterceptService,
@@ -123,12 +125,8 @@ const routes: Routes = [
     DatePipe
   ],
   declarations: [
-    SubAdminComponent,
-    SubAdminListComponent,
-    AddSubAdminComponent
+    DriverOnlineLogComponent,
+    LogDetailsComponent
   ],
-  entryComponents: [
-    AddSubAdminComponent
-  ]
 })
-export class SubAdminModule { }
+export class DriverOnlineLogModule { }

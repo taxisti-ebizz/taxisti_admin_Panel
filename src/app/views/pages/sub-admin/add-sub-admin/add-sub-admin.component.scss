@@ -1,0 +1,27 @@
+.eye_ps input {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+.eye_ps {
+    position: absolute;
+    right: 15px;
+    top: 6px;
+}
+.eye_ps i {
+    position: relative;
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    background: url("assets/img/sprite_icons.svg") no-repeat -187px 3px;
+    background-size: 500px;
+    pointer-events: none;
+}
+.eye_ps input[type="checkbox"]:checked + i {
+    background: url("assets/img/sprite_icons.svg") no-repeat -187px -23px;
+    background-size: 500px;
+}

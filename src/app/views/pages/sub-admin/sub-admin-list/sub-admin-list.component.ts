@@ -100,14 +100,14 @@ export class SubAdminListComponent implements OnInit {
     addSubAdmin() {
 
       const dialogRef = this.dialog.open(AddSubAdminComponent, {
-        width: '1000px',
+        width: '700px',
         height: 'auto',
         backdropClass: 'masterModalPopup',
         data: { page : this.pageData }
       });
 
       dialogRef.afterClosed().subscribe(result => {
-
+        
         if(result != 2){
           // After dialog is closed we're doing frontend updates
           // For add we're just pushing a new row inside DataService
@@ -137,6 +137,42 @@ export class SubAdminListComponent implements OnInit {
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
       });
     } 
+
+    // Active Inactive Sub Admin
+    activeInactiveSubAdmin(user_id,type){
+      
+      var _title = '';
+      var _description = '';
+      var _waitDesciption = '';
+      var _deleteMessage = '';
+      if(type == 0){
+        _title = 'Sub Admin Unapprove';
+        _description = 'Are you sure want to Unapprove?';
+        _waitDesciption = 'Sub admin is unapproving...';
+        _deleteMessage = `Sub admin has been Unapproved`;
+      }else{
+        _title = 'Sub Admin Approve';
+        _description = 'Are you sure want to Approve?';
+        _waitDesciption = 'Sub admin is aprroving...';
+        _deleteMessage = `Sub admin has been Approved`;
+      }
+
+      const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, user_id, type, 'subAdmin');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
+
+        this.store.dispatch(new UserDeleted({ id: user_id }));
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.user_id === user_id);
+        this.exampleDatabase.dataChange.subscribe(res => {
+          const result : any = res;
+            result[foundIndex].status = type;
+        });
+      });
+    }
 }
 
 //DataSource ===============================

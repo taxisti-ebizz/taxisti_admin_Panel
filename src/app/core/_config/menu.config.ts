@@ -537,6 +537,13 @@ export class MenuConfig {
 					page: '/sub-admin/list',
 					bullet: 'dot',
 				},
+				{
+					title: 'Driver Online Log',
+					root: true,
+					icon: 'flaticon-user-add',
+					page: '/driver-online-log/report',
+					bullet: 'dot',
+				},
 				// {
 				// 	title: 'Layout Builder',
 				// 	root: true,

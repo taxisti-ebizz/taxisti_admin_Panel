@@ -50,8 +50,10 @@
         "material-design-icons": "^3.0.1",
         "moment": "^2.24.0",
         "ng-inline-svg": "^9.2.2",
+        "ng-multiselect-dropdown": "^0.2.10",
         "ng2-ckeditor": "^1.2.7",
         "ngrx-store-freeze": "^0.2.4",
+        "ngx-bootstrap": "^5.6.1",
         "ngx-clipboard": "^12.3.0",
         "ngx-highlightjs": "^3.0.3",
         "ngx-perfect-scrollbar": "^8.0.0",
@@ -71,7 +73,7 @@
         "zone.js": "~0.9.1"
     },
     "devDependencies": {
-        "@angular-devkit/build-angular": "^0.800.6",
+        "@angular-devkit/build-angular": "^0.901.6",
         "@angular/cli": "^8.3.22",
         "@angular/compiler-cli": "^8.2.14",
         "@angular/language-service": "^8.2.14",

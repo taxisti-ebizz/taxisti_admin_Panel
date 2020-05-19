@@ -109,7 +109,25 @@ export class VerifyStatusDialogComponent implements OnInit {
 					}
 				})
 			break;
+			case 'subAdmin':
+
+				const subAdminData = {
+					"user_id" : id,
+					"status" : status
+				}
+
+				this.http.postReqForVerify(this.api.updateSubAdminStatus,subAdminData).subscribe(res => {
+					const result : any = res;
+					if(result.status == true){
+						setTimeout(() => {
+							this.dialogRef.close(true); // Keep only this row
+						}, 2500);
+					}
+				})
+
+			break;
 		}
+		
 	}
 }
 
