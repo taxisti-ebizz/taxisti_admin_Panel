@@ -48,6 +48,7 @@ import {
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 const routes: Routes = [
@@ -101,7 +102,8 @@ const routes: Routes = [
     MatTooltipModule,
     MatDialogModule,
     NgbPaginationModule,
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     InterceptService,

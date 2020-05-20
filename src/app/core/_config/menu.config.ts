@@ -540,7 +540,7 @@ export class MenuConfig {
 				{
 					title: 'Driver Online Log',
 					root: true,
-					icon: 'flaticon-user-add',
+					icon: 'flaticon2-analytics',
 					page: '/driver-online-log/report',
 					bullet: 'dot',
 				},

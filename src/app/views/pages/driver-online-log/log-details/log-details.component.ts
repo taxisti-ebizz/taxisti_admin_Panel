@@ -29,6 +29,7 @@ export class LogDetailsComponent implements OnInit {
   hasFormErrors = false;
   viewLoading = false;
   loading = false;
+  maxDate: Date;
 
   constructor(private formBuilder: FormBuilder,
     private http : HttpService,
