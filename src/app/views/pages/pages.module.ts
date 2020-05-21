@@ -20,6 +20,7 @@ import { ContactUsManagementModule } from './contact-us-management/contact-us-ma
 import { PageManagementModule } from './page-management/page-management.module';
 import { SubAdminModule } from './sub-admin/sub-admin.module';
 import { DriverOnlineLogModule } from './driver-online-log/driver-online-log.module';
+import { AdminProfileModule } from './admin-profile/admin-profile.module';
 
 @NgModule({
 	declarations: [MyPageComponent],
@@ -41,7 +42,8 @@ import { DriverOnlineLogModule } from './driver-online-log/driver-online-log.mod
 		ContactUsManagementModule,
 		PageManagementModule,
 		SubAdminModule,
-		DriverOnlineLogModule
+		DriverOnlineLogModule,
+		AdminProfileModule
 	],
 	providers: []
 })

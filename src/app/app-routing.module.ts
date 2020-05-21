@@ -91,6 +91,10 @@ const routes: Routes = [
 				loadChildren: () => import('../app/views/pages/driver-online-log/driver-online-log.module').then(m => m.DriverOnlineLogModule),
 			},
 			{
+				path: 'admin-profile',
+				loadChildren: () => import('../app/views/pages/admin-profile/admin-profile.module').then(m => m.AdminProfileModule),
+			},
+			{
 				path: 'wizard',
 				loadChildren: () => import('../app/views/pages/wizard/wizard.module').then(m => m.WizardModule),
 			},

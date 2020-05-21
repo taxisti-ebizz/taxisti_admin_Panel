@@ -17,7 +17,7 @@
                 </kt-alert>
 
                 <div class="form-group kt-form__group row">
-                    <label class="col-md-2">Select Driver</label>
+                    <label class="col-md-2">Driver</label>
                     <div class="col-md-6">
                         <ng-multiselect-dropdown
                             name="driver_id"
@@ -26,16 +26,15 @@
                             formControlName="driver_id"
                             [disabled]="disabled"
                             [settings]="dropdownSettings"
-                            (onSelect)="onItemSelect($event)"
-                            (onSelectAll)="onSelectAll($event)">
+                            (onSelect)="onItemSelect($event)">
                         </ng-multiselect-dropdown>
                     </div>
                 </div>
 
                 <div class="form-group kt-form__group row">
-                    <label class="col-md-2">Select Duration</label>
+                    <label class="col-md-2">Duration</label>
                     <div class="col-md-6">
-                        <select class="form-control" formControlName="duration">
+                        <select class="form-control" formControlName="duration" (change)="changeDuration($event.target.value)">
                             <option value="Day">Day</option>
                             <option value="Week">Week</option>
                             <option value="Month">Month</option>
@@ -46,12 +45,31 @@
                 </div>
 
                 <div class="form-group kt-form__group row">
-                    <label class="col-md-2">Select Month</label>
+                    <label class="col-md-2">Month</label>
                     <div class="col-md-6">
-                        <input type="text" formControlName="time"
-                                placeholder="DD-MM-YYYY" class="form-control" bsDatepicker
-                                [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'DD-MM-YYYY' }"
-                                #datepickerYMD="bsDatepicker" [maxDate]="maxDate">
+                        <!-- Day Input DatePicker -->
+                        <input type="text" id="dayTime"
+                                placeholder="YYYY-MM-DD" class="form-control" bsDatepicker
+                                [bsConfig]="{ adaptivePosition: true, dateInputFormat: 'YYYY-MM-DD', isAnimated: true, containerClass: 'theme-default' }"
+                                #datepickerYMD="bsDatepicker">
+
+                        <!-- Week Input DatePicker -->
+                        <input type="text" id="weekTime"
+                                placeholder="YYYY-MM-DD" class="form-control" bsDaterangepicker
+                                [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-red', ranges: ranges, rangeInputFormat : 'YYYY-MM-DD', dateInputFormat: 'YYYY-MM-DD' }"
+                                style="display: none;">
+
+                        <!-- Month & Year Input DatePicker -->
+                        <input type="text" id="monthTime"
+                                placeholder="MM/YYYY" class="form-control" bsDatepicker (onShown)="onMonthYear($event)"
+                                [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-dark-blue', dateInputFormat: 'MM/YYYY' }"
+                                style="display: none;">
+
+                        <!-- Year Input DatePicker -->
+                        <input type="text" id="yearTime"
+                                placeholder="YYYY" class="form-control" bsDatepicker (onShown)="onYear($event)"
+                                [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-green', dateInputFormat: 'YYYY' }"
+                                style="display: none;">
                     </div>
                 </div>
               
@@ -67,6 +85,35 @@
                 </div>
             </div>
         </form>
-    </kt-portlet-body>
 
+        <!-- Log report Data -->
+        <div id='reportData'>
+            <br>
+            <div>
+                <p style="font-size: 17px;">Total Hours : <b>{{total_hour}}</b></p>
+            </div>
+            <br>
+            <div class="panel panel-default">
+                <div class="table-responsive">
+                    <table id="datas" class="table table-striped b-t b-b select">
+                    <thead>
+                        <tr>                                        
+                            <th>Date</th>
+                            <th>From Time</th>
+                            <th>To Time</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblbody">
+                        <tr *ngFor="let data of resultArray;">
+                            <td>{{data.created_date}}</td>
+                            <td>{{data.start_time}}</td>
+                            <td>{{data.end_time}}</td>
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>  
+            </div>  
+        </div>
+    </kt-portlet-body>
+    
 </kt-portlet>    

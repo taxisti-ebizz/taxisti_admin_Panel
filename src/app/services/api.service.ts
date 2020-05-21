@@ -79,5 +79,8 @@ export class ApiService {
     updateSubAdminStatus = this.path+'updateSubAdminStatus';
     addSubAdmin = this.path+'addSubAdmin';
     deleteSubAdmin = this.path+'deleteSubAdmin/';
+
+    //Log Details
+    getDriverOnlineLog = this.path+'getDriverOnlineLog';
     
 }

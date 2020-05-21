@@ -10,7 +10,7 @@ import { currentUser, Logout, User } from '../../../../../core/auth';
 
 //Services
 //import { CommonService } from '../../../../../services/common.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -35,7 +35,8 @@ export class UserProfileComponent implements OnInit {
 	 */
 	constructor(private store: Store<AppState>,
 		private router: Router,
-    	private toastr: ToastrService) {
+		private toastr: ToastrService,
+		private activatedRoute : ActivatedRoute) {
 	}
 
 	/**
@@ -62,5 +63,9 @@ export class UserProfileComponent implements OnInit {
 		// setTimeout(() => {
 		// 	location.reload();
 		// }, 1000);
+	}
+
+	editProfile(){
+		this.router.navigateByUrl('/admin-profile/edit-profile', { relativeTo: this.activatedRoute });
 	}
 }
