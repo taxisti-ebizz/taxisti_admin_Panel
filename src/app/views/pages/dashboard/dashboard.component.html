@@ -1,40 +1,309 @@
 <div class="row">
-	<div class="col-xl-6">
+	<div class="col-xl-12">
+		
 		<div class="row row-full-height">
-			<div class="col-sm-12 col-md-12 col-lg-6">
-				<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-					<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-						<kt-widget26 [value]="570" [desc]="'Total Sales'" [options]="chartOptions1"></kt-widget26>
-					</kt-portlet-body>
-				</kt-portlet>
-
-				<div class="kt-space-20"></div>
-
-				<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-					<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-						<kt-widget26 [value]="640" [desc]="'Completed Transactions'" [options]="chartOptions2"></kt-widget26>
-					</kt-portlet-body>
-				</kt-portlet>
+			<div class="col-sm-12 col-md-12 col-lg-4">
+				<h3>All Time</h3>
+			</div>
+			<div class="col-sm-12 col-md-12 col-lg-4">
+				<h3>Current Week</h3>
+			</div>
+			<div class="col-sm-12 col-md-12 col-lg-4">
+				<h3>Last Week</h3>
 			</div>
 
-			<div class="col-sm-12 col-md-12 col-lg-6">
-				<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-					<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-						<kt-widget26 [value]="'234+'" [desc]="'Transactions'" [options]="chartOptions3"></kt-widget26>
-					</kt-portlet-body>
-				</kt-portlet>
+			<!-- All Time -->
+			<div class="col-md-4">
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="570" [desc]="'Users'"></kt-widget26>
+							<!-- [options]="chartOptions1" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>	
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="640" [desc]="'Drivers'"></kt-widget26>
+							<!-- <span>Drivers</span> -->
+							<!-- [options]="chartOptions2" -->
+						</kt-portlet-body>
+					</kt-portlet>
+	
+					<!-- <div class="kt-space-20"></div> -->
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="640" [desc]="'Online Drivers'"></kt-widget26>
+							<!-- [options]="chartOptions3" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'234+'" [desc]="'Pending Ride'"></kt-widget26>
+							<!-- [options]="chartOptions4" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Running Ride'"></kt-widget26>
+							<!-- [options]="chartOptions5" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Completed Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
 
-				<div class="kt-space-20"></div>
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Canceled Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
 
-				<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-					<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-						<kt-widget26 [value]="'4.4M$'" [desc]="'Paid Comissions'" [options]="chartOptions4"></kt-widget26>
-					</kt-portlet-body>
-				</kt-portlet>
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'No Response'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'No Driver Available'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Fake Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
 			</div>
+			<!--End All Time -->
+
+			<!-- Current Week -->
+			<div class="col-md-4">
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="570" [desc]="'Users'"></kt-widget26>
+							<!-- [options]="chartOptions1" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>	
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="640" [desc]="'Drivers'"></kt-widget26>
+							<!-- [options]="chartOptions2" -->
+						</kt-portlet-body>
+					</kt-portlet>
+	
+					<!-- <div class="kt-space-20"></div> -->
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="640" [desc]="'Online Drivers'"></kt-widget26>
+							<!-- [options]="chartOptions3" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'234+'" [desc]="'Pending Ride'"></kt-widget26>
+							<!-- [options]="chartOptions4" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Running Ride'"></kt-widget26>
+							<!-- [options]="chartOptions5" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Completed Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Canceled Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'No Response'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'No Driver Available'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Fake Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+			</div>
+			<!--End Current Week -->
+
+			<!-- Last Week -->
+			<div class="col-md-4">
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="570" [desc]="'Users'"></kt-widget26>
+							<!-- [options]="chartOptions1" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>	
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="640" [desc]="'Drivers'"></kt-widget26>
+							<!-- [options]="chartOptions2" -->
+						</kt-portlet-body>
+					</kt-portlet>
+	
+					<!-- <div class="kt-space-20"></div> -->
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="640" [desc]="'Online Drivers'"></kt-widget26>
+							<!-- [options]="chartOptions3" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'234+'" [desc]="'Pending Ride'"></kt-widget26>
+							<!-- [options]="chartOptions4" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Running Ride'"></kt-widget26>
+							<!-- [options]="chartOptions5" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+	
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Completed Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Canceled Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'No Response'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'No Driver Available'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+
+				<div class="col-xs-12">
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+							<kt-widget26 [value]="'4.4M$'" [desc]="'Fake Ride'"></kt-widget26>
+							<!-- [options]="chartOptions6" -->
+						</kt-portlet-body>
+					</kt-portlet>
+				</div>
+			</div>
+			<!--End Last Week -->
+			
 		</div>
 	</div>
-	<div class="col-xl-6">
+	<!-- <div class="col-xl-6">
 		<kt-portlet [class]="'kt-portlet--height-fluid'">
 			<kt-portlet-header [title]="'Order Statistics'">
 				<ng-container ktPortletTools>
@@ -45,9 +314,8 @@
 				<kt-widget12></kt-widget12>
 			</kt-portlet-body>
 		</kt-portlet>
-	</div>
+	</div> -->
 </div>
-
 
 <kt-portlet>
 	<kt-portlet-body [class]="'kt-portlet__body--fit'">

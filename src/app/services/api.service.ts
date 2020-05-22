@@ -82,5 +82,8 @@ export class ApiService {
 
     //Log Details
     getDriverOnlineLog = this.path+'getDriverOnlineLog';
+
+    //Update Admin Profile
+    updateAdminProfile = this.path+'updateAdminProfile';
     
 }

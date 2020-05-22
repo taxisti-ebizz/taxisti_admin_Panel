@@ -108,3 +108,14 @@
     max-height: 90vh !important;
     position: relative !important;
 }
+
+@media (min-width: 1025px){
+	.kt-portlet.kt-portlet--height-fluid-half {
+		height: calc(50% - 20px) !important;
+	}
+}
+
+.kt-portlet--height-fluid-half.kt-portlet--border-bottom-brand.blue{
+	color: #f4f3f9;
+    background-color: #7266ba;
+}

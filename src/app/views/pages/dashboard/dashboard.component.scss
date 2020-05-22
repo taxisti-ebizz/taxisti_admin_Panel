@@ -5,3 +5,20 @@
 		}
 	}
 }
+
+#height_wrap{height: calc(25% - 0px);}
+
+@media (max-width:767px){
+
+	#height_wrap{height: calc(27% - 20px);}
+
+}
+
+h3 {
+	text-align: center;
+}
+
+.kt-portlet__body.kt-portlet__body--fluid{
+	height: 100px;
+}
+

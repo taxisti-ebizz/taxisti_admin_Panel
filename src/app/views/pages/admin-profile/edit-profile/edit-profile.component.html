@@ -1,1 +1,87 @@
-<p>edit-profile works!</p>
+<kt-portlet>
+
+	<kt-portlet-header [sticky]="true" [title]="'Edit Admin Profile'" [class]="'kt-portlet__head--lg'">
+	
+	</kt-portlet-header>
+	<!-- end::Header -->
+	<kt-portlet-body>
+        <form class="kt-form" [formGroup]="editProfileForm" (ngSubmit)="updateDetails(editProfileForm.value)">
+            <div class="kt-portlet__body">
+
+                <div class="form-group kt-form__group row">
+                    <label class="col-md-2">User Name</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" formControlName="name" placeholder="Enter username" [ngClass]="{ 'is-invalid': isControlHasError('name','required') }" autocomplete="off"/>
+                        <mat-error *ngIf="isControlHasError('name','required')">
+                            <strong>User name is required</strong>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="form-group kt-form__group row">
+                    <label class="col-md-2">Email</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" formControlName="email_id" placeholder="Enter email id" [ngClass]="{ 'is-invalid': isControlHasError('email_id','required') }" autocomplete="off" disabled/>
+                        <mat-error *ngIf="isControlHasError('email_id','required')">
+                            <strong>Email Id is required</strong>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="form-group kt-form__group row">
+                    <label class="col-md-2">Phone No</label>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" formControlName="mobile_no" placeholder="Enter phone number" [ngClass]="{ 'is-invalid': isControlHasError('mobile_no','required') }" autocomplete="off"/>
+                        <mat-error *ngIf="isControlHasError('mobile_no','required')">
+                            <strong>Email Id is required</strong>
+                        </mat-error>
+                    </div>
+                </div>
+
+                <div class="form-group kt-form__group row">
+                    <label class="col-md-2">Password</label>
+                    <div class="col-md-6">
+                        <div style="position: relative;width:100%;height: auto;">
+                            <div class="eye_ps">
+                                <input type="checkbox" (click)="changePasswordType()">
+                                <i></i>
+                            </div>
+                            <input [type]="show ? 'text' : 'password'" class="form-control" id="pass" placeholder="Enter password" (blur)="checkPass($event.target.value)" [ngClass]="{ 'is-invalid': validPass }" autocomplete="off"/>
+                            <mat-error *ngIf="validPass">
+                                <strong>Password must be at least 8 characters</strong>
+                            </mat-error>
+                        </div>    
+                    </div>
+                </div>
+
+                <div class="form-group kt-form__group row">
+                    <label class="col-md-2">Confirm Password</label>
+                    <div class="col-md-6">
+                        <div style="position: relative;width:100%;height: auto;">
+                            <div class="eye_ps">
+                                <input type="checkbox" (click)="changePasswordType()">
+                                <i></i>
+                            </div>
+                            <input [type]="show ? 'text' : 'password'" class="form-control" id="cpass" (keyup)="cnfPass($event.target.value)" (blur)="cnfPass($event.target.value)" placeholder="Enter confirm password" [ngClass]="{ 'is-invalid': wrongPass }" autocomplete="off"/>
+                            <mat-error *ngIf="wrongPass">
+                                <strong>Password and confirm password not matched</strong>
+                            </mat-error>
+                        </div>    
+                    </div>
+                </div>
+
+                <input formControlName="user_id" hidden>
+            </div>
+
+            <div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+                <div class="kt-form__actions kt-form__actions--solid">
+                    <div class="row text-right">
+                        <div class="col-lg-12">
+                            <button type="submit" mat-raised-button [disabled]="!editProfileForm.valid" [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Save changes">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </kt-portlet-body>
+</kt-portlet>        
