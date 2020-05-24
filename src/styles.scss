@@ -104,7 +104,7 @@
     font-size: 0.9rem !important;
 }
 
-.kt-aside-menu.ps.ps--active-y{
+.kt-aside-menu.ps{
     max-height: 90vh !important;
     position: relative !important;
 }
@@ -115,7 +115,23 @@
 	}
 }
 
+.kt-portlet--height-fluid-half.kt-portlet--border-bottom-brand.pink{
+    color: #ffffff;
+    background-color: #b11448;
+    
+}
+
 .kt-portlet--height-fluid-half.kt-portlet--border-bottom-brand.blue{
-	color: #f4f3f9;
+    color: #ffffff;
     background-color: #7266ba;
+}
+
+.kt-portlet--height-fluid-half.kt-portlet--border-bottom-brand.yellow{
+    color: #000000;
+    background-color: #fad733;
+}
+
+.kt-portlet--height-fluid-half.kt-portlet--border-bottom-brand.green{
+    color: #000000;
+    background-color: #27c24c;
 }

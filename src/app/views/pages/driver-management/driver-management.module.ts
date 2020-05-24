@@ -97,6 +97,10 @@ const routes: Routes = [
 			{
 				path: 'location',
 				component: LocationComponent
+			},
+			{
+				path : 'drivers-list/:id',
+				component: DriverListComponent
 			}
 		]
 	}

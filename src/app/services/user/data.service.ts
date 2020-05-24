@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
-import {UserIssue} from '../../module/user-issue.module';
-import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { UserIssue } from '../../module/user-issue.module';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpService } from './../http.service';
 import { ApiService } from './../api.service';
@@ -39,26 +39,43 @@ export class DataService {
       this.dataChange.next(this.dataChange.value);
     }
 
-    getAllIssues(page): void {
+    getAllUserList(page): void {
       this.spinner.show();
 
+      var urlType = 'All';
+      if(localStorage.getItem('urlType')=='currentweek'){
+        urlType = 'currentWeek';
+      }
+      else if(localStorage.getItem('urlType')=='lastweek'){
+        urlType = 'lastWeek';
+      }
+
       const data = {
-        "page" : page
+        "page" : page,
+        "type" : urlType
       }
       const headers : HttpHeaders = new HttpHeaders({ Authorization: 'Bearer '+localStorage.getItem('token') });
   
       this.httpClient.post<UserIssue[]>(this.http.baseUrl+this.api.userList, data, { headers }).subscribe(data => {
           const result : any = data;
           var i = 1;
-          result.data.data.forEach(element => {
-            element.id = i;
+          if(result.status == true){
+            result.data.data.forEach(element => {
+              element.id = i;
+              
+              i++;
+            });
             
-            i++;
-          });
-          
-          this.dataChange.next(result.data.data);
-          this.total = result.data.total;
-          this.spinner.hide();
+            this.dataChange.next(result.data.data);
+            this.total = result.data.total;
+            this.spinner.hide();
+          }
+          else{
+            this.dataChange.next([]);
+            this.total = 0;
+            this.spinner.hide();
+          }
+         
       },
       (error: HttpErrorResponse) => {
         console.log (error.name + ' ' + error.message);

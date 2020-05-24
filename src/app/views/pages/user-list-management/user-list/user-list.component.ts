@@ -31,11 +31,13 @@ import { AppState } from '../../../../core/reducers';
 
 //=================================New===============================================
 import {DataSource} from '@angular/cdk/collections';
-import { fromEvent, BehaviorSubject, Observable, merge } from 'rxjs';
+import { fromEvent, BehaviorSubject, Observable, merge, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserIssue } from '../../../../module/user-issue.module';
-import { map } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 import { DataService } from '../../../../services/user/data.service';
+import { Route } from '@angular/compiler/src/core';
+import { ActivatedRoute } from '@angular/router';
 
 //===========================================End New============================================
 
@@ -59,6 +61,8 @@ export class UserListComponent implements OnInit {
     dataSource: ExampleDataSource | null;
     index: number;
     id: number;
+    urlType : string;
+    pageTitle : string;
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //Old
     @ViewChild(MatSort, { static: true }) sort: MatSort; // Old
@@ -73,13 +77,28 @@ export class UserListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public dataService : DataService) { }
+      public dataService : DataService,
+      private route : ActivatedRoute) {
+
+        localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
+      }
 
     ngOnInit() {
       // Set title to page breadCrumbs
       this.subheaderService.setTitle('User Management');
 
+      if(localStorage.getItem('urlType')=='currentweek'){
+        this.pageTitle = 'Current Week User List';
+      }
+      else if(localStorage.getItem('urlType')=='lastweek'){
+        this.pageTitle = 'Last Week User List';
+      }
+      else{
+        this.pageTitle = 'All User List';
+      }
+
       this.loadData();
+    
     }
 
     //Load User Data
@@ -261,7 +280,11 @@ export class ExampleDataSource extends DataSource<UserIssue> {
       //this.paginator.page
     ];
 
-    this.exampleDatabase.getAllIssues(this.exampleDatabase.page);
+    
+    this.exampleDatabase.getAllUserList(this.exampleDatabase.page);
+  
+    
+    
 
     return merge(...displayDataChanges).pipe(map( (res) => {
         // Filter data
@@ -298,7 +321,11 @@ export class ExampleDataSource extends DataSource<UserIssue> {
   }
 
   changePage(pageNumber){
-    this.exampleDatabase.getAllIssues(pageNumber);
+
+    
+      this.exampleDatabase.getAllUserList(pageNumber);
+    
+
   }
 
   filterData(data){

@@ -85,5 +85,8 @@ export class ApiService {
 
     //Update Admin Profile
     updateAdminProfile = this.path+'updateAdminProfile';
+
+    //Dashboard
+    getDashboardData = this.path+'getDashboardData';
     
 }

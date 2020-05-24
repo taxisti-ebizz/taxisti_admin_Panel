@@ -15,96 +15,157 @@
 			<!-- All Time -->
 			<div class="col-md-4">
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="570" [desc]="'Users'"></kt-widget26>
-							<!-- [options]="chartOptions1" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user-list-management/users-list']">
+						
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.users_count}}</span>
+										<span class="kt-widget26__desc">Users</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>	
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="640" [desc]="'Drivers'"></kt-widget26>
-							<!-- <span>Drivers</span> -->
-							<!-- [options]="chartOptions2" -->
-						</kt-portlet-body>
-					</kt-portlet>
-	
+					<a href="javascript:void()" [routerLink]="['/driver-management/all-drivers-list']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.driver_count}}</span>
+										<span class="kt-widget26__desc_white">Drivers</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 					<!-- <div class="kt-space-20"></div> -->
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="640" [desc]="'Online Drivers'"></kt-widget26>
-							<!-- [options]="chartOptions3" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/driver-management/online-drivers-list']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.online_driver_count}}</span>
+										<span class="kt-widget26__desc_white">Online Drivers</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'234+'" [desc]="'Pending Ride'"></kt-widget26>
-							<!-- [options]="chartOptions4" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/ride-management/pending-rides']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand yellow'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.pending_ride}}</span>
+										<span class="kt-widget26__desc_black">Pending Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Running Ride'"></kt-widget26>
-							<!-- [options]="chartOptions5" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/ride-management/running-rides']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand yellow'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.running_ride}}</span>
+										<span class="kt-widget26__desc_black">Running Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Completed Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/ride-management/complete-rides']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand green'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.completed_ride}}</span>
+										<span class="kt-widget26__desc_black">Completed Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Canceled Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/ride-management/canceled-rides']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.canceled_ride}}</span>
+										<span class="kt-widget26__desc_white">Canceled Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'No Response'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/ride-management/auto-canceled-rides']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.autocomplete_ride}}</span>
+										<span class="kt-widget26__desc_white">No Response</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'No Driver Available'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/ride-management/driver-not-available']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.driver_not_available}}</span>
+										<span class="kt-widget26__desc_white">No Driver Available</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
+					
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Fake Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/ride-management/fake-rides']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.fake_ride}}</span>
+										<span class="kt-widget26__desc_white">Fake Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
+					
 				</div>
 			</div>
 			<!--End All Time -->
@@ -112,93 +173,152 @@
 			<!-- Current Week -->
 			<div class="col-md-4">
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="570" [desc]="'Users'"></kt-widget26>
-							<!-- [options]="chartOptions1" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user-list-management/users-list/currentweek']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_users_count}}</span>
+										<span class="kt-widget26__desc">Users</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>	
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="640" [desc]="'Drivers'"></kt-widget26>
-							<!-- [options]="chartOptions2" -->
-						</kt-portlet-body>
-					</kt-portlet>
-	
+					<a href="javascript:void()" [routerLink]="['/driver-management/drivers-list/currentweek']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_week_driver_count}}</span>
+										<span class="kt-widget26__desc_white">Drivers</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
+					
 					<!-- <div class="kt-space-20"></div> -->
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="640" [desc]="'Online Drivers'"></kt-widget26>
-							<!-- [options]="chartOptions3" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_week_driver_count}}</span>
+										<span class="kt-widget26__desc_white">Online Drivers</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'234+'" [desc]="'Pending Ride'"></kt-widget26>
-							<!-- [options]="chartOptions4" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand yellow'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_pending_ride}}</span>
+										<span class="kt-widget26__desc_black">Pending Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Running Ride'"></kt-widget26>
-							<!-- [options]="chartOptions5" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand yellow'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_running_ride}}</span>
+										<span class="kt-widget26__desc_black">Running Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Completed Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand green'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_completed_ride}}</span>
+										<span class="kt-widget26__desc_black">Completed Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Canceled Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_canceled_ride}}</span>
+										<span class="kt-widget26__desc_white">Canceled Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'No Response'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_autocomplete_ride}}</span>
+										<span class="kt-widget26__desc_white">No Response</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'No Driver Available'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.current_week_driver_not_available}}</span>
+										<span class="kt-widget26__desc_white">No Driver Available</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+					<a href="javascript:void()" [routerLink]="['/user/bob']"></a>
+					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
 						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Fake Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
+							<div class="kt-widget26">
+								<div class="kt-widget26__content">
+									<span class="kt-widget26__number">{{dashData.current_week_fake_ride}}</span>
+									<span class="kt-widget26__desc_white">Fake Ride</span>
+								</div>
+							</div>
 						</kt-portlet-body>
 					</kt-portlet>
 				</div>
@@ -208,95 +328,155 @@
 			<!-- Last Week -->
 			<div class="col-md-4">
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="570" [desc]="'Users'"></kt-widget26>
-							<!-- [options]="chartOptions1" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user-list-management/users-list/lastweek']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_users_count}}</span>
+										<span class="kt-widget26__desc">Users</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>	
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="640" [desc]="'Drivers'"></kt-widget26>
-							<!-- [options]="chartOptions2" -->
-						</kt-portlet-body>
-					</kt-portlet>
-	
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_driver_count}}</span>
+										<span class="kt-widget26__desc_white">Drivers</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
+				
 					<!-- <div class="kt-space-20"></div> -->
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="640" [desc]="'Online Drivers'"></kt-widget26>
-							<!-- [options]="chartOptions3" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand blue'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.online_driver_count}}</span>
+										<span class="kt-widget26__desc_white">Online Drivers</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'234+'" [desc]="'Pending Ride'"></kt-widget26>
-							<!-- [options]="chartOptions4" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand yellow'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_pending_ride}}</span>
+										<span class="kt-widget26__desc_black">Pending Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Running Ride'"></kt-widget26>
-							<!-- [options]="chartOptions5" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand yellow'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_running_ride}}</span>
+										<span class="kt-widget26__desc_black">Running Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 	
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Completed Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand green'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_completed_ride}}</span>
+										<span class="kt-widget26__desc_black">Completed Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Canceled Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_canceled_ride}}</span>
+										<span class="kt-widget26__desc_white">Canceled Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'No Response'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_autocomplete_ride}}</span>
+										<span class="kt-widget26__desc_white">No Response</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'No Driver Available'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_driver_not_available}}</span>
+										<span class="kt-widget26__desc_white">No Driver Available</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 
 				<div class="col-xs-12">
-					<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand'">
-						<kt-portlet-body [class]="'kt-portlet__body--fluid'">
-							<kt-widget26 [value]="'4.4M$'" [desc]="'Fake Ride'"></kt-widget26>
-							<!-- [options]="chartOptions6" -->
-						</kt-portlet-body>
-					</kt-portlet>
+					<a href="javascript:void()" [routerLink]="['/user/bob']">
+						<kt-portlet [class]="'kt-portlet--height-fluid-half kt-portlet--border-bottom-brand pink'">
+							<kt-portlet-body [class]="'kt-portlet__body--fluid'">
+								<div class="kt-widget26">
+									<div class="kt-widget26__content">
+										<span class="kt-widget26__number">{{dashData.last_week_fake_ride}}</span>
+										<span class="kt-widget26__desc_white">Fake Ride</span>
+									</div>
+								</div>
+							</kt-portlet-body>
+						</kt-portlet>
+					</a>
 				</div>
 			</div>
 			<!--End Last Week -->
@@ -317,7 +497,7 @@
 	</div> -->
 </div>
 
-<kt-portlet>
+<!-- <kt-portlet>
 	<kt-portlet-body [class]="'kt-portlet__body--fit'">
 		<div class="row row-no-padding row-col-separator-xl">
 			<div class="col-xl-4">
@@ -331,10 +511,10 @@
 			</div>
 		</div>
 	</kt-portlet-body>
-</kt-portlet>
+</kt-portlet> -->
 
 
-<div class="row">
+<!-- <div class="row">
 	<div class="col-xl-4">
 		<kt-portlet [class]="'kt-portlet--height-fluid'">
 			<kt-portlet-header [title]="'Download Files'">
@@ -387,10 +567,10 @@
 			</kt-portlet-body>
 		</kt-portlet>
 	</div>
-</div>
+</div> -->
 
 
-<div class="row">
+<!-- <div class="row">
 	<div class="col-xl-8">
 		<kt-portlet [class]="'kt-portlet--height-fluid'">
 			<kt-portlet-header [title]="'Exclusive Datatable'" [class]="'kt-portlet__head--lg kt-portlet__head--noborder kt-portlet__head--break-sm'">
@@ -447,7 +627,7 @@
 			</kt-portlet-body>
 		</kt-portlet>
 	</div>
-</div>
+</div> -->
 
 
 <!--

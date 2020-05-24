@@ -1,6 +1,6 @@
 <kt-portlet>
 
-	<kt-portlet-header [sticky]="true" [title]="'User List'" [class]="'kt-portlet__head--lg'">
+	<kt-portlet-header [sticky]="true" [title]="pageTitle" [class]="'kt-portlet__head--lg'">
 		
 	</kt-portlet-header>
 	<!-- end::Header -->
@@ -129,9 +129,9 @@
               </mat-table>
             
             
-              <!-- <div class="no-results" [style.display]="dataSource.filteredData.length == 0 ? '' : 'none'">
-                No results
-              </div> -->
+              <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No records found
+              </div>
         </div>
 
         <div class="mat-table__bottom">

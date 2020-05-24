@@ -9,6 +9,13 @@ import { Widget4Data } from '../../partials/content/widgets/widget4/widget4.comp
 import { AdminAuthService } from '../../../helper/admin-auth.service';
 import { Router } from '@angular/router';
 
+//Services
+import { ApiService } from '../../../services/api.service';
+import { HttpService } from '../../../services/http.service';
+
+//Spinner
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
 	selector: 'kt-dashboard',
 	templateUrl: './dashboard.component.html',
@@ -24,15 +31,23 @@ export class DashboardComponent implements OnInit {
 	widget4_3: Widget4Data;
 	widget4_4: Widget4Data;
 
+	dashData : any = {};	
+
 	constructor(private layoutConfigService: LayoutConfigService,
 		private adminAuthService: AdminAuthService,
-		private router: Router) {
+		private router: Router,
+		private api : ApiService,
+		private http : HttpService,
+		private spinner : NgxSpinnerService) {
+
 		if (!this.adminAuthService.loggedIn()) {
 			this.router.navigate(['/']);
 		}
 		else{
 			this.router.navigate(['/dashboard']);
 		}
+
+		
 	}
 
 	ngOnInit(): void {
@@ -204,5 +219,17 @@ export class DashboardComponent implements OnInit {
 				valueColor: 'kt-font-brand'
 			},
 		]);
+
+		this.getDashboardData();
+	}
+
+	getDashboardData(){
+		this.http.postReq(this.api.getDashboardData,{}).subscribe(res => {
+			const result : any = res;
+			if(result.status == true){
+				this.dashData = result.data;				
+				this.spinner.hide();
+			}
+		})
 	}
 }
