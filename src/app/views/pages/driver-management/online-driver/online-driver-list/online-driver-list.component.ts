@@ -53,6 +53,9 @@ export class OnlineDriverListComponent implements OnInit {
   page = 1
   pageSize = 10
   count = 0;
+  urlType : string;
+  pageTitle : string;
+  userDetail : any;
 
   constructor(private http: HttpService,
     private api: ApiService,
@@ -63,11 +66,15 @@ export class OnlineDriverListComponent implements OnInit {
     private layoutUtilsService: LayoutUtilsService,
     private store: Store<AppState>,
     private httpClient : HttpClient,
-    public onlineDriverDataService : OnlineDriverDataService) { }
+    public onlineDriverDataService : OnlineDriverDataService) { 
+        
+    }
 
   ngOnInit() {
       // Set title to page breadCrumbs
       this.subheaderService.setTitle('Driver Management');
+
+      this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
 
       this.onlineDriverList();
   }
@@ -77,14 +84,14 @@ export class OnlineDriverListComponent implements OnInit {
 
     this.exampleDatabase = new OnlineDriverDataService(this.httpClient,this.spinner,this.http,this.api);
     this.dataSource = new ExampleDataSource(this.exampleDatabase,this.paginator,this.sort);
-    fromEvent(this.filter.nativeElement,'keyup')
-    .subscribe(() => {
-      if(!this.dataSource){
-        return;
-      }
+    // fromEvent(this.filter.nativeElement,'keyup')
+    // .subscribe(() => {
+    //   if(!this.dataSource){
+    //     return;
+    //   }
 
-      this.dataSource.filteredData = this.filter.nativeElement.value;
-    })
+    //   this.dataSource.filteredData = this.filter.nativeElement.value;
+    // })
 
   }
 

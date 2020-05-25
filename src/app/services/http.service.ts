@@ -90,4 +90,9 @@ export class HttpService {
     jwtToken(){
         return localStorage.getItem('jwtToken');
     }
+
+    //Get UserDetail
+    get getUserDetail(){
+        return JSON.parse(localStorage.getItem('userDetail'));
+    }
 }

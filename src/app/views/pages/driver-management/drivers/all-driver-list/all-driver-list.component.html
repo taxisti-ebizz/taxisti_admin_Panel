@@ -141,9 +141,13 @@
 						<button (click)="editDriver(driver)" mat-icon-button color="primary" matTooltip="Edit driver">
 							<mat-icon>create</mat-icon>
                         </button>
-						<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(driver.driver_id)">
-							<mat-icon>delete</mat-icon>
-						</button>
+
+                        <ng-container *ngIf="userDetail.type==0">
+                            <button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(driver.driver_id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </ng-container>
+						
 						<button mat-icon-button class="material-icons color_green" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 1" (click)="verifydriver(driver.driver_id,0)">
 							<mat-icon style="color: green;">thumb_up</mat-icon>
 						</button>

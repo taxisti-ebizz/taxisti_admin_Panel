@@ -75,7 +75,15 @@ const routes: Routes = [
 				component: PendingListComponent
       },
       {
+				path: 'pending-rides/:id',
+				component: PendingListComponent
+      },
+      {
 				path: 'running-rides',
+				component: RunningListComponent
+      },
+      {
+				path: 'running-rides/:id',
 				component: RunningListComponent
       },
       {
@@ -83,7 +91,15 @@ const routes: Routes = [
 				component: CompleteListComponent
       },
       {
+				path: 'complete-rides/:id',
+				component: CompleteListComponent
+      },
+      {
 				path: 'auto-canceled-rides',
+				component: NoResponseListComponent
+      },
+      {
+				path: 'auto-canceled-rides/:id',
 				component: NoResponseListComponent
       },
       {
@@ -91,11 +107,23 @@ const routes: Routes = [
 				component: CanceledListComponent
       },
       {
+				path: 'canceled-rides/:id',
+				component: CanceledListComponent
+      },
+      {
 				path: 'driver-not-available',
 				component: NoDriverAvailableListComponent
       },
       {
+				path: 'driver-not-available/:id',
+				component: NoDriverAvailableListComponent
+      },
+      {
 				path: 'fake-rides',
+				component: FakeRideListComponent
+      },
+      {
+				path: 'fake-rides/:id',
 				component: FakeRideListComponent
 			}
 		]

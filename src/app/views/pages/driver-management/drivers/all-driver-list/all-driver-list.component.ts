@@ -79,6 +79,7 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 	pageSize = 10
 	count = 0;
 	dataObj = {}
+	userDetail : any;
 	
 	constructor(
 		private activatedRoute: ActivatedRoute,
@@ -112,7 +113,9 @@ export class AllDriverListComponent implements OnInit, OnDestroy {
 
 		// Set title to page breadCrumbs
     	this.subheaderService.setTitle('Driver Management');
-    
+		
+		this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
+
 		//Get User List
 		this.allDriverList();
 	}

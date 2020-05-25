@@ -39,27 +39,44 @@ export class AllDriverDataService {
   getAllDriverList(page) : void {
     this.spinner.show();
 
+    var urlType = 'all';
+    if(localStorage.getItem('urlType')=='currentweek'){
+      urlType = 'currentWeek';
+    }
+    else if(localStorage.getItem('urlType')=='lastweek'){
+      urlType = 'lastWeek';
+    }
+
     const data = {
       "page" : page,
-      "type" : "all"
+      "type" : urlType
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
    
     this.httpClient.post<DriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
         const result : any = res;
-
-        var i = 1;
-        result.data.data.forEach(element => {
-          element.id = i;
-          i++;
-        });
-        
-        this.dataChange.next(result.data.data);
-        this.total = result.data.total;
-        //console.log("totalNumber ======>>>>",this.total);
-        
-        this.spinner.hide();
+        if(result.status == true){
+          var i = 1;
+          result.data.data.forEach(element => {
+            element.id = i;
+            i++;
+          });
+          
+          this.total = result.data.total;
+          setTimeout(() => {
+            this.dataChange.next(result.data.data);
+            this.spinner.hide();
+          }, 500);
+          
+        }
+        else{
+          this.total = 0;
+          setTimeout(() => {
+            this.dataChange.next([]);
+            this.spinner.hide();
+          }, 500);
+        }
     },
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);

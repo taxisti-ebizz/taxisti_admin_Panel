@@ -27,6 +27,7 @@ import { PendingRideIssue } from '../../../../module/pending-ride-issue.module';
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -51,8 +52,10 @@ export class PendingListComponent implements OnInit {
     page = 1
     pageSize = 10
     count = 0;
+    urlType : string;
+    pageTitle : string;
 
-    constructor(private http: HttpService,
+    constructor(public http: HttpService,
       private api: ApiService,
       private spinner: NgxSpinnerService,
       private subheaderService: SubheaderService,
@@ -60,11 +63,26 @@ export class PendingListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public pendingRideDataService : PendingRideDataService) { }
+      public pendingRideDataService : PendingRideDataService,
+      private route : ActivatedRoute) { 
+        
+        localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
+
+      }
 
     ngOnInit() {
        // Set title to page breadCrumbs
        this.subheaderService.setTitle('Ride Management');
+
+      if(localStorage.getItem('urlType')=='currentweek'){
+        this.pageTitle = 'Current Week Pending Ride List';
+      }
+      else if(localStorage.getItem('urlType')=='lastweek'){
+        this.pageTitle = 'Last Week Pending Ride List';
+      }
+      else{
+        this.pageTitle = 'Pending Ride List';
+      }
 
        this.getPendingRideList();
     }
@@ -73,13 +91,13 @@ export class PendingListComponent implements OnInit {
     getPendingRideList(){
       this.exampleDatabase = new PendingRideDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      })
+      // fromEvent(this.filter.nativeElement, 'keyup')
+      // .subscribe(() => {
+      //   if (!this.dataSource) {
+      //     return;
+      //   }
+      //   this.dataSource.filter = this.filter.nativeElement.value;
+      // })
     }
 
     //Driver list search filter

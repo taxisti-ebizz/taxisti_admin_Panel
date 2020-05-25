@@ -27,6 +27,7 @@ import { NoDriverAvailableRide } from '../../../../module/no-driver-available-ri
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'kt-no-driver-available-list',
@@ -50,8 +51,10 @@ export class NoDriverAvailableListComponent implements OnInit {
     page = 1
     pageSize = 10
     count = 0;
+    urlType : string;
+    pageTitle : string;
 
-    constructor(private http: HttpService,
+    constructor(public http: HttpService,
       private api: ApiService,
       private spinner: NgxSpinnerService,
       private subheaderService: SubheaderService,
@@ -59,11 +62,26 @@ export class NoDriverAvailableListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public noDriverAvailableDataService : NoDriverAvailableDataService) { }
+      public noDriverAvailableDataService : NoDriverAvailableDataService,
+      private route : ActivatedRoute) { 
+        
+        localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
+
+      }
 
     ngOnInit() {
         // Set title to page breadCrumbs
         this.subheaderService.setTitle('Ride Management');
+
+        if(localStorage.getItem('urlType')=='currentweek'){
+          this.pageTitle = 'Current Week Driver Not Available List';
+        }
+        else if(localStorage.getItem('urlType')=='lastweek'){
+          this.pageTitle = 'Last Week Driver Not Available List';
+        }
+        else{
+          this.pageTitle = 'Driver Not Available List';
+        }
 
         this.getNoDriverAvailableList();
     }
@@ -72,13 +90,13 @@ export class NoDriverAvailableListComponent implements OnInit {
     getNoDriverAvailableList(){
       this.exampleDatabase = new NoDriverAvailableDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      })
+      // fromEvent(this.filter.nativeElement, 'keyup')
+      // .subscribe(() => {
+      //   if (!this.dataSource) {
+      //     return;
+      //   }
+      //   this.dataSource.filter = this.filter.nativeElement.value;
+      // })
     }
 
     //Driver list search filter

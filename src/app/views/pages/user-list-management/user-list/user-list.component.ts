@@ -63,6 +63,7 @@ export class UserListComponent implements OnInit {
     id: number;
     urlType : string;
     pageTitle : string;
+    userDetail : any;
 
     @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator; //Old
     @ViewChild(MatSort, { static: true }) sort: MatSort; // Old
@@ -97,8 +98,10 @@ export class UserListComponent implements OnInit {
         this.pageTitle = 'All User List';
       }
 
+      
+      this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
+      
       this.loadData();
-    
     }
 
     //Load User Data
@@ -107,13 +110,13 @@ export class UserListComponent implements OnInit {
       this.exampleDatabase = new DataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
       
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      });
+      // fromEvent(this.filter.nativeElement, 'keyup')
+      // .subscribe(() => {
+      //   if (!this.dataSource) {
+      //     return;
+      //   }
+      //   this.dataSource.filter = this.filter.nativeElement.value;
+      // });
     }
 
     //Handle Page

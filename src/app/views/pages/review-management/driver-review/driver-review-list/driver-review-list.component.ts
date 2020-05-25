@@ -63,13 +63,13 @@ export class DriverReviewListComponent implements OnInit {
     getDiverReviewList(){
       this.exampleDatabase = new DriverReviewDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      })
+      // fromEvent(this.filter.nativeElement, 'keyup')
+      // .subscribe(() => {
+      //   if (!this.dataSource) {
+      //     return;
+      //   }
+      //   this.dataSource.filter = this.filter.nativeElement.value;
+      // })
     }
 
     //Driver list search filter

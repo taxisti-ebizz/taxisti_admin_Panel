@@ -27,6 +27,7 @@ import { CompleteRideIssue } from '../../../../module/complete-ride-issue.module
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'kt-complete-list',
@@ -50,8 +51,10 @@ export class CompleteListComponent implements OnInit {
     page = 1
     pageSize = 10
     count = 0;
+    urlType : string;
+    pageTitle : string;
 
-    constructor(private http: HttpService,
+    constructor(public http: HttpService,
       private api: ApiService,
       private spinner: NgxSpinnerService,
       private subheaderService: SubheaderService,
@@ -59,11 +62,26 @@ export class CompleteListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public completeRideDataService : CompleteRideDataService) { }
+      public completeRideDataService : CompleteRideDataService,
+      private route : ActivatedRoute) { 
+
+        localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
+
+      }
 
     ngOnInit() {
         // Set title to page breadCrumbs
         this.subheaderService.setTitle('Ride Management');
+
+        if(localStorage.getItem('urlType')=='currentweek'){
+          this.pageTitle = 'Current Week Completed Ride List';
+        }
+        else if(localStorage.getItem('urlType')=='lastweek'){
+          this.pageTitle = 'Last Week Completed Ride List';
+        }
+        else{
+          this.pageTitle = 'Completed Ride List';
+        }
 
         this.getCompleteRideList();
     }
@@ -72,13 +90,13 @@ export class CompleteListComponent implements OnInit {
     getCompleteRideList(){
       this.exampleDatabase = new CompleteRideDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      })
+      // fromEvent(this.filter.nativeElement, 'keyup')
+      // .subscribe(() => {
+      //   if (!this.dataSource) {
+      //     return;
+      //   }
+      //   this.dataSource.filter = this.filter.nativeElement.value;
+      // })
     }
 
     //Driver list search filter
@@ -173,8 +191,6 @@ export class ExampleDataSource extends DataSource<CompleteRideIssue>{
               public paginator: MatPaginator,
               public sort: MatSort) {
     super();
-    // Reset to the first page when the user changes the filter.
-    //this._filterChange.subscribe(() => this._paginator.page = 0);
   }
 
   /** Connect function called by the table to retrieve one stream containing the data to render. */
@@ -188,11 +204,12 @@ export class ExampleDataSource extends DataSource<CompleteRideIssue>{
     ];
 
     this.exampleDatabase.getCompleteRideList(this.exampleDatabase.page);
+    
 
     return merge(...displayDataChanges).pipe(map( (res) => {
         // Filter data
 
-        this.totalDriver = this.exampleDatabase.total //result.total;
+        this.totalDriver = this.exampleDatabase.total; //result.total; 
         this.completeRideResult = this.exampleDatabase.data;
 
         this.filteredData =  this.exampleDatabase.data.slice().filter((issue: CompleteRideIssue) => {
@@ -203,7 +220,7 @@ export class ExampleDataSource extends DataSource<CompleteRideIssue>{
         
         // Sort filtered data
         this.renderedData = this.sortData(this.filteredData.slice());
-
+        
         return this.renderedData;
       }
     ));

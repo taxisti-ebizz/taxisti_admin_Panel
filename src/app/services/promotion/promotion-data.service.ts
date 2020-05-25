@@ -61,12 +61,19 @@ export class PromotionDataService {
             });
 
             this.total = result.data.total;
-            this.dataChange.next(result.data.data);
-            
+            setTimeout(() => {
+              this.dataChange.next(result.data.data);
+              this.spinner.hide();
+            }, 500);
           }
         }
-
-        this.spinner.hide();
+        else{
+          this.total = 0;
+          setTimeout(() => {
+            this.dataChange.next([]);
+            this.spinner.hide();
+          }, 500);
+        }
     },
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);

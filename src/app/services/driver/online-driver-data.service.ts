@@ -40,26 +40,35 @@ export class OnlineDriverDataService {
 
     const data = {
       "page" : page,
-      "type" : "online"
+      "type" : 'online'
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
    
     this.httpClient.post<OnlineDriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
-        const result : any = res;
+      const result : any = res;
 
-        if(result.status == true){
-          var i = 1;
-          result.data.data.forEach(element => {
-            element.id = i;
-            i++;
-          });
-          
-          this.dataChange.next(result.data.data);
-          this.total = result.data.total;
-        }
+      if(result.status == true){
+        var i = 1;
+        result.data.data.forEach(element => {
+          element.id = i;
+          i++;
+        });
         
-        this.spinner.hide();
+        this.total = result.data.total;
+        setTimeout(() => {
+          this.dataChange.next(result.data.data);
+          this.spinner.hide();
+        }, 500);
+        
+      }
+      else{
+        this.total = 0;
+        setTimeout(() => {
+          this.dataChange.next([]);
+          this.spinner.hide();
+        }, 500);
+      }
     },
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);

@@ -28,6 +28,7 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 	currentRouteUrl = '';
 	insideTm: any;
 	outsideTm: any;
+	userDetail : any;
 
 	menuCanvasOptions: OffcanvasOptions = {
 		baseClass: 'kt-aside',
@@ -99,6 +100,8 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
 			// tslint:disable-next-line:max-line-length
 			this.render.setAttribute(this.asideMenu.nativeElement, 'data-ktmenu-dropdown-timeout', objectPath.get(config, 'aside.menu.submenu.dropdown.hover-timeout'));
 		}
+
+		this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
 	}
 
 	/**

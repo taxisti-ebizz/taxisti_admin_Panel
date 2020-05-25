@@ -49,12 +49,21 @@ export class NotificationDataService {
               i++;
             });
 
-            this.dataChange.next(result.data.data);
+            
             this.total = result.data.total;
+            setTimeout(() => {
+              this.dataChange.next(result.data.data);
+              this.spinner.hide();
+            }, 500);
           }
         }
-
-        this.spinner.hide();
+        else{
+          this.total = 0;
+          setTimeout(() => {
+            this.dataChange.next([]);
+            this.spinner.hide();
+          }, 500);
+        }
     },
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);

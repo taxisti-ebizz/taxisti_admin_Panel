@@ -31,7 +31,8 @@ export class DashboardComponent implements OnInit {
 	widget4_3: Widget4Data;
 	widget4_4: Widget4Data;
 
-	dashData : any = {};	
+	dashData : any = {};
+	token : boolean;	
 
 	constructor(private layoutConfigService: LayoutConfigService,
 		private adminAuthService: AdminAuthService,
@@ -221,10 +222,20 @@ export class DashboardComponent implements OnInit {
 		]);
 
 		this.getDashboardData();
+
+		//Set Interval For Automatic Get Dashboard Data
+		var self = this;
+		setInterval(function() {
+			if(localStorage.getItem('token')!=null && localStorage.getItem('token')!=''){
+				self.getDashboardData();
+			}		
+		}, 30000);
+		
 	}
 
+	//Get Dashboard Data
 	getDashboardData(){
-		this.http.postReq(this.api.getDashboardData,{}).subscribe(res => {
+		this.http.postReqForVerify(this.api.getDashboardData,{}).subscribe(res => {
 			const result : any = res;
 			if(result.status == true){
 				this.dashData = result.data;				

@@ -66,14 +66,20 @@ export class DataService {
               i++;
             });
             
-            this.dataChange.next(result.data.data);
+            
             this.total = result.data.total;
-            this.spinner.hide();
+            setTimeout(() => {
+              this.dataChange.next(result.data.data);
+              this.spinner.hide();
+            }, 500);
           }
           else{
-            this.dataChange.next([]);
+           
             this.total = 0;
-            this.spinner.hide();
+            setTimeout(() => {
+              this.dataChange.next([]);
+              this.spinner.hide();
+            }, 500);
           }
          
       },

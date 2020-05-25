@@ -34,6 +34,7 @@ import { DriverIssue } from '../../../../../module/driver-issue.module';
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'kt-driver-list',
@@ -58,6 +59,9 @@ export class DriverListComponent implements OnInit {
     page = 1
     pageSize = 10
     count = 0;
+    urlType : string;
+    pageTitle : string;
+    userDetail : any;
 
     constructor(private http: HttpService,
       private api: ApiService,
@@ -68,11 +72,27 @@ export class DriverListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public allDriverDataService : AllDriverDataService) { }
+      public allDriverDataService : AllDriverDataService,
+      private route : ActivatedRoute) { 
+
+        localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
+      }
 
     ngOnInit() {
         // Set title to page breadCrumbs
         this.subheaderService.setTitle('Driver Management');
+
+        if(localStorage.getItem('urlType')=='currentweek'){
+          this.pageTitle = 'Current Week Driver List';
+        }
+        else if(localStorage.getItem('urlType')=='lastweek'){
+          this.pageTitle = 'Last Week Driver List';
+        }
+        else{
+          this.pageTitle = 'All Driver List';
+        }
+
+        this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
 
         this.allDriverList();
     }
@@ -82,13 +102,13 @@ export class DriverListComponent implements OnInit {
 
       this.exampleDatabase = new AllDriverDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      })
+      // fromEvent(this.filter.nativeElement, 'keyup')
+      // .subscribe(() => {
+      //   if (!this.dataSource) {
+      //     return;
+      //   }
+      //   this.dataSource.filter = this.filter.nativeElement.value;
+      // })
     }
 
     //Handle Page
@@ -248,8 +268,6 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
                 public paginator: MatPaginator,
                 public sort: MatSort) {
       super();
-      // Reset to the first page when the user changes the filter.
-      //this._filterChange.subscribe(() => this._paginator.page = 0);
     }
 
     /** Connect function called by the table to retrieve one stream containing the data to render. */

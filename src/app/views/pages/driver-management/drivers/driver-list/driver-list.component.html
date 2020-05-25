@@ -1,9 +1,7 @@
 <kt-portlet>
 
-	<kt-portlet-header [sticky]="true" [title]="'All Driver List'" [class]="'kt-portlet__head--lg'">
-		<!-- <ng-container ktPortletTools>
-			<button (click)="createProduct()" mat-raised-button color="primary" matTooltip="Create new product">New product</button>
-		</ng-container> -->
+	<kt-portlet-header [sticky]="true" [title]="pageTitle" [class]="'kt-portlet__head--lg'">
+		
 	</kt-portlet-header>
 	<!-- end::Header -->
 
@@ -137,13 +135,18 @@
                     <mat-cell *matCellDef="let driver; let i=index;">
                         <button (click)="viewDriverDetails(driver)" mat-icon-button color="primary" matTooltip="view Driver Details">
 							<mat-icon>remove_red_eye</mat-icon>
-						</button>
+                        </button>
+                        
 						<button (click)="editDriver(i, driver)" mat-icon-button color="primary" matTooltip="Edit driver">
 							<mat-icon style="color: #040404;" aria-label="Edit">create</mat-icon>
                         </button>
-						<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i, driver.user_id)">
-							<mat-icon>delete</mat-icon>
-						</button>
+
+                        <ng-container *ngIf="userDetail.type==0">
+                            <button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i, driver.user_id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </ng-container>
+						
 						<button mat-icon-button class="material-icons color_green" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 1" (click)="verifyDriver(i,driver.user_id,0)">
 							<mat-icon style="color: green;">thumb_up</mat-icon>
 						</button>
@@ -156,6 +159,10 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
             </mat-table>
+
+            <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No records found
+            </div>
         </div>
 
         <!-- start: BOTTOM -->
@@ -163,7 +170,8 @@
 			<mat-spinner [diameter]="20"></mat-spinner>
 			<mat-paginator [pageSize]="10" [pageSizeOptions]="[3, 5, 10]" [showFirstLastButtons]="true"></mat-paginator>
         </div> -->
-        
+
+       
         <div class="mat-table__bottom">
 			<ngb-pagination [collectionSize]="dataSource.totalDriver" [(page)]="allDriverDataService.page" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="handlePage($event)" style="margin-top:30px;"></ngb-pagination>
 

@@ -135,10 +135,14 @@
                     <mat-cell *matCellDef="let driver; let i=index;">
                         <button (click)="viewDriverDetails(driver)" mat-icon-button color="primary" matTooltip="view Driver Details">
 							<mat-icon>remove_red_eye</mat-icon>
-						</button>
-						<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i,driver.user_id)">
-							<mat-icon>delete</mat-icon>
-						</button>
+                        </button>
+                        
+                        <ng-container *ngIf="userDetail.type==0">
+                            <button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i,driver.user_id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                        </ng-container>
+						
 						<button mat-icon-button class="material-icons color_green" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 1" (click)="verifyDriver(i,driver.user_id,0)">
 							<mat-icon style="color: green;">thumb_up</mat-icon>
 						</button>
@@ -151,6 +155,10 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
             </mat-table>
+
+            <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No records found
+            </div>
         </div>
 
         <!-- start: BOTTOM -->

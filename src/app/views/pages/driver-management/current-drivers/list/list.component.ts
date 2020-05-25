@@ -53,7 +53,7 @@ export class ListComponent implements OnInit {
     pageSize = 10
     count = 0;
 
-    constructor(private http: HttpService,
+    constructor(public http: HttpService,
       private api: ApiService,
       private spinner: NgxSpinnerService,
       private subheaderService: SubheaderService,

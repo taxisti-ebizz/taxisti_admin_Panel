@@ -1,6 +1,6 @@
 <kt-portlet>
 
-	<kt-portlet-header [sticky]="true" [title]="'Completed Ride List'" [class]="'kt-portlet__head--lg'">
+	<kt-portlet-header [sticky]="true" [title]="pageTitle" [class]="'kt-portlet__head--lg'">
 	
 	</kt-portlet-header>
 	<!-- end::Header -->
@@ -26,22 +26,24 @@
 
             <!-- start::GROUP ACTIONS -->
 			<!-- Group actions list: 'Delete selected' -->
-			<!-- Group actions are shared for all LISTS | See '../../_shared' folder -->
-			<div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20" [ngClass]="{'show' : dataSource.selection.selected.length > 0}">
-				<div class="col-xl-12">
-					<div class="kt-form__group kt-form__group--inline">
-						<!-- <div class="kt-form__label kt-form__label-no-wrap">
-							<label class="kt--font-bold kt-font-danger-">Selected records count: {{ dataSource.selection.selected.length }}</label>
-						</div> -->
-						<div class="kt-form__control kt-form__group--inline">
-							<button mat-raised-button color="accent" (click)="deleteRides()" matTooltip="Delete selected Rides"  class="mat-button-mt-4">
-								<mat-icon>delete</mat-icon>
-								Delete Selected
-							</button>&nbsp;<!-- Call 'delete-entity-dialog' from _shared folder -->
-						</div>
-					</div>
-				</div>
-			</div>
+            <!-- Group actions are shared for all LISTS | See '../../_shared' folder -->
+            <ng-container *ngIf="http.getUserDetail.type==0">
+                <div class="row align-items-center collapse kt-form__group-actions kt-margin-top-20 kt-margin-bottom-20" [ngClass]="{'show' : dataSource.selection.selected.length > 0}">
+                    <div class="col-xl-12">
+                        <div class="kt-form__group kt-form__group--inline">
+                            <!-- <div class="kt-form__label kt-form__label-no-wrap">
+                                <label class="kt--font-bold kt-font-danger-">Selected records count: {{ dataSource.selection.selected.length }}</label>
+                            </div> -->
+                            <div class="kt-form__control kt-form__group--inline">
+                                <button mat-raised-button color="accent" (click)="deleteRides()" matTooltip="Delete selected Rides"  class="mat-button-mt-4">
+                                    <mat-icon>delete</mat-icon>
+                                    Delete Selected
+                                </button>&nbsp;<!-- Call 'delete-entity-dialog' from _shared folder -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ng-container>
 			<!-- end::GROUP ACTIONS -->
 		</div>
 		<!-- end::FILTERS & GROUP ACTIONS -->
@@ -138,6 +140,10 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let driver; columns: displayedColumns;"></mat-row>
             </mat-table>
+
+            <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No records found
+            </div>
         </div>
 
         <!-- start: BOTTOM -->

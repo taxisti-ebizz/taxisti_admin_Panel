@@ -45,8 +45,17 @@ export class FakeRideDataService {
     getFakeRideList(page) : void {
       this.spinner.show();
 
+      var urlType = 'All';
+      if(localStorage.getItem('urlType')=='currentweek'){
+        urlType = 'currentWeek';
+      }
+      else if(localStorage.getItem('urlType')=='lastweek'){
+        urlType = 'lastWeek';
+      }
+
       const data = {
-        "page" : page
+        "page" : page,
+        "type" : urlType
       }
 
       const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
@@ -70,11 +79,20 @@ export class FakeRideDataService {
               });
 
               this.total = result.data.total;
-              this.dataChange.next(result.data.data);
+              setTimeout(() => {
+                this.dataChange.next(result.data.data);
+                this.spinner.hide();
+              }, 500);
+              
             }
           }
-
-          this.spinner.hide();
+          else{
+            this.total = 0;
+            setTimeout(() => {
+              this.dataChange.next([]);
+              this.spinner.hide();
+            }, 500);
+          }
       },
       (error: HttpErrorResponse) => {
         console.log (error.name + ' ' + error.message);

@@ -140,10 +140,14 @@
 						</button>
 						<button (click)="editDriver(i,driver)" mat-icon-button color="primary" matTooltip="Edit driver">
 							<mat-icon style="color: #040404;" aria-label="Edit">create</mat-icon>
-						</button>
-						<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i,driver.user_id)">
-							<mat-icon>delete</mat-icon>
-						</button>
+                        </button>
+
+                        <ng-container *ngIf="http.getUserDetail.type==0">
+							<button mat-icon-button color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i,driver.user_id)">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+						</ng-container>
+                        
 						<button mat-icon-button class="material-icons color_green" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 1" (click)="verifyDriver(i,driver.user_id,0)">
 							<mat-icon style="color: green;">thumb_up</mat-icon>
 						</button>
