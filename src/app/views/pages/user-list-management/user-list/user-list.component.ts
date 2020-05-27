@@ -20,6 +20,7 @@ import { UserEditComponent } from '../user-edit/user-edit.component';
 
 //View User detailsl 
 import { ViewUserDetailsComponent } from '../view-user-details/view-user-details.component';
+import { UserFilterComponent } from '../user-filter/user-filter.component';
 
 // Models
 import { UserDeleted, User } from '../../../../core/auth';
@@ -209,6 +210,23 @@ export class UserListComponent implements OnInit {
         });
       });
     }
+
+    applyCustomFilter() {
+
+      const dialogRef = this.dialog.open(UserFilterComponent, {
+        width: '1000px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3 }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        
+        if(result != 2){
+
+        }
+      });
+    }  
 
     //Delete USer
     deleteUser(i,user_id) {

@@ -68,22 +68,12 @@ import { NgxSpinnerService } from 'ngx-spinner';
 //Services
 import { EditUserService } from './services/user/edit-user.service';
 import { EditDriverService } from './services/driver/edit-driver.service';
-import {DataService} from './services/user/data.service';
+import { DataService } from './services/user/data.service';
 
 //Toastr Message
 import { ToastrModule } from 'ngx-toastr';
 
 import { CKEditorModule } from 'ng2-ckeditor';
-
-//import { DatepickerModule, BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-// Firebase modules
-
-
-
-// import { RatingModule } from 'ng-starrating';
-// import {StarRatingModule} from 'angular-star-rating';
-
-//import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 // tslint:disable-next-line:class-name
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -138,11 +128,6 @@ export function hljsLanguages(): HighlightLanguage[] {
 		ThemeModule,
 		NgxSpinnerModule,
 		CKEditorModule
-		//BsDatepickerModule.forRoot(),
-    	//DatepickerModule.forRoot() 
-		//AngularFireModule.initializeApp(environment.firebaseConfig),
-		//RatingModule
-		//NgxDaterangepickerMd.forRoot()
 	],
 	exports: [],
 	providers: [

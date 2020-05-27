@@ -20,6 +20,7 @@ import { UserListManagementComponent } from './user-list-management.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserEditComponent } from './user-edit/user-edit.component';
 import { ViewUserDetailsComponent } from './view-user-details/view-user-details.component';
+import { UserFilterComponent } from './user-filter/user-filter.component';
 
 // Material
 import {
@@ -44,7 +45,7 @@ import {
 	MatAutocompleteModule,
 	MAT_DIALOG_DEFAULT_OPTIONS,
 	MatSnackBarModule,
-	MatTooltipModule
+	MatTooltipModule,
 } from '@angular/material';
 import {
 	usersReducer,
@@ -52,7 +53,8 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const routes: Routes = [
 	{
@@ -108,7 +110,9 @@ const routes: Routes = [
 		MatTabsModule,
 		MatTooltipModule,
 		MatDialogModule,
-		NgbPaginationModule
+		NgbPaginationModule,
+		NgMultiSelectDropDownModule.forRoot(),
+    	BsDatepickerModule.forRoot()
   	],
   	providers: [
 		InterceptService,
@@ -133,13 +137,15 @@ const routes: Routes = [
 	entryComponents: [
 		ActionNotificationComponent,
 		UserEditComponent,
-		ViewUserDetailsComponent
+		ViewUserDetailsComponent,
+		UserFilterComponent
 	],
 	declarations: [
 		UserListManagementComponent,
 		UserListComponent, 
 		UserEditComponent, 
-		ViewUserDetailsComponent
+		ViewUserDetailsComponent, 
+		UserFilterComponent
 	]
 })
 export class UserListManagementModule { }

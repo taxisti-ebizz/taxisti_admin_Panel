@@ -1,0 +1,142 @@
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">User List More Filter</h3>
+		</div>
+	</div>
+
+	<form class="kt-form" [formGroup]="userFilterForm" (ngSubmit)="applyFilter(userFilterForm.value)">
+		<div class="kt-portlet__body">
+
+      
+      <div class="form-group kt-form__group row">
+
+        <!-- UserName Box -->
+				<div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Username</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput type="text"  placeholder="Username" formControlName="username"/>
+          </mat-form-field>
+        </div>  
+
+        <!-- Mobile Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Mobile</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input matInput type="text"  placeholder="Mobile" formControlName="mobile"/>
+          </mat-form-field>
+        </div>  
+
+        <!-- Completed Ride Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Completed Ride</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input type="text" matInput  placeholder="Min" formControlName="min_completed" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                   
+            <input type="text" matInput  placeholder="Max" formControlName="max_completed" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+          </mat-form-field>
+        </div>    
+
+        <!-- Cancelled Ride Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Cancelled Ride</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input type="text" matInput  placeholder="Min" formControlName="min_cancelled" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                   
+            <input type="text" matInput  placeholder="Max" formControlName="max_cancelled" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+          </mat-form-field>
+        </div>  
+      </div>   
+      
+      <div class="form-group kt-form__group row">
+        <!-- Total Reviews Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Total Reviews</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input type="text" matInput  placeholder="Min" formControlName="min_total" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                   
+            <input type="text" matInput  placeholder="Max" formControlName="max_total" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+          </mat-form-field>
+        </div>  
+
+        <!-- Average Rating Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Average Rating</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input type="text" matInput  placeholder="Min" formControlName="min_average" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                   
+            <input type="text" matInput  placeholder="Max" formControlName="max_average" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+          </mat-form-field>
+        </div>  
+
+        <!-- Date Of Birth Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Date Of Birth</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input type="text" matInput formControlName="dob"
+                  placeholder="YYYY-MM-DD"  bsDaterangepicker
+                  [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-red', rangeInputFormat : 'YYYY-MM-DD', dateInputFormat: 'YYYY-MM-DD' }">
+          </mat-form-field>
+        </div>  
+
+        <!-- Date Of Birth Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Date Of Register</label>
+					<mat-form-field class="mat-form-field-fluid">
+						<input type="text" matInput formControlName="dor"
+                  placeholder="YYYY-MM-DD"  bsDaterangepicker
+                  [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-red', rangeInputFormat : 'YYYY-MM-DD', dateInputFormat: 'YYYY-MM-DD' }">
+          </mat-form-field>
+        </div>  
+      </div>
+        
+      <div class="form-group kt-form__group row">
+        <!-- Device Type Box -->
+        <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Device Type</label>
+          <ng-multiselect-dropdown
+              name="device_id"
+              [placeholder]="'Select Device Type'"
+              [data]="device_types"
+              formControlName="device_type"
+              [disabled]="disabled"
+              [settings]="dropdownDeviceSettings"
+              (onSelect)="onItemSelectDevice($event)">
+          </ng-multiselect-dropdown>
+         
+        </div>  
+
+         <!-- Device Type Box -->
+         <div class="col-lg-3 kt-margin-bottom-20-mobile">
+          <label for="ssn" class="form-label label document">Verify</label>
+          <ng-multiselect-dropdown
+              name="verify_id"
+              [placeholder]="'Select Verify'"
+              [data]="verify_data"
+              formControlName="verify"
+              [disabled]="disabled"
+              [settings]="dropdownVerifySettings"
+              (onSelect)="onItemSelectVerify($event)">
+          </ng-multiselect-dropdown>
+        </div>  
+      </div>
+        
+			<div class="kt-separator kt-separator--dashed"></div>
+		</div>
+		
+
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button [mat-dialog-close]="2" cdkFocusInitial matTooltip="Cancel changes">
+							Cancel
+            </button>&nbsp;
+						<button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Save changes">Save</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>
