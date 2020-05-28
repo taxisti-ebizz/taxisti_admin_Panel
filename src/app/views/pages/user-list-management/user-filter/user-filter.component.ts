@@ -32,7 +32,7 @@ export class UserFilterComponent implements OnInit {
 
     this.verify_data = [
       { verify_id: '1', verify: 'Approved' },
-      { verify_id: '0', verify: 'Unapproved' },
+      { verify_id: '2', verify: 'Unapproved' },
     ];
 
     this.dropdownDeviceSettings = {
@@ -74,16 +74,48 @@ export class UserFilterComponent implements OnInit {
   }
 
   applyFilter(formData){
-    console.log("FormData =====>>>>>",formData);
-    
-  }
 
-  onItemSelectVerify(event){
+    var dob = (<HTMLInputElement>document.getElementById('dob')).value;
+    dob = ""+dob.toString()+"";
 
-  }
+    var dateOfBirth = dob.replace(/\s+-/g, '');
 
-  onItemSelectDevice(event){
+    var dor = (<HTMLInputElement>document.getElementById('dor')).value;
+    dor = ""+dor.toString()+"";
 
+    var dateOfRegister = dor.replace(/\s+-/g, '');
+
+    var verifyData = '';
+    for (let i = 0; i < formData.verify.length; i++) {
+      if(verifyData!=''){
+        verifyData += ',';
+      }
+      verifyData += formData.verify[i].verify_id;
+    }
+
+    var deviceData = '';
+    for (let i = 0; i < formData.device_type.length; i++) {
+      if(deviceData!=''){
+        deviceData += ',';
+      }
+      deviceData += formData.device_type[i].device_id;
+    }
+
+    const data = {
+      "username" : formData.username,
+      "mobile" : formData.mobile,
+      "complete_ride" : formData.min_completed!=''?formData.min_completed+'-'+formData.max_completed:'',
+      "cancelled_ride" : formData.min_cancelled!=''?formData.min_cancelled+'-'+formData.max_cancelled:'',
+      "total_review" : formData.min_total!=''?formData.min_total+'-'+formData.max_total:'',
+      "average_ratting" : formData.min_average!=''?formData.min_average+'-'+formData.max_average:'',
+      "dob" : dateOfBirth,
+      "dor" : dateOfRegister,
+      "device_type" : deviceData,
+      "verify" : verifyData
+    } 
+
+    localStorage.setItem('userFilter',JSON.stringify(data));
+    this.dialogRef.close(true);
   }
 
 }

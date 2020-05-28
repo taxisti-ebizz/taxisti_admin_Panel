@@ -221,9 +221,10 @@ export class UserListComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
+        console.log("result ======>>>>",result);
         
-        if(result != 2){
-
+        if(result != 3){
+          this.dataSource.applyFilter();
         }
       });
     }  
@@ -304,9 +305,6 @@ export class ExampleDataSource extends DataSource<UserIssue> {
     
     this.exampleDatabase.getAllUserList(this.exampleDatabase.page);
   
-    
-    
-
     return merge(...displayDataChanges).pipe(map( (res) => {
         // Filter data
 
@@ -342,11 +340,11 @@ export class ExampleDataSource extends DataSource<UserIssue> {
   }
 
   changePage(pageNumber){
-
-    
       this.exampleDatabase.getAllUserList(pageNumber);
-    
+  }
 
+  applyFilter(){
+    this.exampleDatabase.getAllUserListWithFilter(this.exampleDatabase.page);
   }
 
   filterData(data){
