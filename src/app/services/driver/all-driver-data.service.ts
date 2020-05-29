@@ -36,6 +36,7 @@ export class AllDriverDataService {
     this.dataChange.next(this.dataChange.value);
   }
 
+  //Get All Driver List
   getAllDriverList(page) : void {
     this.spinner.show();
 
@@ -50,6 +51,47 @@ export class AllDriverDataService {
     const data = {
       "page" : page,
       "type" : urlType
+    }
+
+    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
+   
+    this.httpClient.post<DriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+          var i = 1;
+          result.data.data.forEach(element => {
+            element.id = i;
+            i++;
+          });
+          
+          this.total = result.data.total;
+          setTimeout(() => {
+            this.dataChange.next(result.data.data);
+            this.spinner.hide();
+          }, 500);
+          
+        }
+        else{
+          this.total = 0;
+          setTimeout(() => {
+            this.dataChange.next([]);
+            this.spinner.hide();
+          }, 500);
+        }
+    },
+    (error: HttpErrorResponse) => {
+      console.log (error.name + ' ' + error.message);
+    });
+  }
+
+  //Get All Driver List With Filter
+  getAllDriverListWithFilter(page): void {
+    this.spinner.show();
+
+    const data = {
+      "page" : page,
+      "type" : 'filter',
+      "filter" : localStorage.getItem('driverFilter')!=null?localStorage.getItem('driverFilter'):''
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })

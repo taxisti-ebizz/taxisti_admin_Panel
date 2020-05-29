@@ -25,6 +25,7 @@ import { ViewDriverDetailsComponent } from '../view-driver-details/view-driver-d
 // Edit Driver Service
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
 import { AllDriverDataService } from '../../../../../services/driver/all-driver-data.service';
+import { DriverFilterComponent } from '../../driver-filter/driver-filter.component';
 
 
 import { Store } from '@ngrx/store';
@@ -237,6 +238,24 @@ export class DriverListComponent implements OnInit {
 
     }
 
+    //Apply More Filter
+    applyCustomFilter() {
+
+      const dialogRef = this.dialog.open(DriverFilterComponent, {
+        width: '1000px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'All Driver More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+       
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }  
     
     private refreshTable() {
       // Refreshing table using paginator
@@ -320,6 +339,11 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
     /* Delete Item From List */
     deleteItem(index){
       this.exampleDatabase.deleteDriver(index)
+    }
+
+    //Apply Filter
+    applyFilter(){
+      this.exampleDatabase.getAllDriverListWithFilter(this.exampleDatabase.page);
     }
 
     /* Refresh perticular page */

@@ -18,7 +18,6 @@ import { ActionNotificationComponent } from '../../partials/content/crud';
 import { DriverManagementComponent } from './driver-management.component';
 
 //All Driver
-import { AllDriverListComponent } from './drivers/all-driver-list/all-driver-list.component';
 import { DriverListComponent } from './drivers/driver-list/driver-list.component';
 import { DriverEditComponent } from './drivers/driver-edit/driver-edit.component';
 import { ViewDriverDetailsComponent } from './drivers/view-driver-details/view-driver-details.component';
@@ -34,6 +33,10 @@ import { ViewOnlineDriverComponent } from './online-driver/view-online-driver/vi
 
 //Location
 import { LocationComponent } from './location/location.component';
+
+//Driver Filter
+import { DriverFilterComponent } from './driver-filter/driver-filter.component';
+
 
 // Material
 import {
@@ -68,6 +71,9 @@ import {
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AgmCoreModule } from '@agm/core';
+
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 //import { RatingModule } from 'ng-starrating';
 
@@ -108,41 +114,43 @@ const routes: Routes = [
 
 @NgModule({
 	imports: [
-			CommonModule,
-			HttpClientModule,
-			PartialsModule,
-			RouterModule.forChild(routes),
-			StoreModule.forFeature('users', usersReducer),
-			EffectsModule.forFeature([UserEffects]),
-			FormsModule,
-			ReactiveFormsModule,
-			TranslateModule.forChild(),
-			MatButtonModule,
-			MatMenuModule,
-			MatSelectModule,
-			MatInputModule,
-			MatTableModule,
-			MatAutocompleteModule,
-			MatRadioModule,
-			MatIconModule,
-			MatNativeDateModule,
-			MatProgressBarModule,
-			MatDatepickerModule,
-			MatCardModule,
-			MatPaginatorModule,
-			MatSortModule,
-			MatCheckboxModule,
-			MatProgressSpinnerModule,
-			MatSnackBarModule,
-			MatExpansionModule,
-			MatTabsModule,
-			MatTooltipModule,
-			MatDialogModule,
-			NgbPaginationModule,
-			AgmCoreModule.forRoot({
-				apiKey: 'AIzaSyCyHzLEsS3Obyncia4v8idZ3RENsUKiWDs'
-			})
-			//RatingModule
+		CommonModule,
+		HttpClientModule,
+		PartialsModule,
+		RouterModule.forChild(routes),
+		StoreModule.forFeature('users', usersReducer),
+		EffectsModule.forFeature([UserEffects]),
+		FormsModule,
+		ReactiveFormsModule,
+		TranslateModule.forChild(),
+		MatButtonModule,
+		MatMenuModule,
+		MatSelectModule,
+		MatInputModule,
+		MatTableModule,
+		MatAutocompleteModule,
+		MatRadioModule,
+		MatIconModule,
+		MatNativeDateModule,
+		MatProgressBarModule,
+		MatDatepickerModule,
+		MatCardModule,
+		MatPaginatorModule,
+		MatSortModule,
+		MatCheckboxModule,
+		MatProgressSpinnerModule,
+		MatSnackBarModule,
+		MatExpansionModule,
+		MatTabsModule,
+		MatTooltipModule,
+		MatDialogModule,
+		NgbPaginationModule,
+		AgmCoreModule.forRoot({
+			apiKey: 'AIzaSyCyHzLEsS3Obyncia4v8idZ3RENsUKiWDs'
+		}),
+		NgMultiSelectDropDownModule.forRoot(),
+		BsDatepickerModule.forRoot()
+		//RatingModule
 	],
 	providers: [
 		InterceptService,
@@ -171,11 +179,11 @@ const routes: Routes = [
 		DriverEditComponent,
 		ViewComponent,
 		EditComponent,
-		ViewOnlineDriverComponent
+		ViewOnlineDriverComponent,
+		DriverFilterComponent
 	],
 	declarations: [
 		DriverManagementComponent,
-		AllDriverListComponent,
 		DriverEditComponent,
 		ViewDriverDetailsComponent,
 		ListComponent,
@@ -184,7 +192,8 @@ const routes: Routes = [
 		DriverListComponent,
 		OnlineDriverListComponent,
 		ViewOnlineDriverComponent,
-		LocationComponent
+		LocationComponent,
+		DriverFilterComponent
 	]
 })
 export class DriverManagementModule { }

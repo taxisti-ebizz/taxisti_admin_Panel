@@ -211,18 +211,19 @@ export class UserListComponent implements OnInit {
       });
     }
 
+    //Apply More Filter
     applyCustomFilter() {
 
       const dialogRef = this.dialog.open(UserFilterComponent, {
         width: '1000px',
         height: 'auto',
         backdropClass: 'masterModalPopup',
-        data: { mode : 3 }
+        data: { mode : 3 },
+        disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log("result ======>>>>",result);
-        
+      
         if(result != 3){
           this.dataSource.applyFilter();
         }

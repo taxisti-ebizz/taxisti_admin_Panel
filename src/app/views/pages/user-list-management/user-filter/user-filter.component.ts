@@ -25,16 +25,19 @@ export class UserFilterComponent implements OnInit {
     private formBuilder : FormBuilder) { }
 
   ngOnInit() {
+    //Device Type Array 
     this.device_types = [
         { device_id: 'A', device_type: 'Android' },
         { device_id: 'I', device_type: 'IOS' },
     ];
 
+    //Verify Array 
     this.verify_data = [
       { verify_id: '1', verify: 'Approved' },
       { verify_id: '2', verify: 'Unapproved' },
     ];
 
+    //Multiple Device Type Settings
     this.dropdownDeviceSettings = {
       singleSelection: false,
       idField: 'device_id',
@@ -45,6 +48,7 @@ export class UserFilterComponent implements OnInit {
       allowSearchFilter: false
     };
 
+    //Multiple Verify Settings
     this.dropdownVerifySettings = {
       singleSelection: false,
       idField: 'verify_id',
@@ -55,6 +59,7 @@ export class UserFilterComponent implements OnInit {
       allowSearchFilter: false
     };
 
+    //User Filter Form
     this.userFilterForm = this.formBuilder.group({
       username : [''],
       mobile : [''],
@@ -73,6 +78,7 @@ export class UserFilterComponent implements OnInit {
     })
   }
 
+  //Apply Filter
   applyFilter(formData){
 
     var dob = (<HTMLInputElement>document.getElementById('dob')).value;

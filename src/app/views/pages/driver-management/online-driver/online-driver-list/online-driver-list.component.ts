@@ -17,6 +17,7 @@ import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../.
 
 //View Driver details
 import { ViewOnlineDriverComponent } from '../view-online-driver/view-online-driver.component';
+import { DriverFilterComponent } from '../../driver-filter/driver-filter.component';
 
 // Edit Driver Service
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
@@ -197,6 +198,25 @@ export class OnlineDriverListComponent implements OnInit {
     });
   }
 
+  //Apply More Filter
+  applyCustomFilter() {
+
+    const dialogRef = this.dialog.open(DriverFilterComponent, {
+      width: '1000px',
+      height: 'auto',
+      backdropClass: 'masterModalPopup',
+      data: { mode : 3, title : 'Online Driver More Filter' },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     
+      if(result != 3){
+        this.dataSource.applyFilter();
+      }
+    });
+  }  
+
 }
 
 
@@ -260,6 +280,11 @@ export class ExampleDataSource extends DataSource<OnlineDriverIssue>{
   changePage(pageNumber){
     
     this.exampleDatabase.getOnlineDriverList(pageNumber);
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getOnlineDriverListWithList(this.exampleDatabase.page);
   }
 
   /* Delete Item From List */

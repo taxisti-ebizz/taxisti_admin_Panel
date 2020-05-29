@@ -15,7 +15,10 @@ import { SubheaderService } from '../../../../core/_base/layout';
 import { UserDeleted, User } from '../../../../core/auth';
 import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../core/_base/crud';
 // Services and Models
-import {	ManyProductsDeleted } from '../../../../core/e-commerce';
+import { ManyProductsDeleted } from '../../../../core/e-commerce';
+
+//Filter Component
+import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
 
 // Service
 import { PendingRideDataService } from '../../../../services/ride/pending-ride-data.service';
@@ -186,6 +189,25 @@ export class PendingListComponent implements OnInit {
       });
     } 
 
+    //Apply More Filter
+    applyCustomFilter() {
+
+      const dialogRef = this.dialog.open(RidesFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Pending Ride More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }  
+
 }
 
 //DataSource ===============================
@@ -260,9 +282,15 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
   deleteItem(index){
     this.exampleDatabase.deletePendingRide(index)
   }
-
+  
+  //Delete Selected Item
   deleteSelectedItem(ids){
     this.exampleDatabase.deleteSelectedRides(ids)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getPendingRideListWithFilter(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

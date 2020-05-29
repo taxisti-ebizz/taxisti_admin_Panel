@@ -25,7 +25,7 @@ import { NoResponseListComponent } from './no-response-list/no-response-list.com
 import { CanceledListComponent } from './canceled-list/canceled-list.component';
 import { NoDriverAvailableListComponent } from './no-driver-available-list/no-driver-available-list.component';
 import { FakeRideListComponent } from './fake-ride-list/fake-ride-list.component';
-
+import { RidesFilterComponent } from './rides-filter/rides-filter.component';
 
 // Material
 import {
@@ -58,6 +58,8 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 
 const routes: Routes = [
@@ -162,7 +164,9 @@ const routes: Routes = [
         MatTabsModule,
         MatTooltipModule,
         MatDialogModule,
-        NgbPaginationModule
+        NgbPaginationModule,
+        NgMultiSelectDropDownModule.forRoot(),
+		    BsDatepickerModule.forRoot()
     ],
     providers: [
       InterceptService,
@@ -193,7 +197,11 @@ const routes: Routes = [
       NoResponseListComponent,
       CanceledListComponent,
       NoDriverAvailableListComponent,
-      FakeRideListComponent
+      FakeRideListComponent,
+      RidesFilterComponent
+    ],
+    entryComponents : [
+      RidesFilterComponent
     ]
 })
 export class RideManagementModule { }

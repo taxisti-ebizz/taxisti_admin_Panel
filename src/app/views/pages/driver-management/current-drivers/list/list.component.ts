@@ -13,6 +13,8 @@ import { SubheaderService } from '../../../../../core/_base/layout';
 //Component
 import { ViewComponent } from '../view/view.component';
 import { EditComponent } from '../edit/edit.component';
+import { DriverFilterComponent } from '../../driver-filter/driver-filter.component';
+
 
 //Service
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service'
@@ -76,13 +78,13 @@ export class ListComponent implements OnInit {
 
       this.exampleDatabase = new CurDriverDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
-      fromEvent(this.filter.nativeElement, 'keyup')
-      .subscribe(() => {
-        if (!this.dataSource) {
-          return;
-        }
-        this.dataSource.filter = this.filter.nativeElement.value;
-      })
+      // fromEvent(this.filter.nativeElement, 'keyup')
+      // .subscribe(() => {
+      //   if (!this.dataSource) {
+      //     return;
+      //   }
+      //   this.dataSource.filter = this.filter.nativeElement.value;
+      // })
     }
 
     //Driver list search filter
@@ -210,6 +212,25 @@ export class ListComponent implements OnInit {
     });
   }
 
+  //Apply More Filter
+  applyCustomFilter() {
+
+    const dialogRef = this.dialog.open(DriverFilterComponent, {
+      width: '1000px',
+      height: 'auto',
+      backdropClass: 'masterModalPopup',
+      data: { mode : 3, title : 'Current Driver More Filter' },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+     
+      if(result != 3){
+        this.dataSource.applyFilter();
+      }
+    });
+  }  
+
 
   private refreshTable() {
     // Refreshing table using paginator
@@ -282,6 +303,11 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
   changePage(pageNumber){
     
     this.exampleDatabase.getCurrentDriverList(pageNumber);
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getCurrentDriverListWithFilter(this.exampleDatabase.page);
   }
 
   /* Delete Item From List */

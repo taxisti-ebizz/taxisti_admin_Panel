@@ -48,18 +48,69 @@ export class CurDriverDataService {
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
    
     this.httpClient.post<CurrentDriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
-        const result : any = res;
+      const result : any = res;
 
+      if(result.status == true){
         var i = 1;
         result.data.data.forEach(element => {
           element.id = i;
           i++;
         });
         
-        this.dataChange.next(result.data.data);
         this.total = result.data.total;
+        setTimeout(() => {
+          this.dataChange.next(result.data.data);
+          this.spinner.hide();
+        }, 500);
+      }
+      else{
+        this.total = 0;
+        setTimeout(() => {
+          this.dataChange.next([]);
+          this.spinner.hide();
+        }, 500);
+      }
+    },
+    (error: HttpErrorResponse) => {
+      console.log (error.name + ' ' + error.message);
+    });
+  }
+
+  //Get Current Driver List Data With Filter
+  getCurrentDriverListWithFilter(page) : void {
+    this.spinner.show();
+
+    const data = {
+      "page" : page,
+      "type" : "filter",
+      "filter" : localStorage.getItem('driverFilter')!=null?localStorage.getItem('driverFilter'):''
+    }
+
+    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
+   
+    this.httpClient.post<CurrentDriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
+      const result : any = res;
+
+      if(result.status == true){
+        var i = 1;
+        result.data.data.forEach(element => {
+          element.id = i;
+          i++;
+        });
         
-        this.spinner.hide();
+        this.total = result.data.total;
+        setTimeout(() => {
+          this.dataChange.next(result.data.data);
+          this.spinner.hide();
+        }, 500);
+      }
+      else{
+        this.total = 0;
+        setTimeout(() => {
+          this.dataChange.next([]);
+          this.spinner.hide();
+        }, 500);
+      }
     },
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);
