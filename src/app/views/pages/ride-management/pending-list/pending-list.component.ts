@@ -196,7 +196,7 @@ export class PendingListComponent implements OnInit {
         width: '800px',
         height: 'auto',
         backdropClass: 'masterModalPopup',
-        data: { mode : 3, title : 'Pending Ride More Filter' },
+        data: { mode : 3, title : 'Pending Ride More Filter', type : '' },
         disableClose: true
       });
 

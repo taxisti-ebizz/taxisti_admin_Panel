@@ -20,6 +20,9 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 // Service
 import { CompleteRideDataService } from '../../../../services/ride/complete-ride-data.service';
 
+//Filter Component
+import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -163,6 +166,27 @@ export class CompleteListComponent implements OnInit {
       });
     }
 
+    //Apply More Filter
+    applyCustomFilter() {
+
+      localStorage.setItem('listType','completedRide');
+
+      const dialogRef = this.dialog.open(RidesFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Completed Ride More Filter', type : 'completedRide' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }  
+
 }
 
 
@@ -234,6 +258,11 @@ export class ExampleDataSource extends DataSource<CompleteRideIssue>{
 
   deleteSelectedItem(ids){
     this.exampleDatabase.deleteSelectedRides(ids)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getCompletedgRideListWithFilter(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

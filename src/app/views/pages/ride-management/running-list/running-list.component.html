@@ -1,7 +1,11 @@
 <kt-portlet>
 
 	<kt-portlet-header [sticky]="true" [title]="pageTitle" [class]="'kt-portlet__head--lg'">
-	
+		<ng-container ktPortletTools>
+			<button (click)="applyCustomFilter()" mat-raised-button matTooltip="Apply Filter" color="primary" type="button">
+				<span>More Filter</span>
+			</button>
+		</ng-container>
 	</kt-portlet-header>
 	<!-- end::Header -->
 

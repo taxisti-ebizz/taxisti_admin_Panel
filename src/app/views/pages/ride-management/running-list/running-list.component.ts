@@ -20,6 +20,9 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 // Service
 import { RunningRideDataService } from '../../../../services/ride/running-ride-data.service';
 
+//Filter Component
+import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -205,6 +208,25 @@ export class RunningListComponent implements OnInit {
       });
     }
 
+    //Apply More Filter
+    applyCustomFilter() {
+
+      const dialogRef = this.dialog.open(RidesFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Running Ride More Filter', type : '' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }  
+
 }
 
 //DataSource ===============================
@@ -282,6 +304,11 @@ export class ExampleDataSource extends DataSource<RunningRideIssue>{
 
   deleteSelectedItem(ids){
     this.exampleDatabase.deleteSelectedRides(ids)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getRunningRideListWithFilter(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

@@ -49,7 +49,7 @@ export class RunningRideDataService {
 
   }
 
-  //Get Pending Ride Data
+  //Get Running Ride Data
   getRunningRideList(page) : void {
     this.spinner.show();
 
@@ -64,6 +64,50 @@ export class RunningRideDataService {
     const data = {
       "page" : page,
       "type" : urlType
+    }
+
+    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
+   
+    this.httpClient.post<RunningRideIssue>(this.http.baseUrl+this.api.getRunningRideList,data,{ headers }).subscribe(res => {
+        const result : any = res;
+
+        if(result.status == true){
+
+          if(Object.keys(result.data).length > 0 && result.data.constructor === Object){
+            var i = 1;
+            result.data.data.forEach(element => {
+              element.index = i;
+              i++;
+            });
+
+            this.total = result.data.total;
+            setTimeout(() => {
+              this.dataChange.next(result.data.data);
+              this.spinner.hide();
+            }, 500);
+          }
+        }
+        else{
+          this.total = 0;
+          setTimeout(() => {
+            this.dataChange.next([]);
+            this.spinner.hide();
+          }, 500);
+        }
+    },
+    (error: HttpErrorResponse) => {
+      console.log (error.name + ' ' + error.message);
+    });
+  }
+
+  //Get Running Ride Data With Filter
+  getRunningRideListWithFilter(page) : void {
+    this.spinner.show();
+
+    const data = {
+      "page" : page,
+      "type" : 'filter',
+      "filter" : localStorage.getItem('ridesFilter')!=null?localStorage.getItem('ridesFilter'):''
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
