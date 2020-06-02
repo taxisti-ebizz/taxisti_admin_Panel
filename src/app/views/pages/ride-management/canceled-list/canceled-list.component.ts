@@ -20,6 +20,9 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 // Service
 import { CanceledRideDataService } from '../../../../services/ride/canceled-ride-data.service';
 
+//Filter Component
+import { OthersRideFilterComponent } from '../others-ride-filter/others-ride-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -163,6 +166,33 @@ export class CanceledListComponent implements OnInit {
       });
     }
 
+
+    //Apply More Filter
+    applyCustomFilter() {
+
+      localStorage.setItem('listType','canceledRide');
+
+      const dialogRef = this.dialog.open(OthersRideFilterComponent, {
+        width: '900px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Canceled Ride More Filter', type : 'canceledRide' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    } 
+
+    //Clear Filter
+    clearFilter(){
+      this.dataSource.clearFilter();
+    }
+
 }
 
 //DataSource ===============================
@@ -228,12 +258,22 @@ export class ExampleDataSource extends DataSource<CanceledRide>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
+
     this.exampleDatabase.getCanceledRideList(pageNumber);
   }
 
   deleteSelectedItem(ids){
     this.exampleDatabase.deleteSelectedRides(ids)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getCanceledRideListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getCanceledRideList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

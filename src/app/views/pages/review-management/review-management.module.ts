@@ -18,7 +18,7 @@ import { DriverReviewListComponent } from './driver-review/driver-review-list/dr
 import { ViewDriverReviewDetailComponent } from './driver-review/view-driver-review-detail/view-driver-review-detail.component';
 import { RiderReviewListComponent } from './rider-review/rider-review-list/rider-review-list.component';
 import { ViewRiderReviewDetailComponent } from './rider-review/view-rider-review-detail/view-rider-review-detail.component';
-
+import { ReviewFilterComponent } from './review-filter/review-filter.component';
 
 // Material
 import {
@@ -51,6 +51,7 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 const routes: Routes = [
 	{
@@ -134,11 +135,13 @@ const routes: Routes = [
     DriverReviewListComponent,
     ViewDriverReviewDetailComponent,
     RiderReviewListComponent,
-    ViewRiderReviewDetailComponent
+    ViewRiderReviewDetailComponent,
+    ReviewFilterComponent
   ],
   entryComponents: [
     ViewDriverReviewDetailComponent,
-    ViewRiderReviewDetailComponent
+    ViewRiderReviewDetailComponent,
+    ReviewFilterComponent
   ]
 })
 export class ReviewManagementModule { }

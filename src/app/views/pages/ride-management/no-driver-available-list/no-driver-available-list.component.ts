@@ -20,6 +20,9 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 // Service
 import { NoDriverAvailableDataService } from '../../../../services/ride/no-driver-available-data.service';
 
+//Filter Component
+import { NoDriverAvailableFilterComponent } from '../no-driver-available-list/no-driver-available-filter/no-driver-available-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -184,6 +187,30 @@ export class NoDriverAvailableListComponent implements OnInit {
         this.dataSource.selection.clear();
       });
     } 
+
+    //Apply More Filter
+    applyCustomFilter() {
+
+      const dialogRef = this.dialog.open(NoDriverAvailableFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Driver Not Available More Filter', type : '' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }  
+
+    //Clear Filter
+    clearFilter(){
+      this.dataSource.clearFilter();
+    }
 }
 
 //DataSource ===============================
@@ -248,7 +275,6 @@ export class ExampleDataSource extends DataSource<NoDriverAvailableRide>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
     this.exampleDatabase.getNoDriverAvailableList(pageNumber);
   }
 
@@ -257,8 +283,19 @@ export class ExampleDataSource extends DataSource<NoDriverAvailableRide>{
     this.exampleDatabase.deleteDriver(index)
   }
 
+  //Delete Selected Ride
   deleteSelectedItem(ids){
     this.exampleDatabase.deleteSelectedRides(ids)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getNoDriverAvailableListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getNoDriverAvailableList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

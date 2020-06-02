@@ -29,6 +29,9 @@ import { map } from 'rxjs/operators';
 //Componenent
 import { ViewRiderReviewDetailComponent } from '../view-rider-review-detail/view-rider-review-detail.component'
 
+//Filter Component
+import { ReviewFilterComponent } from '../../review-filter/review-filter.component';
+
 @Component({
   selector: 'kt-rider-review-list',
   templateUrl: './rider-review-list.component.html',
@@ -126,6 +129,30 @@ export class RiderReviewListComponent implements OnInit {
       })
     }
 
+    //Apply Custom Filter
+    applyCustomFilter(){
+
+      const dialogRef = this.dialog.open(ReviewFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Riders Review More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }
+    
+    //Clear Filter
+    clearFilter(){
+      this.dataSource.clearFilter();
+    }
+
 }
 
 //DataSource ===============================
@@ -186,8 +213,17 @@ export class ExampleDataSource extends DataSource<RiderReview>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
     this.exampleDatabase.getRiderReviewList(pageNumber);
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getRiderReviewListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getRiderReviewList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

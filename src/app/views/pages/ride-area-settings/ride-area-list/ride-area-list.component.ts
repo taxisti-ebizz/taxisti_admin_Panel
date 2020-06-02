@@ -21,6 +21,9 @@ import { RideAreaDataService } from '../../../../services/ride-area/ride-area-da
 //Component
 import { ViewRideAreaComponent } from '../view-ride-area/view-ride-area.component';
 
+//Filter Component
+import { RideAreaFilterComponent } from '../ride-area-filter/ride-area-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -28,6 +31,7 @@ import { RideArea } from '../../../../module/ride-area/ride-area.module';
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+
 
 @Component({
   selector: 'kt-ride-area-list',
@@ -147,6 +151,30 @@ export class RideAreaListComponent implements OnInit {
       })
     }
 
+    //Apply Custom Filter
+    applyCustomFilter(){
+
+      const dialogRef = this.dialog.open(RideAreaFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Ride Area More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }
+    
+    //Clear Filter
+    clearFilter(){
+      this.dataSource.clearFilter();
+    }
+
 }
 
 //DataSource ===============================
@@ -206,13 +234,22 @@ export class ExampleDataSource extends DataSource<RideArea>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
     this.exampleDatabase.getRideAreaList(pageNumber);
   }
 
   /* Delete Item From List */
   deleteItem(index){
     this.exampleDatabase.deleteArea(index)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getRideAreaListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getRideAreaList(this.exampleDatabase.page);
   }
 
   disconnect() {}

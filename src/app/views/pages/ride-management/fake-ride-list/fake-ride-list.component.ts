@@ -20,6 +20,9 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 // Service
 import { FakeRideDataService } from '../../../../services/ride/fake-ride-data.service';
 
+//Filter Component
+import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -163,6 +166,31 @@ export class FakeRideListComponent implements OnInit {
       });
     }
 
+    //Apply More Filter
+    applyCustomFilter() {
+
+      localStorage.setItem('listType','fakeRide');
+
+      const dialogRef = this.dialog.open(RidesFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Fake Ride More Filter', type : 'fakeRide' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }  
+
+    //Clear Filter
+    clearFilter(){
+      this.dataSource.clearFilter();
+    }
 }
 
 //DataSource ===============================
@@ -230,8 +258,19 @@ export class ExampleDataSource extends DataSource<FakeRide>{
     this.exampleDatabase.getFakeRideList(pageNumber);
   }
 
+  //Delete Selected Ride Data
   deleteSelectedItem(ids){
     this.exampleDatabase.deleteSelectedRides(ids)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getFakeRideListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getFakeRideList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

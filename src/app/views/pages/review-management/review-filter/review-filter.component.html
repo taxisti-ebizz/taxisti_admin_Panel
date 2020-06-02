@@ -1,0 +1,63 @@
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{data.title}}</h3>
+		</div>
+	</div>
+
+	<form class="kt-form" [formGroup]="reviewFilterForm" (ngSubmit)="applyFilter(reviewFilterForm.value)">
+		<div class="kt-portlet__body">
+
+            <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose()">
+				Enter atleast one value in the field
+			</kt-alert>
+
+
+            <div class="form-group kt-form__group row">
+                <div class="form-row mb-4 fullwidthl">
+                    <!-- Name -->
+                    <div class="col-xs-12 col-md-3">
+                        <label for="ssn" class="form-label label document">Name</label>
+                        <input type="text" class="form-control" formControlName="name" placeholder="Name">
+                    </div>
+
+                    <!-- Mobile -->
+                    <div class="col-xs-12 col-md-3">
+                        <label for="ssn" class="form-label label document">Mobile</label>
+                        <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile">
+                    </div>
+
+                    <!-- Reviews -->
+                    <div class="col-xs-12 col-md-3">
+                        <label for="ssn" class="form-label label document fullwidthl">Reviews</label>
+                        <input type="text" class="form-control minMaxl" id="" placeholder="Min" formControlName="min_review" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                            
+                        <input type="text" class="form-control minMaxr"  placeholder="Max" formControlName="max_review" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                    </div>  
+                    
+                    <!-- End Date -->
+                    <div class="col-xs-12 col-md-3">
+                        <label for="ssn" class="form-label label document fullwidthl">Average Rating</label>
+                        <input type="text" class="form-control minMaxl" placeholder="Min" formControlName="min_avg_rating" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                            
+                        <input type="text" class="form-control minMaxr"  placeholder="Max" formControlName="max_avg_rating" onkeydown="return ( event.ctrlKey || event.altKey || (47<event.keyCode && event.keyCode<58 && event.shiftKey==false) || (95<event.keyCode && event.keyCode<106) || (event.keyCode==8) || (event.keyCode==9) || (event.keyCode>34 && event.keyCode<40) || (event.keyCode==46) )"/>
+                    </div>  
+                </div>
+            </div>       
+		</div>
+		
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+						<button type="button" mat-raised-button [mat-dialog-close]="3" cdkFocusInitial matTooltip="Close Modal">
+							Close
+                        </button>&nbsp;
+						<button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Apply Filter">Apply</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

@@ -20,6 +20,9 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 // Service
 import { NoResponseRideDataService } from '../../../../services/ride/no-response-ride-data.service';
 
+//Filter Component
+import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -185,6 +188,27 @@ export class NoResponseListComponent implements OnInit {
         this.dataSource.selection.clear();
       });
     } 
+
+    //Apply More Filter
+    applyCustomFilter() {
+
+      localStorage.setItem('listType','');
+
+      const dialogRef = this.dialog.open(RidesFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Auto Canceled Ride More Filter', type : '' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    } 
 }
 
 //DataSource ===============================
@@ -261,6 +285,11 @@ export class ExampleDataSource extends DataSource<NoResponseRide>{
 
   deleteSelectedItem(ids){
     this.exampleDatabase.deleteSelectedRides(ids)
+  }
+
+  //Apply FIlter 
+  applyFilter(){
+    this.exampleDatabase.getNoResponseRideListWithFilter(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

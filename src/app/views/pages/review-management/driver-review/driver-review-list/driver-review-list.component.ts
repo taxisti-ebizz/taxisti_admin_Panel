@@ -21,6 +21,9 @@ import { map } from 'rxjs/operators';
 //Componenent
 import { ViewDriverReviewDetailComponent } from '../view-driver-review-detail/view-driver-review-detail.component'
 
+//Filter Component
+import { ReviewFilterComponent } from '../../review-filter/review-filter.component';
+
 @Component({
   selector: 'kt-driver-review-list',
   templateUrl: './driver-review-list.component.html',
@@ -87,7 +90,7 @@ export class DriverReviewListComponent implements OnInit {
       this.dataSource.changePage(event);
     }
 
-   //View Driver Review Details
+    //View Driver Review Details
     viewReview(driver_id){
       this.driverReviewDataService.mode = 3;
 
@@ -114,6 +117,30 @@ export class DriverReviewListComponent implements OnInit {
             
           }
       })
+    }
+
+    //Apply Custom Filter
+    applyCustomFilter(){
+
+      const dialogRef = this.dialog.open(ReviewFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Drivers Review More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }
+    
+    //Clear Filter
+    clearFilter(){
+      this.dataSource.clearFilter();
     }
 }
 
@@ -175,8 +202,17 @@ export class ExampleDataSource extends DataSource<DriverReview>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
     this.exampleDatabase.getDriverReviewList(pageNumber);
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getDriverReviewListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getDriverReviewList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

@@ -39,7 +39,7 @@ export class RideAreaDataService {
     this.dataChange.next(this.dataChange.value);
   }
 
-  //Get Pending Ride Data
+  //Get Ride Area Data
   getRideAreaList(page) : void {
     this.spinner.show();
 
@@ -76,6 +76,51 @@ export class RideAreaDataService {
             this.spinner.hide();
           }, 500);
         }
+    },
+    (error: HttpErrorResponse) => {
+      console.log (error.name + ' ' + error.message);
+    });
+  }
+
+  //Get Ride Area List With Filter
+  getRideAreaListWithFilter(page) : void {
+    this.spinner.show();
+
+    const data = {
+      "page" : page,
+      "urlType" : 'filter',
+      "filter" : localStorage.getItem('rideAreaFilter')!=null?localStorage.getItem('rideAreaFilter'):''
+    }
+
+    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
+   
+    this.httpClient.post<RideArea>(this.http.baseUrl+this.api.getRideAreaList,data,{ headers }).subscribe(res => {
+      const result : any = res;
+
+      if(result.status == true){
+
+        if(Object.keys(result.data).length > 0 && result.data.constructor === Object){
+          var i = 1;
+          result.data.data.forEach(element => {
+            element.index = i;
+            i++;
+          });
+
+          this.total = result.data.total;
+          setTimeout(() => {
+            this.dataChange.next(result.data.data);
+            this.spinner.hide();
+          }, 500);
+          
+        }
+      }
+      else{
+        this.total = 0;
+        setTimeout(() => {
+          this.dataChange.next([]);
+          this.spinner.hide();
+        }, 500);
+      }
     },
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);

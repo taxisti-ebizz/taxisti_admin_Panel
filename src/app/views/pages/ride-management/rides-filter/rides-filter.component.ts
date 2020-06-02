@@ -57,8 +57,24 @@ export class RidesFilterComponent implements OnInit {
         var data = {};
         if(localStorage.getItem('listType')=='completedRide'){
             data = {  
+              "rider_name" : formData.rider_name,
+              "driver_name" : formData.driver_name,
+              "start_date" : startDate,
+              "end_date" : endDate,
+              "start_location" : formData.start_location,
+              "end_location" : formData.end_location,
+              "amount" : formData.min_amount!=''?formData.min_amount+'-'+formData.max_amount:'',
+              "distance" : formData.min_distance!=''?formData.min_distance+'-'+formData.max_distance:'',
+              "rider_rating" : (<HTMLInputElement>document.getElementById('min_rider_rating')).value!=''?(<HTMLInputElement>document.getElementById('min_rider_rating')).value+'-'+(<HTMLInputElement>document.getElementById('max_rider_rating')).value:'',
+              "driver_rating" : (<HTMLInputElement>document.getElementById('min_driver_rating')).value!=''?(<HTMLInputElement>document.getElementById('min_driver_rating')).value+'-'+(<HTMLInputElement>document.getElementById('max_driver_rating')).value:''
+            }
+        }
+        else if(localStorage.getItem('listType')=='fakeRide'){
+          data = {  
             "rider_name" : formData.rider_name,
             "driver_name" : formData.driver_name,
+            "rider_mobile" : (<HTMLInputElement>document.getElementById('rider_mobile')).value!=''?(<HTMLInputElement>document.getElementById('rider_mobile')).value:'',
+            "driver_mobile" : (<HTMLInputElement>document.getElementById('driver_mobile')).value!=''?(<HTMLInputElement>document.getElementById('driver_mobile')).value:'', 
             "start_date" : startDate,
             "end_date" : endDate,
             "start_location" : formData.start_location,

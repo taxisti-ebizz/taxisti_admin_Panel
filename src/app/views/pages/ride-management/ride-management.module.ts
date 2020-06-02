@@ -26,6 +26,9 @@ import { CanceledListComponent } from './canceled-list/canceled-list.component';
 import { NoDriverAvailableListComponent } from './no-driver-available-list/no-driver-available-list.component';
 import { FakeRideListComponent } from './fake-ride-list/fake-ride-list.component';
 import { RidesFilterComponent } from './rides-filter/rides-filter.component';
+import { OthersRideFilterComponent } from './others-ride-filter/others-ride-filter.component';
+import { NoDriverAvailableFilterComponent } from './no-driver-available-list/no-driver-available-filter/no-driver-available-filter.component';
+
 
 // Material
 import {
@@ -60,7 +63,6 @@ import {
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-
 
 const routes: Routes = [
 	{
@@ -198,10 +200,14 @@ const routes: Routes = [
       CanceledListComponent,
       NoDriverAvailableListComponent,
       FakeRideListComponent,
-      RidesFilterComponent
+      RidesFilterComponent,
+      OthersRideFilterComponent,
+      NoDriverAvailableFilterComponent
     ],
     entryComponents : [
-      RidesFilterComponent
+      RidesFilterComponent,
+      OthersRideFilterComponent,
+      NoDriverAvailableFilterComponent
     ]
 })
 export class RideManagementModule { }

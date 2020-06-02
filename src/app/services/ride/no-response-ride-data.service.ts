@@ -103,6 +103,50 @@ export class NoResponseRideDataService {
       });
     }
 
+    //Get No Resoponse Ride List With Filter
+    getNoResponseRideListWithFilter(page) : void {
+      const data = {
+        "page" : page,
+        "type" : 'filter',
+        "filter" : localStorage.getItem('ridesFilter')!=null?localStorage.getItem('ridesFilter'):''
+      }
+
+      const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
+    
+      this.httpClient.post<NoResponseRide>(this.http.baseUrl+this.api.getNoResponseRideList ,data, { headers }).subscribe(res => {
+          const result : any = res;
+
+          if(result.status == true){
+
+            if(Object.keys(result.data).length > 0 && result.data.constructor === Object){
+              var i = 1;
+              result.data.data.forEach(element => {
+                element.index = i;
+                i++;
+              });
+
+              this.total = result.data.total;
+              setTimeout(() => {
+                this.dataChange.next(result.data.data);
+                this.spinner.hide();
+              }, 500);
+            }
+          }
+          else{
+            this.total = 0;
+            setTimeout(() => {
+              this.dataChange.next([]);
+              this.spinner.hide();
+            }, 500);
+          }
+
+          
+      },
+      (error: HttpErrorResponse) => {
+        console.log (error.name + ' ' + error.message);
+      });
+    }
+
     // DEMO ONLY, you can find working methods below
     add (data: NoResponseRide): void {
       this.dialogData = data;

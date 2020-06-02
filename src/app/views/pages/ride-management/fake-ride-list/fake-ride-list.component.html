@@ -1,7 +1,14 @@
 <kt-portlet>
 
 	<kt-portlet-header [sticky]="true" [title]="pageTitle" [class]="'kt-portlet__head--lg'">
-	
+        <ng-container ktPortletTools>
+			<button (click)="applyCustomFilter()" mat-raised-button matTooltip="Apply Filter" color="primary" type="button">
+				<span>More Filter</span>
+			</button>&nbsp;&nbsp;
+            <button (click)="clearFilter()" mat-raised-button matTooltip="Clear Filter" color="warn" type="button">
+				<span>Clear Filter</span>
+			</button>
+		</ng-container>
 	</kt-portlet-header>
 	<!-- end::Header -->
 	<kt-portlet-body>
@@ -77,13 +84,13 @@
             
                 <!-- User Name Column -->
                 <ng-container matColumnDef="rider_name">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Name</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.rider_name}}</mat-cell>
                 </ng-container>
 
                 <!-- User Mobile Column -->
                 <ng-container matColumnDef="rider_mobile">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>User Mobile</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Mobile</mat-header-cell>
                     <mat-cell *matCellDef="let ride">{{ride.rider_mobile}}</mat-cell>
                 </ng-container>
             

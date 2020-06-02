@@ -208,6 +208,10 @@ export class PendingListComponent implements OnInit {
       });
     }  
 
+    //Clear Filter
+    clearFilter(){
+      this.dataSource.clearFilter();
+    }
 }
 
 //DataSource ===============================
@@ -291,6 +295,11 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
   //Apply Filter
   applyFilter(){
     this.exampleDatabase.getPendingRideListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getPendingRideList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */
