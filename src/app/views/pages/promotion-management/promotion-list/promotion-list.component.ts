@@ -20,6 +20,9 @@ import { AddPromotionComponent } from '../add-promotion/add-promotion.component'
 // Service
 import { PromotionDataService } from '../../../../services/promotion/promotion-data.service';
 
+//Filter Component
+import { PromotionFilterComponent } from '../promotion-list/promotion-filter/promotion-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -35,7 +38,8 @@ import { map } from 'rxjs/operators';
 })
 export class PromotionListComponent implements OnInit {
 
-  displayedColumns = ['id', 'promo_image', 'type', 'code', 'user_limit', 'start_date', 'end_date', 'actions'];
+  //'promo_image',
+  displayedColumns = ['id', 'type', 'code', 'user_limit', 'start_date', 'end_date', 'actions'];
 
   exampleDatabase : PromotionDataService | null;
   dataSource : ExampleDataSource | null;
@@ -162,6 +166,30 @@ export class PromotionListComponent implements OnInit {
     });
   }
 
+  //Apply Custom Filter
+  applyCustomFilter(){
+
+    const dialogRef = this.dialog.open(PromotionFilterComponent, {
+      width: '800px',
+      height: 'auto',
+      backdropClass: 'masterModalPopup',
+      data: { mode : 3, title : 'Promotion More Filter' },
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+    
+      if(result != 3){
+        this.dataSource.applyFilter();
+      }
+    });
+  }
+  
+  //Clear Filter
+  clearFilter(){
+    this.dataSource.clearFilter();
+  }
+
 }
 
 //DataSource ===============================
@@ -220,13 +248,22 @@ export class ExampleDataSource extends DataSource<Promotion>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
     this.exampleDatabase.getPromotionList(pageNumber);
   }
 
   /* Delete Item From List */
   deleteItem(index){
     this.exampleDatabase.deletePromotion(index)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getPromotionListWithFilter(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getPromotionList(this.exampleDatabase.page);
   }
 
   disconnect() {}

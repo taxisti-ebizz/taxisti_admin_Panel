@@ -18,6 +18,8 @@ import { PromotionListComponent } from './promotion-list/promotion-list.componen
 import { EditPromotionComponent } from './edit-promotion/edit-promotion.component';
 import { AddPromotionComponent } from './add-promotion/add-promotion.component';
 import { PromotionUserListComponent } from './promotion-user-list/promotion-user-list.component';
+import { PromotionFilterComponent } from './promotion-list/promotion-filter/promotion-filter.component';
+import { PromotionUserFilterComponent } from './promotion-user-list/promotion-user-filter/promotion-user-filter.component';
 
 
 // Material
@@ -51,7 +53,8 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 
 const routes: Routes = [
 	{
@@ -107,7 +110,9 @@ const routes: Routes = [
     MatTabsModule,
     MatTooltipModule,
     MatDialogModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    NgMultiSelectDropDownModule.forRoot(),
+    BsDatepickerModule.forRoot()
   ],
   providers: [
     InterceptService,
@@ -135,11 +140,15 @@ const routes: Routes = [
     PromotionListComponent,
     EditPromotionComponent,
     AddPromotionComponent,
-    PromotionUserListComponent
+    PromotionUserListComponent,
+    PromotionFilterComponent,
+    PromotionUserFilterComponent
   ],
   entryComponents: [
     EditPromotionComponent,
-    AddPromotionComponent
+    AddPromotionComponent,
+    PromotionFilterComponent,
+    PromotionUserFilterComponent
   ]
 })
 export class PromotionManagementModule { }

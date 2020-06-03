@@ -124,4 +124,11 @@ export class UserFilterComponent implements OnInit {
     this.dialogRef.close(true);
   }
 
+  //Reset Form
+  resetForm(){
+    (<HTMLInputElement>document.getElementById('dob')).value = '';
+    (<HTMLInputElement>document.getElementById('dor')).value = '';
+    this.userFilterForm.reset();
+  }
+
 }

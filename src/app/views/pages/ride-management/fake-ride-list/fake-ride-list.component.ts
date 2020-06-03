@@ -265,7 +265,7 @@ export class ExampleDataSource extends DataSource<FakeRide>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getFakeRideListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getFakeRideList(this.exampleDatabase.page);
   }
 
   //Clear Filter

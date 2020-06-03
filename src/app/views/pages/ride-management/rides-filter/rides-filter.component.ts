@@ -103,4 +103,24 @@ export class RidesFilterComponent implements OnInit {
         this.dialogRef.close();
     }
 
-}
+    //Reset Form
+    resetForm(){
+      if(localStorage.getItem('listType')=='completedRide'){
+        (<HTMLInputElement>document.getElementById('min_rider_rating')).value = '';
+        (<HTMLInputElement>document.getElementById('max_rider_rating')).value = '';
+        (<HTMLInputElement>document.getElementById('min_driver_rating')).value = '';
+        (<HTMLInputElement>document.getElementById('max_driver_rating')).value = '';
+      }
+      else if(localStorage.getItem('listType')=='fakeRide'){
+        (<HTMLInputElement>document.getElementById('min_rider_rating')).value = '';
+        (<HTMLInputElement>document.getElementById('max_rider_rating')).value = '';
+        (<HTMLInputElement>document.getElementById('min_driver_rating')).value = '';
+        (<HTMLInputElement>document.getElementById('max_driver_rating')).value = '';
+        (<HTMLInputElement>document.getElementById('rider_mobile')).value = '';
+        (<HTMLInputElement>document.getElementById('driver_mobile')).value = '';
+      }
+      
+      this.rideFilterForm.reset();
+    }
+
+} 

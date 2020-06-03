@@ -53,9 +53,19 @@ export class CanceledRideDataService {
         urlType = 'lastWeek';
       }
 
-      const data = {
-        "page" : page,
-        "type" : urlType
+      var data = {};
+      if(localStorage.getItem('ridesFilter')!=null && localStorage.getItem('ridesFilter')!=''){
+        data = {
+          "page" : page,
+          "type" : urlType,
+          "sub_type" : "filter",
+          "filter" : localStorage.getItem('ridesFilter')!=null?localStorage.getItem('ridesFilter'):''
+        }
+      }else{
+        data = {
+          "page" : page,
+          "type" : urlType
+        }
       }
 
       const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
@@ -98,57 +108,6 @@ export class CanceledRideDataService {
         console.log (error.name + ' ' + error.message);
       });
     }
-
-    //Get Canceled Ride List Data With Filter
-    getCanceledRideListWithFilter(page) : void {
-      this.spinner.show();
-
-      const data = {
-        "page" : page,
-        "type" : 'filter',
-        "filter" : localStorage.getItem('ridesFilter')!=null?localStorage.getItem('ridesFilter'):''
-      }
-
-      const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
-    
-      this.httpClient.post<CanceledRide>(this.http.baseUrl+this.api.getCanceledRideList ,data, { headers }).subscribe(res => {
-          const result : any = res;
-
-          if(result.status == true){
-
-            if(Object.keys(result.data).length > 0 && result.data.constructor === Object){
-              var i = 1;
-              result.data.data.forEach(element => {
-                element.index = i;
-                if(element.cancel_by == 1){
-                  element.cancel_by_name = 'Driver';
-                }
-                else if(element.cancel_by == 2){
-                  element.cancel_by_name = 'Rider';
-                }
-                i++;
-              });
-
-              this.total = result.data.total;
-              setTimeout(() => {
-                this.dataChange.next(result.data.data);
-                this.spinner.hide();
-              }, 500);
-
-            }
-          }
-          else{
-            this.total = 0;
-            setTimeout(() => {
-              this.dataChange.next([]);
-              this.spinner.hide();
-            }, 500);
-          }
-      },
-      (error: HttpErrorResponse) => {
-        console.log (error.name + ' ' + error.message);
-      });
-    } 
 
     // DEMO ONLY, you can find working methods below
     add (data: CanceledRide): void {

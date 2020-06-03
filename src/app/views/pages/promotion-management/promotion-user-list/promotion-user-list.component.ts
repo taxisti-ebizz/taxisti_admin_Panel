@@ -15,6 +15,9 @@ import { LayoutUtilsService, MessageType, QueryParamsModel } from '../../../../c
 // Service
 import { PromotionUserDataService } from '../../../../services/promotion/promotion-user-data.service';
 
+//Filter Component
+import { PromotionUserFilterComponent } from '../promotion-user-list/promotion-user-filter/promotion-user-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -31,7 +34,8 @@ import { map } from 'rxjs/operators';
 })
 export class PromotionUserListComponent implements OnInit {
 
-    displayedColumns = ['id', 'profile_pic', 'username', 'mobile', 'description', 'created_date', 'action'];
+    //'profile_pic',
+    displayedColumns = ['id', 'username', 'mobile', 'description', 'created_date', 'action'];
 
     exampleDatabase : PromotionUserDataService | null;
     dataSource : ExampleDataSource | null;
@@ -116,7 +120,30 @@ export class PromotionUserListComponent implements OnInit {
       });
     }
     
+    //Apply Custom Filter
+    applyCustomFilter(){
+
+      const dialogRef = this.dialog.open(PromotionUserFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Promotion User More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }
     
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('promotionUserFilter','');
+      this.dataSource.clearFilter();
+    }
 
 }
 
@@ -176,13 +203,22 @@ export class ExampleDataSource extends DataSource<PromotionUser>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
     this.exampleDatabase.getPromotionUserList(pageNumber);
   }
 
   /* Redeem Coupon */
   redeemCoupon(index){
     this.exampleDatabase.redeemCoupon(index)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getPromotionUserList(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getPromotionUserList(this.exampleDatabase.page);
   }
 
   disconnect() {}

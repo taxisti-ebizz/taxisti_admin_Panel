@@ -83,6 +83,8 @@ export class DriverFilterComponent implements OnInit {
         max_current_week : [''],
         min_total_hours : [''],
         max_total_hours : [''],
+        min_total_reviews : [''],
+        max_total_reviews : [''],
         min_average : [''],
         max_average : ['']
       })
@@ -148,7 +150,7 @@ export class DriverFilterComponent implements OnInit {
           "acceptance_ratio" : formData.min_acceptance!=''?formData.min_acceptance+'-'+formData.max_acceptance:'',
           "online_hours_last_week" : formData.min_last_week!=''?formData.min_last_week+'-'+formData.max_last_week:'',
           "online_hours_current_week" : formData.min_current_week!=''?formData.min_current_week+'-'+formData.max_current_week:'',
-          "total_online_hours" : formData.min_total_hours!=''?formData.min_total_hours+'-'+formData.max_total_hours:'',
+          "total_online_hours" : formData.min_total_hours!=''?formData.min_total_hours+'-'+formData.max_total_hours:''
         } 
     
         localStorage.setItem('driverFilter',JSON.stringify(data));
@@ -159,5 +161,12 @@ export class DriverFilterComponent implements OnInit {
 
     onAlertClose(){
       this.hasFormErrors = false;
+    }
+
+    //Reset Form
+    resetForm(){
+      (<HTMLInputElement>document.getElementById('dob')).value = '';
+      (<HTMLInputElement>document.getElementById('dor')).value = '';
+      this.driverFilterForm.reset();
     }
 }

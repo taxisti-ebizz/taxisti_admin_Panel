@@ -209,6 +209,12 @@ export class NoResponseListComponent implements OnInit {
         }
       });
     } 
+
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('ridesFilter','');
+      this.dataSource.clearFilter();
+    }
 }
 
 //DataSource ===============================
@@ -289,7 +295,12 @@ export class ExampleDataSource extends DataSource<NoResponseRide>{
 
   //Apply FIlter 
   applyFilter(){
-    this.exampleDatabase.getNoResponseRideListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getNoResponseRideList(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getNoResponseRideList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

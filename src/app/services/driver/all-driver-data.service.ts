@@ -48,51 +48,21 @@ export class AllDriverDataService {
       urlType = 'lastWeek';
     }
 
-    const data = {
-      "page" : page,
-      "type" : urlType
+    var data = {};
+    if(localStorage.getItem('driverFilter')!=null && localStorage.getItem('driverFilter')!=''){
+      data = {
+        "page" : page,
+        "type" : urlType,
+        "sub_type" : "filter",
+        "filter" : localStorage.getItem('driverFilter')
+      }
+    }else{
+      data = {
+        "page" : page,
+        "type" : urlType
+      }
     }
 
-    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
-   
-    this.httpClient.post<DriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
-        const result : any = res;
-        if(result.status == true){
-          var i = 1;
-          result.data.data.forEach(element => {
-            element.id = i;
-            i++;
-          });
-          
-          this.total = result.data.total;
-          setTimeout(() => {
-            this.dataChange.next(result.data.data);
-            this.spinner.hide();
-          }, 500);
-          
-        }
-        else{
-          this.total = 0;
-          setTimeout(() => {
-            this.dataChange.next([]);
-            this.spinner.hide();
-          }, 500);
-        }
-    },
-    (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
-    });
-  }
-
-  //Get All Driver List With Filter
-  getAllDriverListWithFilter(page): void {
-    this.spinner.show();
-
-    const data = {
-      "page" : page,
-      "type" : 'filter',
-      "filter" : localStorage.getItem('driverFilter')!=null?localStorage.getItem('driverFilter'):''
-    }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
    

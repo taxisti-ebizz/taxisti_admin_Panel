@@ -187,6 +187,12 @@ export class CompleteListComponent implements OnInit {
       });
     }  
 
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('ridesFilter','');
+      this.dataSource.clearFilter();
+    }
+
 }
 
 
@@ -262,7 +268,12 @@ export class ExampleDataSource extends DataSource<CompleteRideIssue>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getCompletedgRideListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getCompleteRideList(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getCompleteRideList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

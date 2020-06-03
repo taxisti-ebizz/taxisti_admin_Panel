@@ -42,8 +42,18 @@ export class ContactUsDataService {
   getContactUsList(page) : void {
     this.spinner.show();
 
-    const data = {
-      "page" : page
+    var data = {};
+
+    if(localStorage.getItem('contactUsFilter')!=null && localStorage.getItem('contactUsFilter')!=''){
+      data = {
+        "page" : page,
+        "type" : "filter",
+        "filter" : localStorage.getItem('contactUsFilter')
+      }
+    }else{
+      data = {
+        "page" : page
+      }
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })

@@ -30,6 +30,7 @@ export class DataService {
       return this.dialogData;
     }
 
+    //Delete USer
     deleteUser(index){
       const foundIndex = this.dataChange.value.findIndex(x => x.id === index);
   
@@ -39,7 +40,7 @@ export class DataService {
       this.dataChange.next(this.dataChange.value);
     }
 
-
+    //Get All User List
     getAllUserList(page): void {
       this.spinner.show();
 
@@ -51,51 +52,19 @@ export class DataService {
         urlType = 'lastWeek';
       }
 
-      const data = {
-        "page" : page,
-        "type" : urlType
-      }
-      const headers : HttpHeaders = new HttpHeaders({ Authorization: 'Bearer '+localStorage.getItem('token') });
-  
-      this.httpClient.post<UserIssue[]>(this.http.baseUrl+this.api.userList, data, { headers }).subscribe(data => {
-          const result : any = data;
-          var i = 1;
-          if(result.status == true){
-            result.data.data.forEach(element => {
-              element.id = i;
-              
-              i++;
-            });
-            
-            
-            this.total = result.data.total;
-            setTimeout(() => {
-              this.dataChange.next(result.data.data);
-              this.spinner.hide();
-            }, 500);
-          }
-          else{
-           
-            this.total = 0;
-            setTimeout(() => {
-              this.dataChange.next([]);
-              this.spinner.hide();
-            }, 500);
-          }
-         
-      },
-      (error: HttpErrorResponse) => {
-        console.log (error.name + ' ' + error.message);
-      });
-    }
-
-    getAllUserListWithFilter(page): void {
-      this.spinner.show();
-
-      const data = {
-        "page" : page,
-        "type" : 'filter',
-        "filter" : localStorage.getItem('userFilter')!=null?localStorage.getItem('userFilter'):''
+      var data = {};
+      if(localStorage.getItem('userFilter')!=null && localStorage.getItem('userFilter')!=''){
+        data = {
+          "page" : page,
+          "type" : urlType,
+          "sub_type" : 'filter',
+          "filter" : localStorage.getItem('userFilter')
+        }
+      }else {
+        data = {
+          "page" : page,
+          "type" : urlType
+        }
       }
 
       const headers : HttpHeaders = new HttpHeaders({ Authorization: 'Bearer '+localStorage.getItem('token') });
@@ -131,7 +100,7 @@ export class DataService {
         console.log (error.name + ' ' + error.message);
       });
     }
-  
+
     // DEMO ONLY, you can find working methods below
     addIssue (issue: UserIssue): void {
       this.dialogData = issue;

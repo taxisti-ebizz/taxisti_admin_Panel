@@ -16,7 +16,7 @@ import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsServi
 import { ContactUsManagementComponent } from './contact-us-management.component';
 import { ContactUsListComponent } from './contact-us-list/contact-us-list.component';
 import { ViewContactMessagesComponent } from './view-contact-messages/view-contact-messages.component';
-
+import { ContactUsFilterComponent } from './contact-us-filter/contact-us-filter.component';
 
 // Material
 import {
@@ -49,6 +49,9 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 const routes: Routes = [
 	{
@@ -100,7 +103,9 @@ const routes: Routes = [
     MatTabsModule,
     MatTooltipModule,
     MatDialogModule,
-    NgbPaginationModule
+    NgbPaginationModule,
+    BsDatepickerModule.forRoot(),
+    NgMultiSelectDropDownModule.forRoot()
   ],
   providers: [
     InterceptService,
@@ -126,10 +131,12 @@ const routes: Routes = [
   declarations: [
     ContactUsManagementComponent,
     ContactUsListComponent,
-    ViewContactMessagesComponent
+    ViewContactMessagesComponent,
+    ContactUsFilterComponent
   ],
   entryComponents: [
-    ViewContactMessagesComponent
+    ViewContactMessagesComponent,
+    ContactUsFilterComponent
   ]
 })
 export class ContactUsManagementModule { }

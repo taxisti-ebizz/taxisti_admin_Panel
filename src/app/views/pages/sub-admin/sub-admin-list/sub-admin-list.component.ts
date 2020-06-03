@@ -21,6 +21,9 @@ import { SubAdminDataService } from '../../../../services/sub-admin/sub-admin-da
 //Component
 import { AddSubAdminComponent } from '../add-sub-admin/add-sub-admin.component';
 
+//Filter Component
+import { SubAdminFilterComponent } from '../sub-admin-filter/sub-admin-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -173,6 +176,31 @@ export class SubAdminListComponent implements OnInit {
         });
       });
     }
+
+    //Apply Custom Filter
+    applyCustomFilter(){
+
+      const dialogRef = this.dialog.open(SubAdminFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Sub Admin More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }
+    
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('subAdminFilter','');
+      this.dataSource.clearFilter();
+    }
 }
 
 //DataSource ===============================
@@ -239,6 +267,16 @@ export class ExampleDataSource extends DataSource<SubAdmin>{
   /* Delete Item From List */
   deleteItem(index){
     this.exampleDatabase.deleteSubAdmin(index)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getSubAdminList(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getSubAdminList(this.exampleDatabase.page);
   }
 
   disconnect() {}

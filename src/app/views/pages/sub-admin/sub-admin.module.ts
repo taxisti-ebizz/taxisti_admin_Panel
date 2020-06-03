@@ -16,6 +16,7 @@ import { HttpUtilsService, TypesUtilsService, InterceptService, LayoutUtilsServi
 import { SubAdminComponent } from './sub-admin.component';
 import { SubAdminListComponent } from './sub-admin-list/sub-admin-list.component';
 import { AddSubAdminComponent } from './add-sub-admin/add-sub-admin.component';
+import { SubAdminFilterComponent } from './sub-admin-filter/sub-admin-filter.component';
 
 // Material
 import {
@@ -125,10 +126,12 @@ const routes: Routes = [
   declarations: [
     SubAdminComponent,
     SubAdminListComponent,
-    AddSubAdminComponent
+    AddSubAdminComponent,
+    SubAdminFilterComponent
   ],
   entryComponents: [
-    AddSubAdminComponent
+    AddSubAdminComponent,
+    SubAdminFilterComponent
   ]
 })
 export class SubAdminModule { }

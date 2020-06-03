@@ -6,20 +6,15 @@
 		</div>
 	</div>
 
-	<form class="kt-form" [formGroup]="noDriverAvailbleFilterForm" (ngSubmit)="applyFilter(noDriverAvailbleFilterForm.value)">
+	<form class="kt-form" [formGroup]="promotionUserFilterForm" (ngSubmit)="applyFilter(promotionUserFilterForm.value)">
 		<div class="kt-portlet__body">
-
-            <kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose()">
-				Enter atleast one value in the field
-			</kt-alert>
-
 
             <div class="form-group kt-form__group row">
                 <div class="form-row mb-4 fullwidthl">
-                    <!-- Rider Name -->
+                    <!-- User Name -->
                     <div class="col-xs-12 col-md-3">
-                        <label for="ssn" class="form-label label document">Rider Name</label>
-                        <input type="text" class="form-control" formControlName="rider_name" placeholder="Rider Name">
+                        <label for="ssn" class="form-label label document">Username</label>
+                        <input type="text" class="form-control" formControlName="username" placeholder="Username">
                     </div>
 
                     <!-- Mobile -->
@@ -28,28 +23,29 @@
                         <input type="text" class="form-control" formControlName="mobile" placeholder="Mobile">
                     </div>
 
-                    <!-- Location -->
+                    <!-- Description -->
                     <div class="col-xs-12 col-md-3">
-                        <label for="ssn" class="form-label label document">Location</label>
-                        <input type="text" class="form-control" formControlName="location" placeholder="Location">
-                    </div>  
-                    
-                    <!-- Created Date -->
+                        <label for="ssn" class="form-label label document">Description</label>
+                        <input type="text" class="form-control" placeholder="Min" formControlName="description" placeholder="Description"/>
+                    </div>   
+
+                    <!-- Apply Date -->
                     <div class="col-xs-12 col-md-3">
-                        <label for="ssn" class="form-label label document">Created Date</label>
-                        <input type="text" class="form-control" id="created_date"
-                            placeholder="YYYY-MM-DD"  bsDaterangepicker 
-                            [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-dark-blue', rangeInputFormat : 'YYYY-MM-DD', dateInputFormat: 'YYYY-MM-DD' }" autocomplete="off">
-                    </div>  
+                        <label for="ssn" class="form-label label document">Apply Date</label>
+                        <input type="text" class="form-control" id="apply_date"
+                            placeholder="YYYY-MM-DD"  bsDaterangepicker
+                            [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-red', rangeInputFormat : 'YYYY-MM-DD', dateInputFormat: 'YYYY-MM-DD' }" autocomplete="off">
+                    </div> 
                 </div>
-            </div>       
+            </div>   
+            
 		</div>
 		
 		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
 			<div class="kt-form__actions kt-form__actions--solid">
 				<div class="row text-right">
 					<div class="col-lg-12">
-						<button type="button" class="resetForm" mat-raised-button (click)="resetForm()" matTooltip="Reset Form">Reset</button>&nbsp;
+                        <button type="button" class="resetForm" mat-raised-button (click)="resetForm()" matTooltip="Reset Form">Reset</button>&nbsp;
                         <button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Apply Filter">Apply</button>&nbsp;
                         <button type="button" mat-raised-button [mat-dialog-close]="3" cdkFocusInitial matTooltip="Close Modal" color="warn">
 							Close

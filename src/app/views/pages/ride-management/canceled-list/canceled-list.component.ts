@@ -190,6 +190,7 @@ export class CanceledListComponent implements OnInit {
 
     //Clear Filter
     clearFilter(){
+      localStorage.setItem('ridesFilter','');
       this.dataSource.clearFilter();
     }
 
@@ -268,7 +269,7 @@ export class ExampleDataSource extends DataSource<CanceledRide>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getCanceledRideListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getCanceledRideList(this.exampleDatabase.page);
   }
 
   //Clear Filter

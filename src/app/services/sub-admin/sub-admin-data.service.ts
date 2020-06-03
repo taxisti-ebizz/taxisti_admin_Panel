@@ -42,8 +42,17 @@ export class SubAdminDataService {
   getSubAdminList(page) : void {
     this.spinner.show();
 
-    const data = {
-      "page" : page
+    var data = {};
+    if(localStorage.getItem('subAdminFilter')!=null && localStorage.getItem('subAdminFilter')!=''){
+      data = {
+        "page" : page,
+        "type" : 'filter',
+        "filter" : localStorage.getItem('subAdminFilter')
+      }
+    }else{
+      data = {
+        "page" : page
+      }
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })

@@ -117,10 +117,11 @@
 			<div class="kt-form__actions kt-form__actions--solid">
 				<div class="row text-right">
 					<div class="col-lg-12">
-						<button type="button" mat-raised-button [mat-dialog-close]="3" cdkFocusInitial matTooltip="Close Modal">
+						<button type="button" class="resetForm" mat-raised-button (click)="resetForm()" matTooltip="Reset Form">Reset</button>&nbsp;
+                        <button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Apply Filter">Apply</button>&nbsp;
+                        <button type="button" mat-raised-button [mat-dialog-close]="3" cdkFocusInitial matTooltip="Close Modal" color="warn">
 							Close
-                        </button>&nbsp;
-						<button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Apply Filter">Apply</button>
+                        </button>
 					</div>
 				</div>
 			</div>

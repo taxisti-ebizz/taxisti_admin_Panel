@@ -256,6 +256,12 @@ export class DriverListComponent implements OnInit {
         }
       });
     }  
+
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('driverFilter','');;
+      this.dataSource.clearFilter();
+    }
     
     private refreshTable() {
       // Refreshing table using paginator
@@ -343,7 +349,12 @@ export class ExampleDataSource extends DataSource<DriverIssue>{
 
     //Apply Filter
     applyFilter(){
-      this.exampleDatabase.getAllDriverListWithFilter(this.exampleDatabase.page);
+      this.exampleDatabase.getAllDriverList(this.exampleDatabase.page);
+    }
+
+    //Clear Filter
+    clearFilter(){
+      this.exampleDatabase.getAllDriverList(this.exampleDatabase.page);
     }
 
     /* Refresh perticular page */

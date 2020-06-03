@@ -61,53 +61,19 @@ export class PendingRideDataService {
       urlType = 'lastWeek';
     }
 
-    const data = {
-      "page" : page,
-      "type" : urlType
-    }
-
-    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
-   
-    this.httpClient.post<PendingRideIssue>(this.http.baseUrl+this.api.getPendingRideList,data,{ headers }).subscribe(res => {
-        const result : any = res;
-
-        if(result.status == true){
-
-          if(Object.keys(result.data).length > 0 && result.data.constructor === Object){
-            var i = 1;
-            result.data.data.forEach(element => {
-              element.index = i;
-              i++;
-            });
-
-            this.total = result.data.total;
-            setTimeout(() => {
-              this.dataChange.next(result.data.data);
-              this.spinner.hide();
-            }, 500);
-          }
-        }
-        else{
-          this.total = 0;
-          setTimeout(() => {
-            this.dataChange.next([]);
-            this.spinner.hide();
-          }, 500);
-        }
-    },
-    (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
-    });
-  }
-
-  //Get Pending Ride List Data With Filter
-  getPendingRideListWithFilter(page) : void {
-    this.spinner.show();
-
-    const data = {
-      "page" : page,
-      "type" : 'filter',
-      "filter" : localStorage.getItem('ridesFilter')!=null?localStorage.getItem('ridesFilter'):''
+    var data = {};
+    if(localStorage.getItem('ridesFilter')!=null && localStorage.getItem('ridesFilter')!=''){
+      data = {
+        "page" : page,
+        "type" : urlType,
+        "sub_type" : 'filter',
+        "filter" : localStorage.getItem('ridesFilter')
+      }
+    }else{
+      data = {
+        "page" : page,
+        "type" : urlType
+      }
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })

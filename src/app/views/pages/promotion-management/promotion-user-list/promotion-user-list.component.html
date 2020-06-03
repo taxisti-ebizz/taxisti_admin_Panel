@@ -1,7 +1,14 @@
 <kt-portlet>
 
 	<kt-portlet-header [sticky]="true" [title]="'Promotion User List'" [class]="'kt-portlet__head--lg'">
-       
+        <ng-container ktPortletTools>
+            <button (click)="applyCustomFilter()" mat-raised-button matTooltip="Apply Filter" color="primary" type="button">
+				<span>More Filter</span>
+            </button>&nbsp;&nbsp;
+            <button (click)="clearFilter()" mat-raised-button matTooltip="Clear Filter" color="warn" type="button">
+				<span>Clear Filter</span>
+			</button>
+		</ng-container>
 	</kt-portlet-header>
 	<!-- end::Header -->
 	<kt-portlet-body>
@@ -38,7 +45,7 @@
                 </ng-container>
 
                  <!-- Profile Pic Column -->
-                 <ng-container matColumnDef="profile_pic">
+                 <!-- <ng-container matColumnDef="profile_pic">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Profile Pic</mat-header-cell>
                     <mat-cell *matCellDef="let promo">
                         <ng-container *ngIf="promo.profile_pic!=''">
@@ -48,7 +55,7 @@
                             <img src="assets/img/user_image.png">
                         </ng-container>
                     </mat-cell>
-                </ng-container>
+                </ng-container> -->
             
                 <!-- Username Column -->
                 <ng-container matColumnDef="username">
@@ -84,7 +91,7 @@
                             </button>
                         </ng-container>
                         <ng-container *ngIf="promo.redeem==1">
-                            <img src="assets/img/check.png" class="checked">
+                            <img src="assets/img/check.png" class="checked" matTooltip="Redeemed">
                         </ng-container>
                     </mat-cell>
                 </ng-container>
@@ -92,6 +99,10 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let promo; columns: displayedColumns;"></mat-row>
             </mat-table>
+
+            <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No records found
+            </div>
         </div>
 
         <!-- start: BOTTOM -->

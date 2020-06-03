@@ -1,0 +1,44 @@
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<div class="kt-portlet__head kt-portlet__head__custom">
+		<div class="kt-portlet__head-label">
+			<h3 class="kt-portlet__head-title">{{data.title}}</h3>
+		</div>
+	</div>
+
+	<form class="kt-form" [formGroup]="subAdminFilterForm" (ngSubmit)="applyFilter(subAdminFilterForm.value)">
+		<div class="kt-portlet__body">
+
+            <div class="form-group kt-form__group row">
+                <div class="form-row mb-4 fullwidthl">
+                    <!-- Name -->
+                    <div class="col-xs-12 col-md-6">
+                        <label for="ssn" class="form-label label document">Name</label>
+                        <input type="text" class="form-control" formControlName="name" placeholder="Name">
+                    </div>
+
+                    <!-- Email ID -->
+                    <div class="col-xs-12 col-md-6">
+                        <label for="ssn" class="form-label label document">Email Id</label>
+                        <input type="text" class="form-control" formControlName="email_id" placeholder="Email Id">
+                    </div>
+                </div>
+            </div>   
+            
+		</div>
+		
+		<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+			<div class="kt-form__actions kt-form__actions--solid">
+				<div class="row text-right">
+					<div class="col-lg-12">
+                        <button type="button" class="resetForm" mat-raised-button (click)="resetForm()" matTooltip="Reset Form">Reset</button>&nbsp;
+                        <button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Apply Filter">Apply</button>&nbsp;
+                        <button type="button" mat-raised-button [mat-dialog-close]="3" cdkFocusInitial matTooltip="Close Modal" color="warn">
+							Close
+                        </button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</form>
+</div>

@@ -30,8 +30,8 @@ export class NoDriverAvailableFilterComponent implements OnInit {
 
     }
 
-     //Apply Filter
-     applyFilter(formData){
+    //Apply Filter
+    applyFilter(formData){
 
       var created_date = (<HTMLInputElement>document.getElementById('created_date')).value;
           created_date = ""+created_date.toString()+"";
@@ -47,6 +47,12 @@ export class NoDriverAvailableFilterComponent implements OnInit {
       
       localStorage.setItem('notAvailRidesFilter',JSON.stringify(data));
       this.dialogRef.close();
-  }
+    }
+
+    //Reset Form
+    resetForm(){
+      (<HTMLInputElement>document.getElementById('created_date')).value = '';
+      this.noDriverAvailbleFilterForm.reset();
+    }
 
 }

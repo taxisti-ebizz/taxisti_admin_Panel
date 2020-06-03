@@ -41,10 +41,22 @@ export class PromotionUserDataService {
     //Get Promotion User Data
     getPromotionUserList(page) : void {
       this.spinner.show();
-  
-      const data = {
-        "page" : page
+
+      var data = {};
+      
+      if(localStorage.getItem('promotionUserFilter')!=null && localStorage.getItem('promotionUserFilter')!=''){
+        data = {
+          "page" : page,
+          "type" : "filter",
+          "filter" : localStorage.getItem('promotionUserFilter')
+        }
       }
+      else{
+        data = {
+          "page" : page
+        }
+      }
+      
   
       const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
      
@@ -79,7 +91,7 @@ export class PromotionUserDataService {
         console.log (error.name + ' ' + error.message);
       });
     }
-  
+
     // DEMO ONLY, you can find working methods below
     add (data: PromotionUser): void {
       this.dialogData = data;

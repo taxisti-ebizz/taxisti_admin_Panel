@@ -217,6 +217,12 @@ export class OnlineDriverListComponent implements OnInit {
     });
   }  
 
+  //Clear Filter
+  clearFilter(){
+    localStorage.setItem('driverFilter','');;
+    this.dataSource.clearFilter();
+  }
+
 }
 
 
@@ -284,12 +290,17 @@ export class ExampleDataSource extends DataSource<OnlineDriverIssue>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getOnlineDriverListWithList(this.exampleDatabase.page);
+    this.exampleDatabase.getOnlineDriverList(this.exampleDatabase.page);
   }
 
   /* Delete Item From List */
   deleteItem(index){
     this.exampleDatabase.deleteOnlineDriver(index)
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getOnlineDriverList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

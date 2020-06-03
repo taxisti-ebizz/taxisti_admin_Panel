@@ -21,6 +21,9 @@ import { ContactUsDataService } from '../../../../services/contact-us/contact-us
 //Component
 import { ViewContactMessagesComponent } from '../view-contact-messages/view-contact-messages.component';
 
+//Filter Component
+import { ContactUsFilterComponent } from '../contact-us-filter/contact-us-filter.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -137,6 +140,31 @@ export class ContactUsListComponent implements OnInit {
       });
             
     }
+
+    //Apply Custom Filter
+    applyCustomFilter(){
+
+      const dialogRef = this.dialog.open(ContactUsFilterComponent, {
+        width: '800px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Contact Us More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }
+    
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('contactUsFilter','');
+      this.dataSource.clearFilter();
+    }
          
 }
 
@@ -197,13 +225,22 @@ export class ExampleDataSource extends DataSource<ContactUs>{
 
   /*Change Pagination and get next page data */
   changePage(pageNumber){
-    
     this.exampleDatabase.getContactUsList(pageNumber);
   }
 
   /* Delete Item From List */
   deleteItem(index){
     this.exampleDatabase.deleteContact(index)
+  }
+
+  //Apply Filter
+  applyFilter(){
+    this.exampleDatabase.getContactUsList(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getContactUsList(this.exampleDatabase.page);
   }
 
   disconnect() {}

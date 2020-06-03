@@ -211,6 +211,8 @@ export class RunningListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      localStorage.setItem('listType','');
+
       const dialogRef = this.dialog.open(RidesFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -226,6 +228,12 @@ export class RunningListComponent implements OnInit {
         }
       });
     }  
+
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('ridesFilter','');
+      this.dataSource.clearFilter();
+    }
 
 }
 
@@ -308,7 +316,12 @@ export class ExampleDataSource extends DataSource<RunningRideIssue>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getRunningRideListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getRunningRideList(this.exampleDatabase.page);
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getRunningRideList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

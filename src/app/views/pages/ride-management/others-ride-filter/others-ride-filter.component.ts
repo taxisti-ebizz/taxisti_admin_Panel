@@ -60,49 +60,57 @@ export class OthersRideFilterComponent implements OnInit {
     }
 
     //Apply Filter
-  applyFilter(formData){
+    applyFilter(formData){
 
-    var startDate = (<HTMLInputElement>document.getElementById('start_date')).value;
-        startDate = ""+startDate.toString()+"";
-    var start_date = startDate.replace(/\s+-/g, '');
+      var startDate = (<HTMLInputElement>document.getElementById('start_date')).value;
+          startDate = ""+startDate.toString()+"";
+      var start_date = startDate.replace(/\s+-/g, '');
 
-    var endDate = (<HTMLInputElement>document.getElementById('end_date')).value;
-        endDate = ""+endDate.toString()+"";
-    var end_date = endDate.replace(/\s+-/g, '');
+      var endDate = (<HTMLInputElement>document.getElementById('end_date')).value;
+          endDate = ""+endDate.toString()+"";
+      var end_date = endDate.replace(/\s+-/g, '');
 
-    var date_of_ride = (<HTMLInputElement>document.getElementById('date_of_ride')).value;
-        date_of_ride = ""+date_of_ride.toString()+"";
-    var dateOfRide = date_of_ride.replace(/\s+-/g, '');
+      var date_of_ride = (<HTMLInputElement>document.getElementById('date_of_ride')).value;
+          date_of_ride = ""+date_of_ride.toString()+"";
+      var dateOfRide = date_of_ride.replace(/\s+-/g, '');
 
-    var date_of_cancel = (<HTMLInputElement>document.getElementById('date_of_cancel')).value;
-        date_of_cancel = ""+date_of_cancel.toString()+"";
-    var dateOfCancel = date_of_cancel.replace(/\s+-/g, '');
+      var date_of_cancel = (<HTMLInputElement>document.getElementById('date_of_cancel')).value;
+          date_of_cancel = ""+date_of_cancel.toString()+"";
+      var dateOfCancel = date_of_cancel.replace(/\s+-/g, '');
 
-    var cancelByData = '';
-    for (let i = 0; i < formData.cancel_by.length; i++) {
-      if(cancelByData!=''){
-        cancelByData += ',';
+      var cancelByData = '';
+      for (let i = 0; i < formData.cancel_by.length; i++) {
+        if(cancelByData!=''){
+          cancelByData += ',';
+        }
+        cancelByData += formData.cancel_by[i].cancelBy_id;
       }
-      cancelByData += formData.cancel_by[i].cancelBy_id;
+
+      const data = {
+        "user_name" : formData.username,
+        "driver_name" : formData.driver_name,
+        "driver_mobile" : formData.driver_mobile,
+        "user_mobile" : formData.user_mobile,
+        "start_date" : start_date,
+        "end_date" : end_date,
+        "start_location" : formData.start_location,
+        "end_location" : formData.end_location,
+        "amount" : formData.min_amount!=''?formData.min_amount+'-'+formData.max_amount:'',
+        "date_of_ride" : dateOfRide,
+        "date_of_cancel" : dateOfCancel,
+        "cancel_by" : cancelByData,
+      } 
+
+      localStorage.setItem('ridesFilter',JSON.stringify(data));
+      this.dialogRef.close(true);
     }
 
-    const data = {
-      "user_name" : formData.username,
-      "driver_name" : formData.driver_name,
-      "driver_mobile" : formData.driver_mobile,
-      "user_mobile" : formData.user_mobile,
-      "start_date" : start_date,
-      "end_date" : end_date,
-      "start_location" : formData.start_location,
-      "end_location" : formData.end_location,
-      "amount" : formData.min_amount!=''?formData.min_amount+'-'+formData.max_amount:'',
-      "date_of_ride" : dateOfRide,
-      "date_of_cancel" : dateOfCancel,
-      "cancel_by" : cancelByData,
-    } 
-
-    localStorage.setItem('ridesFilter',JSON.stringify(data));
-    this.dialogRef.close(true);
-  }
-
+    //Reset Form
+    resetForm(){
+      (<HTMLInputElement>document.getElementById('start_date')).value = '';
+      (<HTMLInputElement>document.getElementById('end_date')).value = '';
+      (<HTMLInputElement>document.getElementById('date_of_ride')).value = '';
+      (<HTMLInputElement>document.getElementById('date_of_cancel')).value = '';
+      this.otherRideFilterForm.reset();
+    }
 }

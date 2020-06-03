@@ -2,8 +2,14 @@
 
 	<kt-portlet-header [sticky]="true" [title]="'Sub Admin List'" [class]="'kt-portlet__head--lg'">
         <ng-container ktPortletTools>
-			<button (click)="addSubAdmin()" mat-raised-button matTooltip="Add New" color="primary" type="button">
+			<button (click)="addSubAdmin()" mat-raised-button matTooltip="Add New" class="addSubAdmin" type="button">
 				<span>Add New Sub Admin</span>
+			</button>&nbsp;&nbsp;
+            <button (click)="applyCustomFilter()" mat-raised-button matTooltip="Apply Filter" color="primary" type="button">
+				<span>More Filter</span>
+            </button>&nbsp;&nbsp;
+            <button (click)="clearFilter()" mat-raised-button matTooltip="Clear Filter" color="warn" type="button">
+				<span>Clear Filter</span>
 			</button>
 		</ng-container>
 	</kt-portlet-header>

@@ -231,6 +231,12 @@ export class ListComponent implements OnInit {
     });
   }  
 
+  //Clear Filter
+  clearFilter(){
+    localStorage.setItem('driverFilter','');;
+    this.dataSource.clearFilter();
+  }
+
 
   private refreshTable() {
     // Refreshing table using paginator
@@ -307,12 +313,17 @@ export class ExampleDataSource extends DataSource<CurrentDriverIssue>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getCurrentDriverListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getCurrentDriverList(this.exampleDatabase.page);
   }
 
   /* Delete Item From List */
   deleteItem(index){
     this.exampleDatabase.deleteDriver(index)
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getCurrentDriverList(this.exampleDatabase.page);
   }
 
   /* Refresh perticular page */

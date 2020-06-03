@@ -265,6 +265,12 @@ export class UserListComponent implements OnInit {
         this.dataSource.paginator.firstPage();
       }
     }
+
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('userFilter','');
+      this.dataSource.clearFilter();
+    }
 }
 
 //===================================New ===================================================
@@ -340,12 +346,14 @@ export class ExampleDataSource extends DataSource<UserIssue> {
     ));
   }
 
+  //Change Page
   changePage(pageNumber){
       this.exampleDatabase.getAllUserList(pageNumber);
   }
 
+  //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getAllUserListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getAllUserList(this.exampleDatabase.page);
   }
 
   filterData(data){
@@ -360,8 +368,14 @@ export class ExampleDataSource extends DataSource<UserIssue> {
     })
   }
 
+  //Delete Item
   deleteItem(index){
     this.exampleDatabase.deleteUser(index)
+  }
+
+  //Clear Filter
+  clearFilter(){
+    this.exampleDatabase.getAllUserList(this.exampleDatabase.page);
   }
 
   disconnect() {}

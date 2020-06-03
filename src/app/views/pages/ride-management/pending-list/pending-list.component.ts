@@ -192,6 +192,8 @@ export class PendingListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      localStorage.setItem('listType','');
+
       const dialogRef = this.dialog.open(RidesFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -294,7 +296,7 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getPendingRideListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.deletePendingRide(this.exampleDatabase.page);
   }
 
   //Clear Filter

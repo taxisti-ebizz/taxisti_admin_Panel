@@ -39,51 +39,19 @@ export class OnlineDriverDataService {
   getOnlineDriverList(page) : void {
     this.spinner.show();
 
-    const data = {
-      "page" : page,
-      "type" : 'online'
-    }
-
-    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
-   
-    this.httpClient.post<OnlineDriverIssue>(this.http.baseUrl+this.api.getDriverList,data,{ headers }).subscribe(res => {
-      const result : any = res;
-
-      if(result.status == true){
-        var i = 1;
-        result.data.data.forEach(element => {
-          element.id = i;
-          i++;
-        });
-        
-        this.total = result.data.total;
-        setTimeout(() => {
-          this.dataChange.next(result.data.data);
-          this.spinner.hide();
-        }, 500);
-        
+    var data = {};
+    if(localStorage.getItem('driverFilter')!=null && localStorage.getItem('driverFilter')!=''){
+      data = {
+        "page" : page,
+        "type" : "online",
+        "sub_type" : "filter",
+        "filter" : localStorage.getItem('driverFilter')
       }
-      else{
-        this.total = 0;
-        setTimeout(() => {
-          this.dataChange.next([]);
-          this.spinner.hide();
-        }, 500);
+    }else{
+      data = {
+        "page" : page,
+        "type" : 'online'
       }
-    },
-    (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
-    });
-  }
-
-  //Get Online Driver List Data With Filter
-  getOnlineDriverListWithList(page) : void {
-    this.spinner.show();
-
-    const data = {
-      "page" : page,
-      "type" : 'filter',
-      "filter" : localStorage.getItem('driverFilter')!=null?localStorage.getItem('driverFilter'):''
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })

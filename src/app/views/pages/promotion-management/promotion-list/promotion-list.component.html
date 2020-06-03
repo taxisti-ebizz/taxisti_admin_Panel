@@ -2,8 +2,14 @@
 
 	<kt-portlet-header [sticky]="true" [title]="'Promotion List'" [class]="'kt-portlet__head--lg'">
         <ng-container ktPortletTools>
-			<button (click)="addPromotion()" mat-raised-button matTooltip="Add New Promotion" color="primary" type="button">
+			<button (click)="addPromotion()" mat-raised-button matTooltip="Add New Promotion" class="addPromotion" type="button">
 				<span>Add Promotion</span>
+            </button>&nbsp;&nbsp;
+            <button (click)="applyCustomFilter()" mat-raised-button matTooltip="Apply Filter" color="primary" type="button">
+				<span>More Filter</span>
+            </button>&nbsp;&nbsp;
+            <button (click)="clearFilter()" mat-raised-button matTooltip="Clear Filter" color="warn" type="button">
+				<span>Clear Filter</span>
 			</button>
 		</ng-container>
 	</kt-portlet-header>
@@ -42,7 +48,7 @@
                 </ng-container>
 
                  <!-- Promo Image -->
-                 <ng-container matColumnDef="promo_image">
+                 <!-- <ng-container matColumnDef="promo_image">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Promo Image</mat-header-cell>
                     <mat-cell *matCellDef="let promo">
                         <ng-container *ngIf="promo.promo_image!=''">
@@ -52,7 +58,7 @@
                             <img src="assets/img/user_image.png">
                         </ng-container>
                     </mat-cell>
-                </ng-container>
+                </ng-container> -->
             
                 <!-- Type Column -->
                 <ng-container matColumnDef="type">
@@ -101,6 +107,10 @@
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                 <mat-row *matRowDef="let promo; columns: displayedColumns;"></mat-row>
             </mat-table>
+
+            <div class="no-results" [style.display]="dataSource.renderedData.length == 0 ? '' : 'none'">
+                No records found
+            </div>
         </div>
 
         <!-- start: BOTTOM -->

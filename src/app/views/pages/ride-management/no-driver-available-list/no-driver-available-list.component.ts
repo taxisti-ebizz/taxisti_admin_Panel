@@ -209,6 +209,7 @@ export class NoDriverAvailableListComponent implements OnInit {
 
     //Clear Filter
     clearFilter(){
+      localStorage.setItem('notAvailRidesFilter','');
       this.dataSource.clearFilter();
     }
 }
@@ -290,7 +291,7 @@ export class ExampleDataSource extends DataSource<NoDriverAvailableRide>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getNoDriverAvailableListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getNoDriverAvailableList(this.exampleDatabase.page);
   }
 
   //Clear Filter
