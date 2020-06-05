@@ -67,7 +67,7 @@ export class RunningRideDataService {
         "page" : page,
         "type" : urlType,
         "sub-type" : 'filter',
-        "filter" : localStorage.getItem('ridesFilter')!=null?localStorage.getItem('ridesFilter'):''
+        "filter" : localStorage.getItem('ridesFilter')
       }
     }else {
       data = {

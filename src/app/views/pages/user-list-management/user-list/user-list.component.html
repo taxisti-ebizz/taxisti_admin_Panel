@@ -43,7 +43,7 @@
             </div> -->
 
             <mat-table #table [dataSource]="dataSource" matSort class="mat-cell alluser">
-                ng update @angular/cli @angular/core
+                <!-- ng update @angular/cli @angular/core -->
                 <!--- Note that these columns can be defined in any order.
                       The actual rendered columns are set as a property on the row definition" -->
             
@@ -55,7 +55,7 @@
             
                 <ng-container matColumnDef="username">
                   <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-                  <mat-cell *matCellDef="let row"> {{row.first_name+' '+row.last_name}}</mat-cell>
+                  <mat-cell *matCellDef="let row"> <a href="javascript:void()" (click)="viewUser(row)">{{row.first_name+' '+row.last_name}}</a></mat-cell>
                 </ng-container>
             
                 <ng-container matColumnDef="mobile_no">

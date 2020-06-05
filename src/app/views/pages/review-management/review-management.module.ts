@@ -51,6 +51,7 @@ import {
 } from '../../../core/auth';
 
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReviewUserDetailsComponent } from './review-user-details/review-user-details.component';
 
 
 const routes: Routes = [
@@ -136,12 +137,15 @@ const routes: Routes = [
     ViewDriverReviewDetailComponent,
     RiderReviewListComponent,
     ViewRiderReviewDetailComponent,
-    ReviewFilterComponent
+    ReviewFilterComponent,
+    ReviewUserDetailsComponent,
+    ReviewUserDetailsComponent
   ],
   entryComponents: [
     ViewDriverReviewDetailComponent,
     ViewRiderReviewDetailComponent,
-    ReviewFilterComponent
+    ReviewFilterComponent,
+    ReviewUserDetailsComponent
   ]
 })
 export class ReviewManagementModule { }

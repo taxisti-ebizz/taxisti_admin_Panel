@@ -24,6 +24,9 @@ import { ViewContactMessagesComponent } from '../view-contact-messages/view-cont
 //Filter Component
 import { ContactUsFilterComponent } from '../contact-us-filter/contact-us-filter.component';
 
+//View User Details
+import { ViewContactUserDetailComponent } from './../view-contact-user-detail/view-contact-user-detail.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -70,6 +73,7 @@ export class ContactUsListComponent implements OnInit {
       // Set title to page breadCrumbs
       this.subheaderService.setTitle('Contact Us');
 
+      localStorage.setItem('contactUsFilter','');
       this.getContactUsData();
     }
 
@@ -139,6 +143,36 @@ export class ContactUsListComponent implements OnInit {
         }
       });
             
+    }
+
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(ViewContactUserDetailComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }
+      })
+      
     }
 
     //Apply Custom Filter

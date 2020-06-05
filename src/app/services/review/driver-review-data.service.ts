@@ -33,53 +33,18 @@ export class DriverReviewDataService {
   getDriverReviewList(page) : void {
     this.spinner.show();
 
-    const data = {
-      "page" : page
-    }
-
-    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
-   
-    this.httpClient.post<DriverReview>(this.http.baseUrl+this.api.getDriverReviews,data,{ headers }).subscribe(res => {
-        const result : any = res;
-
-        if(result.status == true){
-
-          if(Object.keys(result.data).length > 0 && result.data.constructor === Object){
-            var i = 1;
-            result.data.data.forEach(element => {
-              element.index = i;
-              i++;
-            });
-
-            this.total = result.data.total;
-            setTimeout(() => {
-              this.dataChange.next(result.data.data);
-              this.spinner.hide();
-            }, 500);
-          }
-        }
-        else{
-          this.total = 0;
-          setTimeout(() => {
-            this.dataChange.next([]);
-            this.spinner.hide();
-          }, 500);
-        }
-    },
-    (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
-    });
-  }
-
-  //Get Driver List Data With Filter
-  getDriverReviewListWithFilter(page) : void {
-    this.spinner.show();
-
-    const data = {
-      "page" : page,
-      "urlType" : 'filter',
-      "filter" : localStorage.getItem('reviewsFilter')!=null?localStorage.getItem('reviewsFilter'):''
-    }
+    var data = {};
+    if(localStorage.getItem('reviewsFilter')!=null && localStorage.getItem('reviewsFilter')!=''){
+      data = {
+        "page" : page,
+        "type" : 'filter',
+        "filter" : localStorage.getItem('reviewsFilter')
+      }
+    }else{
+      data = {
+        "page" : page
+      }
+    } 
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
    

@@ -23,6 +23,9 @@ import { CanceledRideDataService } from '../../../../services/ride/canceled-ride
 //Filter Component
 import { OthersRideFilterComponent } from '../others-ride-filter/others-ride-filter.component';
 
+//View Ride User details
+import { ViewRideUserDetailsComponent } from '../view-ride-user-details/view-ride-user-details.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -86,6 +89,7 @@ export class CanceledListComponent implements OnInit {
           this.pageTitle = 'Canceled Ride List';
         }
 
+        localStorage.setItem('ridesFilter','');
         this.getCanceledRideList();
     }
 
@@ -166,6 +170,35 @@ export class CanceledListComponent implements OnInit {
       });
     }
 
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(ViewRideUserDetailsComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }
+      })
+      
+    }
 
     //Apply More Filter
     applyCustomFilter() {

@@ -60,7 +60,7 @@
                 <!-- Username Column -->
                 <ng-container matColumnDef="username">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-                    <mat-cell *matCellDef="let promo">{{promo.name}}</mat-cell>
+                    <mat-cell *matCellDef="let promo"><a href="javascript:void(0)" (click)="viewUserDetails(promo.user_id)">{{promo.name}}</a></mat-cell>
                 </ng-container>
 
                 <!-- Mobile Column -->

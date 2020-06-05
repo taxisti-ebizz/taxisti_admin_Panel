@@ -23,6 +23,8 @@ import { DriverFilterComponent } from '../../driver-filter/driver-filter.compone
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service';
 import { OnlineDriverDataService } from '../../../../../services/driver/online-driver-data.service';
 
+//View Driver User details
+import { ViewDriverUserDetailsComponent } from '../../view-driver-user-details/view-driver-user-details.component';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
@@ -77,6 +79,7 @@ export class OnlineDriverListComponent implements OnInit {
 
       this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
 
+      localStorage.setItem('driverFilter','');
       this.onlineDriverList();
   }
 
@@ -198,6 +201,36 @@ export class OnlineDriverListComponent implements OnInit {
     });
   }
 
+  //View User Details
+  viewUserDetails(user_id){
+
+    const data = {
+      "user_id" : user_id
+    }
+
+    this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+      const result : any = res;
+      if(result.status == true){
+
+        this.spinner.hide();
+
+        const dialogRef = this.dialog.open(ViewDriverUserDetailsComponent, {
+          width: '700px',
+          height: 'auto',
+          backdropClass: 'masterModalPopup',
+          data: { mode: 3, userData : result.data }
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          
+          if (result === false) {
+            this.spinner.hide();
+          }
+        });
+      }
+    })
+    
+  }
+
   //Apply More Filter
   applyCustomFilter() {
 
@@ -219,7 +252,7 @@ export class OnlineDriverListComponent implements OnInit {
 
   //Clear Filter
   clearFilter(){
-    localStorage.setItem('driverFilter','');;
+    localStorage.setItem('driverFilter','');
     this.dataSource.clearFilter();
   }
 

@@ -23,6 +23,10 @@ import { RunningRideDataService } from '../../../../services/ride/running-ride-d
 //Filter Component
 import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
 
+//View Ride User details
+import { ViewRideUserDetailsComponent } from '../view-ride-user-details/view-ride-user-details.component';
+
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -86,9 +90,11 @@ export class RunningListComponent implements OnInit {
         this.pageTitle = 'Running Ride List';
       }
 
+      localStorage.setItem('ridesFilter','');
       this.getPendingRideList();
     }
 
+    //Get Pending Ride List Data
     getPendingRideList(){
       this.exampleDatabase = new RunningRideDataService(this.httpClient,this.spinner,this.http,this.api);
       this.dataSource = new ExampleDataSource(this.exampleDatabase, this.paginator, this.sort);
@@ -206,6 +212,36 @@ export class RunningListComponent implements OnInit {
         this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
         this.dataSource.selection.clear();
       });
+    }
+
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(ViewRideUserDetailsComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }
+      })
+      
     }
 
     //Apply More Filter

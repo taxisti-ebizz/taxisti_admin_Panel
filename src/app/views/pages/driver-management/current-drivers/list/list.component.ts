@@ -15,6 +15,8 @@ import { ViewComponent } from '../view/view.component';
 import { EditComponent } from '../edit/edit.component';
 import { DriverFilterComponent } from '../../driver-filter/driver-filter.component';
 
+//View Driver User details
+import { ViewDriverUserDetailsComponent } from '../../view-driver-user-details/view-driver-user-details.component';
 
 //Service
 import { EditDriverService } from '../../../../../services/driver/edit-driver.service'
@@ -71,6 +73,7 @@ export class ListComponent implements OnInit {
         // Set title to page breadCrumbs
     	  this.subheaderService.setTitle('Driver Management');
 
+        localStorage.setItem('driverFilter','');
         this.driverList();
     }
 
@@ -124,7 +127,7 @@ export class ListComponent implements OnInit {
     /*
       Edit Driver detail
     */
-   editDriver(i: number, driverData) {
+    editDriver(i: number, driverData) {
       
     this.id = driverData.id;
     // index row is used just for debugging proposes and can be removed
@@ -143,106 +146,137 @@ export class ListComponent implements OnInit {
         this.refreshTable();
       }
     });
-  }
-
-  //Delete Driver 
-  deleteDriver(i,driver_id) {
-
-    this.index = i+1;
-    this.id = driver_id;
-
-    const _title = 'Delete Driver';
-    const _description = 'Are you sure to permanently delete this driver?';
-    const _waitDesciption = 'Driver is deleting...';
-    const _deleteMessage = `Driver has been deleted`;
-
-    const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, driver_id, 'driver');
-    dialogRef.afterClosed().subscribe(res => {
-      if (!res) {
-        return;
-      }
-
-      //this.refreshTable() //Refresh With API call than uncomment this
-
-      this.dataSource.deleteItem(this.index)
-
-      this.store.dispatch(new UserDeleted({ id: driver_id }));
-      this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-      
-    });
-
-  }
-
-  //Verify Driver
-  verifyDriver(i,driverId,status){
-
-    this.id = i + 1;
-    
-    var _title = '';
-    var _description = '';
-    var _waitDesciption = '';
-    var _deleteMessage = '';
-    if(status == 0){
-      _title = 'Driver Unapprove';
-      _description = 'Are you sure want to Unapprove?';
-      _waitDesciption = 'Driver is unapproving...';
-      _deleteMessage = `Driver has been Unapproved`;
-    }else{
-      _title = 'Driver Approve';
-      _description = 'Are you sure want to Approve?';
-      _waitDesciption = 'Driver is aprroving...';
-      _deleteMessage = `Driver has been Approved`;
     }
 
-    const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, driverId, status, 'driver');
-    dialogRef.afterClosed().subscribe(res => {
-      if (!res) {
-        return;
-      }
+    //Delete Driver 
+    deleteDriver(i,driver_id) {
 
-      this.store.dispatch(new UserDeleted({ id: driverId }));
-      this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
-      
-      const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-      this.exampleDatabase.dataChange.subscribe(res => {
-        const result : any = res;
-          result[foundIndex].verify = status;
+      this.index = i+1;
+      this.id = driver_id;
+
+      const _title = 'Delete Driver';
+      const _description = 'Are you sure to permanently delete this driver?';
+      const _waitDesciption = 'Driver is deleting...';
+      const _deleteMessage = `Driver has been deleted`;
+
+      const dialogRef = this.layoutUtilsService.deleteElement(_title, _description, _waitDesciption, driver_id, 'driver');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
+
+        //this.refreshTable() //Refresh With API call than uncomment this
+
+        this.dataSource.deleteItem(this.index)
+
+        this.store.dispatch(new UserDeleted({ id: driver_id }));
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+        
       });
 
-    });
-  }
+    }
 
-  //Apply More Filter
-  applyCustomFilter() {
+    //Verify Driver
+    verifyDriver(i,driverId,status){
 
-    const dialogRef = this.dialog.open(DriverFilterComponent, {
-      width: '1000px',
-      height: 'auto',
-      backdropClass: 'masterModalPopup',
-      data: { mode : 3, title : 'Current Driver More Filter' },
-      disableClose: true
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-     
-      if(result != 3){
-        this.dataSource.applyFilter();
+      this.id = i + 1;
+      
+      var _title = '';
+      var _description = '';
+      var _waitDesciption = '';
+      var _deleteMessage = '';
+      if(status == 0){
+        _title = 'Driver Unapprove';
+        _description = 'Are you sure want to Unapprove?';
+        _waitDesciption = 'Driver is unapproving...';
+        _deleteMessage = `Driver has been Unapproved`;
+      }else{
+        _title = 'Driver Approve';
+        _description = 'Are you sure want to Approve?';
+        _waitDesciption = 'Driver is aprroving...';
+        _deleteMessage = `Driver has been Approved`;
       }
-    });
-  }  
 
-  //Clear Filter
-  clearFilter(){
-    localStorage.setItem('driverFilter','');;
-    this.dataSource.clearFilter();
-  }
+      const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, driverId, status, 'driver');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
+
+        this.store.dispatch(new UserDeleted({ id: driverId }));
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Delete);
+        
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        this.exampleDatabase.dataChange.subscribe(res => {
+          const result : any = res;
+            result[foundIndex].verify = status;
+        });
+
+      });
+    }
+
+    //Apply More Filter
+    applyCustomFilter() {
+
+      const dialogRef = this.dialog.open(DriverFilterComponent, {
+        width: '1000px',
+        height: 'auto',
+        backdropClass: 'masterModalPopup',
+        data: { mode : 3, title : 'Current Driver More Filter' },
+        disableClose: true
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+      
+        if(result != 3){
+          this.dataSource.applyFilter();
+        }
+      });
+    }  
+
+    //Clear Filter
+    clearFilter(){
+      localStorage.setItem('driverFilter','');
+      this.dataSource.clearFilter();
+    }
+
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+         
+          const dialogRef = this.dialog.open(ViewDriverUserDetailsComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+           
+        }
+      })
+    
+    }
 
 
-  private refreshTable() {
-    // Refreshing table using paginator
+    private refreshTable() {
+      // Refreshing table using paginator
 
-    // this.dataSource.refreshPage(this.allDriverDataService.page) // Refresh With API call than uncomment this 
-  }
+      // this.dataSource.refreshPage(this.allDriverDataService.page) // Refresh With API call than uncomment this 
+    }
 
 }
 

@@ -24,6 +24,9 @@ import { AddSubAdminComponent } from '../add-sub-admin/add-sub-admin.component';
 //Filter Component
 import { SubAdminFilterComponent } from '../sub-admin-filter/sub-admin-filter.component';
 
+//View User Details
+import { ViewSubAdminUserDetailComponent } from './../view-sub-admin-user-detail/view-sub-admin-user-detail.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -31,6 +34,9 @@ import { SubAdmin } from '../../../../module/sub-admin/sub-admin.module';
 import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+
+//Toastr Messages
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'kt-sub-admin-list',
@@ -60,12 +66,14 @@ export class SubAdminListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public subAdminDataService : SubAdminDataService) { }
+      public subAdminDataService : SubAdminDataService,
+      private toastr : ToastrService) { }
 
     ngOnInit() {
       // Set title to page breadCrumbs
       this.subheaderService.setTitle('Sub Admin');
 
+      localStorage.setItem('subAdminFilter','');
       this.getSubAdminData();
     }
 
@@ -175,6 +183,40 @@ export class SubAdminListComponent implements OnInit {
             result[foundIndex].status = type;
         });
       });
+    }
+
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(ViewSubAdminUserDetailComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }
+        else{
+          this.spinner.hide();
+          this.toastr.error('Something went wrong');
+        }
+      })
+      
     }
 
     //Apply Custom Filter

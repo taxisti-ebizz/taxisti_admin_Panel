@@ -29,6 +29,8 @@ import { RidesFilterComponent } from './rides-filter/rides-filter.component';
 import { OthersRideFilterComponent } from './others-ride-filter/others-ride-filter.component';
 import { NoDriverAvailableFilterComponent } from './no-driver-available-list/no-driver-available-filter/no-driver-available-filter.component';
 
+//View Ride User details
+import { ViewRideUserDetailsComponent } from './view-ride-user-details/view-ride-user-details.component';
 
 // Material
 import {
@@ -63,6 +65,7 @@ import {
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+
 
 const routes: Routes = [
 	{
@@ -202,12 +205,14 @@ const routes: Routes = [
       FakeRideListComponent,
       RidesFilterComponent,
       OthersRideFilterComponent,
-      NoDriverAvailableFilterComponent
+      NoDriverAvailableFilterComponent,
+      ViewRideUserDetailsComponent
     ],
     entryComponents : [
       RidesFilterComponent,
       OthersRideFilterComponent,
-      NoDriverAvailableFilterComponent
+      NoDriverAvailableFilterComponent,
+      ViewRideUserDetailsComponent
     ]
 })
 export class RideManagementModule { }

@@ -42,8 +42,17 @@ export class PromotionDataService {
   getPromotionList(page) : void {
     this.spinner.show();
 
-    const data = {
-      "page" : page
+    var data = {};
+    if(localStorage.getItem('promotionFilter')!=null && localStorage.getItem('promotionFilter')!=''){
+      data = {
+        "page" : page,
+        "type" : 'filter',
+        "filter" : localStorage.getItem('promotionFilter')
+      }
+    }else{
+      data = {
+        "page" : page
+      }
     }
 
     const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
@@ -74,50 +83,6 @@ export class PromotionDataService {
             this.spinner.hide();
           }, 500);
         }
-    },
-    (error: HttpErrorResponse) => {
-      console.log (error.name + ' ' + error.message);
-    });
-  }
-
-  //Get Promotion List Data With Filter
-  getPromotionListWithFilter(page) : void {
-    this.spinner.show();
-
-    const data = {
-      "page" : page,
-      "type" : 'filter',
-      "filter" : localStorage.getItem('promotionFilter')!=null?localStorage.getItem('promotionFilter'):''
-    }
-
-    const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
-   
-    this.httpClient.post<Promotion>(this.http.baseUrl+this.api.getPromotionList,data,{ headers }).subscribe(res => {
-      const result : any = res;
-
-      if(result.status == true){
-
-        if(Object.keys(result.data).length > 0 && result.data.constructor === Object){
-          var i = 1;
-          result.data.data.forEach(element => {
-            element.index = i;
-            i++;
-          });
-
-          this.total = result.data.total;
-          setTimeout(() => {
-            this.dataChange.next(result.data.data);
-            this.spinner.hide();
-          }, 500);
-        }
-      }
-      else{
-        this.total = 0;
-        setTimeout(() => {
-          this.dataChange.next([]);
-          this.spinner.hide();
-        }, 500);
-      }
     },
     (error: HttpErrorResponse) => {
       console.log (error.name + ' ' + error.message);

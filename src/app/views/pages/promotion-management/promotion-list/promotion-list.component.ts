@@ -70,6 +70,8 @@ export class PromotionListComponent implements OnInit {
       // Set title to page breadCrumbs
       this.subheaderService.setTitle('Promotion Management');
       this.promotion = Promotion;
+
+      localStorage.setItem('promotionFilter','');
       this.getPromotionList();
 
   }
@@ -187,6 +189,7 @@ export class PromotionListComponent implements OnInit {
   
   //Clear Filter
   clearFilter(){
+    localStorage.setItem('promotionFilter','');
     this.dataSource.clearFilter();
   }
 
@@ -258,7 +261,7 @@ export class ExampleDataSource extends DataSource<Promotion>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getPromotionListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getPromotionList(this.exampleDatabase.page);
   }
 
   //Clear Filter

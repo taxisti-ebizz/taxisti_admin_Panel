@@ -70,6 +70,7 @@ export class RideAreaListComponent implements OnInit {
         // Set title to page breadCrumbs
         this.subheaderService.setTitle('Ride Area Settings');
 
+        localStorage.setItem('rideAreaFilter','');
         this.getRideAreaList();
     }
 
@@ -172,6 +173,7 @@ export class RideAreaListComponent implements OnInit {
     
     //Clear Filter
     clearFilter(){
+      localStorage.setItem('rideAreaFilter','');
       this.dataSource.clearFilter();
     }
 
@@ -244,7 +246,7 @@ export class ExampleDataSource extends DataSource<RideArea>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getRideAreaListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getRideAreaList(this.exampleDatabase.page);
   }
 
   //Clear Filter

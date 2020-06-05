@@ -59,7 +59,7 @@ export class CanceledRideDataService {
           "page" : page,
           "type" : urlType,
           "sub_type" : "filter",
-          "filter" : localStorage.getItem('ridesFilter')!=null?localStorage.getItem('ridesFilter'):''
+          "filter" : localStorage.getItem('ridesFilter')
         }
       }else{
         data = {

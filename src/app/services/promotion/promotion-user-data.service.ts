@@ -57,7 +57,6 @@ export class PromotionUserDataService {
         }
       }
       
-  
       const headers : HttpHeaders = new HttpHeaders({ Authorization : 'Bearer '+localStorage.getItem('token') })
      
       this.httpClient.post<PromotionUser>(this.http.baseUrl+this.api.getUserPromotionList,data,{ headers }).subscribe(res => {

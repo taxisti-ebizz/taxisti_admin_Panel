@@ -85,7 +85,7 @@
                 <!-- User Name Column -->
                 <ng-container matColumnDef="rider_name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Name</mat-header-cell>
-                    <mat-cell *matCellDef="let ride">{{ride.rider_name}}</mat-cell>
+                    <mat-cell *matCellDef="let ride"><a href="javascript:void(0)" (click)="viewUserDetails(ride.rider_id)">{{ride.rider_name}}</a></mat-cell>
                 </ng-container>
 
                 <!-- User Mobile Column -->
@@ -97,7 +97,7 @@
                 <!-- Driver Name Column -->
                 <ng-container matColumnDef="driver_name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name</mat-header-cell>
-                    <mat-cell *matCellDef="let ride">{{ride.driver_name}}</mat-cell>
+                    <mat-cell *matCellDef="let ride"><a href="javascript:void(0)" (click)="viewUserDetails(ride.driver_id)">{{ride.driver_name}}</a></mat-cell>
                 </ng-container>
 
                 <!-- Driver Mobile Column -->

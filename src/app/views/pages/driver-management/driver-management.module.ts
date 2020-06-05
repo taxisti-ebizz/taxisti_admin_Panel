@@ -30,6 +30,7 @@ import { ViewComponent } from './current-drivers/view/view.component';
 //Online Driver 
 import { OnlineDriverListComponent } from './online-driver/online-driver-list/online-driver-list.component';
 import { ViewOnlineDriverComponent } from './online-driver/view-online-driver/view-online-driver.component';
+import { ViewDriverUserDetailsComponent } from './view-driver-user-details/view-driver-user-details.component';
 
 //Location
 import { LocationComponent } from './location/location.component';
@@ -180,7 +181,8 @@ const routes: Routes = [
 		ViewComponent,
 		EditComponent,
 		ViewOnlineDriverComponent,
-		DriverFilterComponent
+		DriverFilterComponent,
+		ViewDriverUserDetailsComponent
 	],
 	declarations: [
 		DriverManagementComponent,
@@ -193,7 +195,8 @@ const routes: Routes = [
 		OnlineDriverListComponent,
 		ViewOnlineDriverComponent,
 		LocationComponent,
-		DriverFilterComponent
+		DriverFilterComponent,
+		ViewDriverUserDetailsComponent
 	]
 })
 export class DriverManagementModule { }

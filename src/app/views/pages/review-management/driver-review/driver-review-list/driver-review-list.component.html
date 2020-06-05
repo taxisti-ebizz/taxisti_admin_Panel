@@ -47,7 +47,7 @@
                 <!-- Driver Name Column -->
                 <ng-container matColumnDef="driver_name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name</mat-header-cell>
-                    <mat-cell *matCellDef="let review">{{review.driver_name}}</mat-cell>
+                    <mat-cell *matCellDef="let review"><a href="javascript:void(0)" (click)="viewUserDetails(review.driver_id)">{{review.driver_name}}</a></mat-cell>
                 </ng-container>
 
                 <!-- Driver Mobile Column -->

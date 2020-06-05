@@ -102,6 +102,7 @@ export class UserListComponent implements OnInit {
       
       this.userDetail = JSON.parse(localStorage.getItem('userDetail'));
       
+      localStorage.setItem('userFilter','');
       this.loadData();
     }
 

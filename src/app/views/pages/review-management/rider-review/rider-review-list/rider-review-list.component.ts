@@ -32,6 +32,9 @@ import { ViewRiderReviewDetailComponent } from '../view-rider-review-detail/view
 //Filter Component
 import { ReviewFilterComponent } from '../../review-filter/review-filter.component';
 
+//View User Details
+import { ReviewUserDetailsComponent } from '../../review-user-details/review-user-details.component'
+
 @Component({
   selector: 'kt-rider-review-list',
   templateUrl: './rider-review-list.component.html',
@@ -69,6 +72,7 @@ export class RiderReviewListComponent implements OnInit {
         // Set title to page breadCrumbs
         this.subheaderService.setTitle('Review Management');
 
+        localStorage.setItem('reviewsFilter','');
         this.getRiderReviewList();
     }
 
@@ -129,6 +133,36 @@ export class RiderReviewListComponent implements OnInit {
       })
     }
 
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(ReviewUserDetailsComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }
+      })
+      
+    }
+
     //Apply Custom Filter
     applyCustomFilter(){
 
@@ -150,6 +184,7 @@ export class RiderReviewListComponent implements OnInit {
     
     //Clear Filter
     clearFilter(){
+      localStorage.setItem('reviewsFilter','');
       this.dataSource.clearFilter();
     }
 
@@ -218,7 +253,7 @@ export class ExampleDataSource extends DataSource<RiderReview>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.getRiderReviewListWithFilter(this.exampleDatabase.page);
+    this.exampleDatabase.getRiderReviewList(this.exampleDatabase.page);
   }
 
   //Clear Filter

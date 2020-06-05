@@ -23,6 +23,9 @@ import { NoResponseRideDataService } from '../../../../services/ride/no-response
 //Filter Component
 import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
 
+//View Ride User details
+import { ViewRideUserDetailsComponent } from '../view-ride-user-details/view-ride-user-details.component';
+
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
 import { DataSource } from '@angular/cdk/collections';
@@ -33,9 +36,9 @@ import { map } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'kt-no-response-list',
-  templateUrl: './no-response-list.component.html',
-  styleUrls: ['./no-response-list.component.scss']
+    selector: 'kt-no-response-list',
+    templateUrl: './no-response-list.component.html',
+    styleUrls: ['./no-response-list.component.scss']
 })
 export class NoResponseListComponent implements OnInit {
 
@@ -86,6 +89,7 @@ export class NoResponseListComponent implements OnInit {
           this.pageTitle = 'Auto Canceled Ride List';
         }
 
+        localStorage.setItem('ridesFilter','');
         this.getNoResponseRideList();
     }
 
@@ -188,6 +192,36 @@ export class NoResponseListComponent implements OnInit {
         this.dataSource.selection.clear();
       });
     } 
+
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(ViewRideUserDetailsComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }
+      })
+      
+    }
 
     //Apply More Filter
     applyCustomFilter() {

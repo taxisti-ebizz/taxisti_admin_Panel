@@ -20,6 +20,7 @@ import { AddPromotionComponent } from './add-promotion/add-promotion.component';
 import { PromotionUserListComponent } from './promotion-user-list/promotion-user-list.component';
 import { PromotionFilterComponent } from './promotion-list/promotion-filter/promotion-filter.component';
 import { PromotionUserFilterComponent } from './promotion-user-list/promotion-user-filter/promotion-user-filter.component';
+import { ViewPromotionUserDetailsComponent } from './view-promotion-user-details/view-promotion-user-details.component';
 
 
 // Material
@@ -142,13 +143,15 @@ const routes: Routes = [
     AddPromotionComponent,
     PromotionUserListComponent,
     PromotionFilterComponent,
-    PromotionUserFilterComponent
+    PromotionUserFilterComponent,
+    ViewPromotionUserDetailsComponent
   ],
   entryComponents: [
     EditPromotionComponent,
     AddPromotionComponent,
     PromotionFilterComponent,
-    PromotionUserFilterComponent
+    PromotionUserFilterComponent,
+    ViewPromotionUserDetailsComponent
   ]
 })
 export class PromotionManagementModule { }

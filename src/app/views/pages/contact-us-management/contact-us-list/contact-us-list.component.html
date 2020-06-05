@@ -46,7 +46,7 @@
                 <!-- User Name Column -->
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
-                    <mat-cell *matCellDef="let contact">{{contact.name}}</mat-cell>
+                    <mat-cell *matCellDef="let contact"><a href="javascript:void(0)" (click)="viewUserDetails(contact.user_id)">{{contact.name}}</a></mat-cell>
                 </ng-container>
 
                 <!-- Message Column -->

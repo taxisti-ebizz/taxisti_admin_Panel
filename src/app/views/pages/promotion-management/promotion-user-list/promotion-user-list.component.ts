@@ -26,6 +26,11 @@ import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
+//View User Detail
+import { ViewPromotionUserDetailsComponent } from './../view-promotion-user-details/view-promotion-user-details.component';
+
+//Toastr Messages
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'kt-promotion-user-list',
@@ -60,12 +65,14 @@ export class PromotionUserListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public promotionUserDataService : PromotionUserDataService) { }
+      public promotionUserDataService : PromotionUserDataService,
+      private toastr : ToastrService) { }
 
     ngOnInit() {
         // Set title to page breadCrumbs
         this.subheaderService.setTitle('Promotion Management');
-  
+
+        localStorage.setItem('promotionUserFilter','');
         this.getPromotionUserList();
     }
 
@@ -118,6 +125,39 @@ export class PromotionUserListComponent implements OnInit {
         });
 
       });
+    }
+
+    //View User Details
+    viewUserDetails(user_id){
+
+      const data = {
+        "user_id" : user_id
+      }
+
+      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(ViewPromotionUserDetailsComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, userData : result.data }
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }else{
+          this.spinner.hide();
+          this.toastr.error('Something went wrong');
+        }
+      })
+      
     }
     
     //Apply Custom Filter

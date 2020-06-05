@@ -18,6 +18,10 @@ import { ContactUsListComponent } from './contact-us-list/contact-us-list.compon
 import { ViewContactMessagesComponent } from './view-contact-messages/view-contact-messages.component';
 import { ContactUsFilterComponent } from './contact-us-filter/contact-us-filter.component';
 
+//View User Details
+import { ViewContactUserDetailComponent } from './view-contact-user-detail/view-contact-user-detail.component';
+
+
 // Material
 import {
 	MatInputModule,
@@ -51,7 +55,6 @@ import {
 import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-
 
 const routes: Routes = [
 	{
@@ -132,11 +135,13 @@ const routes: Routes = [
     ContactUsManagementComponent,
     ContactUsListComponent,
     ViewContactMessagesComponent,
-    ContactUsFilterComponent
+    ContactUsFilterComponent,
+    ViewContactUserDetailComponent
   ],
   entryComponents: [
     ViewContactMessagesComponent,
-    ContactUsFilterComponent
+    ContactUsFilterComponent,
+    ViewContactUserDetailComponent
   ]
 })
 export class ContactUsManagementModule { }

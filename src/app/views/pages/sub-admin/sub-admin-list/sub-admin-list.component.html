@@ -49,7 +49,7 @@
                 <!-- User Name Column -->
                 <ng-container matColumnDef="name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>User Name</mat-header-cell>
-                    <mat-cell *matCellDef="let sub">{{sub.name}}</mat-cell>
+                    <mat-cell *matCellDef="let sub"><a href="javascript:void(0)" (click)="viewUserDetails(sub.user_id)">{{sub.name}}</a></mat-cell>
                 </ng-container>
 
                 <!-- Email Column -->

@@ -18,6 +18,10 @@ import { SubAdminListComponent } from './sub-admin-list/sub-admin-list.component
 import { AddSubAdminComponent } from './add-sub-admin/add-sub-admin.component';
 import { SubAdminFilterComponent } from './sub-admin-filter/sub-admin-filter.component';
 
+//View User Details
+import { ViewSubAdminUserDetailComponent } from './view-sub-admin-user-detail/view-sub-admin-user-detail.component';
+
+
 // Material
 import {
 	MatInputModule,
@@ -127,11 +131,13 @@ const routes: Routes = [
     SubAdminComponent,
     SubAdminListComponent,
     AddSubAdminComponent,
-    SubAdminFilterComponent
+    SubAdminFilterComponent,
+    ViewSubAdminUserDetailComponent
   ],
   entryComponents: [
     AddSubAdminComponent,
-    SubAdminFilterComponent
+    SubAdminFilterComponent,
+    ViewSubAdminUserDetailComponent
   ]
 })
 export class SubAdminModule { }
