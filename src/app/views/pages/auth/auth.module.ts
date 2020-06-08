@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 // Material
-import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatInputModule, MatIconModule } from '@angular/material';
 // Translate
 import { TranslateModule } from '@ngx-translate/core';
 // NGRX
@@ -60,6 +60,7 @@ const routes: Routes = [
 		RouterModule.forChild(routes),
 		MatInputModule,
 		MatFormFieldModule,
+		MatIconModule,
 		MatCheckboxModule,
 		TranslateModule.forChild(),
 		StoreModule.forFeature('auth', authReducer),

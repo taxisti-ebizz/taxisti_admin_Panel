@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 	isLoggedIn$: Observable<boolean>;
 	errors: any = [];
 	class = '';
+	hide: boolean = true; // Used For Hide/Show Password
 
 	private unsubscribe: Subject<any>;
 
