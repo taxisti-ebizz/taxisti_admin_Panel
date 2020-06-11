@@ -192,7 +192,7 @@ export class SubAdminListComponent implements OnInit {
         "user_id" : user_id
       }
 
-      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+      this.http.postReq(this.api.getSubAdminDetails,data).subscribe(res => {
         const result : any = res;
         if(result.status == true){
 

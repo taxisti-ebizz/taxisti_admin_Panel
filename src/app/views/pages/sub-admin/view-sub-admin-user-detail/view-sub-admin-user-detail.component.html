@@ -1,7 +1,7 @@
 <div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
 	<div class="kt-portlet__head kt-portlet__head__custom">
 		<div class="kt-portlet__head-label">
-			<h3 class="kt-portlet__head-title">{{'View '}} <strong>{{data.userData.first_name+' '+data.userData.last_name}}</strong> {{' Details'}}</h3>
+			<h3 class="kt-portlet__head-title"> View <strong>{{data.userData.name}}</strong> Details</h3>
 		</div>
     </div>
     
@@ -14,19 +14,13 @@
 
             <div class="col-sm-12">
                 <label class="col-sm-4">User Name :</label>
-                <span>{{ data.userData.first_name+' '+data.userData.last_name }}</span>
-            </div>
-            <br/>
-            <div class="col-sm-12">
-                <label class="col-sm-4">User Profile Pic :</label>
-                <ng-container *ngIf="data.userData.profile_pic!=''"><img src="{{data.userData.profile_pic}}"></ng-container> 
-                <ng-container *ngIf="data.userData.profile_pic==''"><img src="assets/img/driver.png"></ng-container> 
+                <span>{{ data.userData.name }}</span>
             </div>
             <br/>
             
             <div class="col-sm-12">
-                <label class="col-sm-4">Date Of Birth :</label>
-                <span>{{data.userData.date_of_birth}}</span>
+                <label class="col-sm-4">Email Id :</label>
+                <span>{{data.userData.email_id}}</span>
             </div>
             
             <br/>

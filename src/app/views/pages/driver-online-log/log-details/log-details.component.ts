@@ -15,6 +15,7 @@ import { map, tap, finalize } from 'rxjs/operators';
 import { DatePipe } from '@angular/common'; // Used for changed date format
 import { BsDatepickerViewMode } from 'ngx-bootstrap/datepicker/models';
 import { BsDatepickerConfig } from 'ngx-bootstrap/datepicker/public_api';
+import { SubheaderService } from '../../../../core/_base/layout';
 
 @Component({
   selector: 'kt-log-details',
@@ -59,9 +60,13 @@ export class LogDetailsComponent implements OnInit {
     private http : HttpService,
     private api : ApiService,
     private spinner : NgxSpinnerService,
-    private datePipe : DatePipe) { }
+    private datePipe : DatePipe,
+    private subheaderService: SubheaderService) { }
 
   ngOnInit() {
+    // Set title to page breadCrumbs
+    this.subheaderService.setTitle('Driver Online Log');
+
     this.getDriverList();
     this.selectedItems = [];
     this.dropdownSettings = {

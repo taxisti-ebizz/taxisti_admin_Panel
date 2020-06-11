@@ -33,7 +33,7 @@ export class DriverReviewDataService {
 
   //Get Driver Review Data
   getDriverReviewList(page) : void {
-    //this.spinner.show();
+    this.spinner.show();
 
     var data = {};
     if(localStorage.getItem('reviewsFilter')!=null && localStorage.getItem('reviewsFilter')!=''){
