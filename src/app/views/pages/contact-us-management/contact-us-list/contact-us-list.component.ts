@@ -178,6 +178,10 @@ export class ContactUsListComponent implements OnInit {
     //Apply Custom Filter
     applyCustomFilter(){
 
+      if(Object.keys(this.contactUsDataService.formData).length > 0){
+        this.contactUsDataService.mode = 4;
+      }
+
       const dialogRef = this.dialog.open(ContactUsFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -189,6 +193,8 @@ export class ContactUsListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.contactUsDataService.mode = 0;
+          this.contactUsDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -197,6 +203,8 @@ export class ContactUsListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('contactUsFilter','');
+      this.contactUsDataService.mode = 0;
+      this.contactUsDataService.formData = {};
       this.dataSource.clearFilter();
     }
          

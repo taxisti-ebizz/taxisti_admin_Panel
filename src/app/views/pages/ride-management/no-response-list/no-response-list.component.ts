@@ -19,6 +19,7 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 
 // Service
 import { NoResponseRideDataService } from '../../../../services/ride/no-response-ride-data.service';
+import { CommonService } from '../../../../services/common.service';
 
 //Filter Component
 import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
@@ -69,7 +70,8 @@ export class NoResponseListComponent implements OnInit {
       private store: Store<AppState>,
       private httpClient : HttpClient,
       public noResponseRideDataService : NoResponseRideDataService,
-      private route : ActivatedRoute) { 
+      private route : ActivatedRoute,
+      private commonService : CommonService) { 
         
         localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
 
@@ -226,6 +228,12 @@ export class NoResponseListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      this.commonService.type = 'autoCanceled';
+
+      if(Object.keys(this.noResponseRideDataService.formData).length > 0){
+        this.noResponseRideDataService.mode = 4;
+      }
+
       localStorage.setItem('listType','');
 
       const dialogRef = this.dialog.open(RidesFilterComponent, {
@@ -239,6 +247,8 @@ export class NoResponseListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.noResponseRideDataService.mode = 0;
+          this.noResponseRideDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -247,6 +257,8 @@ export class NoResponseListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('ridesFilter','');
+      this.noResponseRideDataService.mode = 0;
+      this.noResponseRideDataService.formData = {};
       this.dataSource.clearFilter();
     }
 }

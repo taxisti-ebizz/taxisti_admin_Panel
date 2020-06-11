@@ -16,6 +16,8 @@ export class DataService {
     dialogData: any;
     page = 0;
     total : any;
+    mode : any;
+    formData = {};
 
     constructor (private httpClient: HttpClient,
       private spinner : NgxSpinnerService,

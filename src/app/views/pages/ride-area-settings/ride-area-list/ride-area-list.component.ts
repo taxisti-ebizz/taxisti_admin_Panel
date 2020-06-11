@@ -154,6 +154,10 @@ export class RideAreaListComponent implements OnInit {
 
     //Apply Custom Filter
     applyCustomFilter(){
+      
+      if(Object.keys(this.rideAreaDataService.formData).length > 0){
+        this.rideAreaDataService.mode = 4;
+      }
 
       const dialogRef = this.dialog.open(RideAreaFilterComponent, {
         width: '800px',
@@ -166,6 +170,8 @@ export class RideAreaListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.rideAreaDataService.mode = 0;
+          this.rideAreaDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -174,6 +180,8 @@ export class RideAreaListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('rideAreaFilter','');
+      this.rideAreaDataService.mode = 0;
+      this.rideAreaDataService.formData = {};
       this.dataSource.clearFilter();
     }
 

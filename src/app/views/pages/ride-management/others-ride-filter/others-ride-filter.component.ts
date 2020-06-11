@@ -2,6 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+//Services
+import { CanceledRideDataService } from '../../../../services/ride/canceled-ride-data.service';
+
 @Component({
   selector: 'kt-others-ride-filter',
   templateUrl: './others-ride-filter.component.html',
@@ -21,7 +24,8 @@ export class OthersRideFilterComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<OthersRideFilterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private formBuilder : FormBuilder) { }
+      private formBuilder : FormBuilder,
+      private canceledRideService : CanceledRideDataService) { }
 
     ngOnInit() {
 
@@ -50,6 +54,8 @@ export class OthersRideFilterComponent implements OnInit {
         driver_mobile : [''],
         start_date : [''],
         end_date : [''],
+        date_of_ride : [''],
+        date_of_cancel : [''],
         start_location : [''],
         end_location : [''],
         min_amount : [''],
@@ -57,10 +63,17 @@ export class OthersRideFilterComponent implements OnInit {
         cancel_by : ['']
       })
 
+      if(this.canceledRideService.mode == 4){
+        this.otherRideFilterForm.patchValue(this.canceledRideService.formData);
+      }
+
     }
 
     //Apply Filter
     applyFilter(formData){
+
+      console.log("formData =====>>>>",formData);
+      
 
       var startDate = (<HTMLInputElement>document.getElementById('start_date')).value;
           startDate = ""+startDate.toString()+"";
@@ -78,24 +91,27 @@ export class OthersRideFilterComponent implements OnInit {
           date_of_cancel = ""+date_of_cancel.toString()+"";
       var dateOfCancel = date_of_cancel.replace(/\s+-/g, '');
 
-      var cancelByData = '';
-      for (let i = 0; i < formData.cancel_by.length; i++) {
-        if(cancelByData!=''){
-          cancelByData += ',';
+      
+      if(formData.cancel_by!='' && formData.cancel_by!=null){
+        var cancelByData = '';
+        for (let i = 0; i < formData.cancel_by.length; i++) {
+          if(cancelByData!=''){
+            cancelByData += ',';
+          }
+          cancelByData += formData.cancel_by[i].cancelBy_id;
         }
-        cancelByData += formData.cancel_by[i].cancelBy_id;
       }
 
       const data = {
         "user_name" : formData.username,
-        "driver_name" : formData.driver_name,
-        "driver_mobile" : formData.driver_mobile,
-        "user_mobile" : formData.user_mobile,
+        "driver_name" : formData.driver_name!=null?formData.driver_name:'',
+        "driver_mobile" : formData.driver_mobile!=null?formData.driver_mobile:'',
+        "user_mobile" : formData.user_mobile!=null?formData.user_mobile:'',
         "start_date" : start_date,
         "end_date" : end_date,
-        "start_location" : formData.start_location,
-        "end_location" : formData.end_location,
-        "amount" : formData.min_amount!=''?formData.min_amount+'-'+formData.max_amount:'',
+        "start_location" : formData.start_location!=null?formData.start_location:'',
+        "end_location" : formData.end_location!=null?formData.end_location:'',
+        "amount" : formData.min_amount!=null?formData.min_amount+'-'+formData.max_amount:'',
         "date_of_ride" : dateOfRide,
         "date_of_cancel" : dateOfCancel,
         "cancel_by" : cancelByData,
@@ -112,5 +128,10 @@ export class OthersRideFilterComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('date_of_ride')).value = '';
       (<HTMLInputElement>document.getElementById('date_of_cancel')).value = '';
       this.otherRideFilterForm.reset();
+    }
+
+    //Close Form
+    closeForm(){
+      this.canceledRideService.formData = this.otherRideFilterForm.value;
     }
 }

@@ -2,6 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+// Service
+import { ContactUsDataService } from '../../../../services/contact-us/contact-us-data.service';
+
 @Component({
     selector: 'kt-contact-us-filter',
     templateUrl: './contact-us-filter.component.html',
@@ -20,7 +23,8 @@ export class ContactUsFilterComponent implements OnInit {
    
     constructor(public dialogRef: MatDialogRef<ContactUsFilterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private formBuilder : FormBuilder) { }
+      private formBuilder : FormBuilder,
+      private contactUsDataService : ContactUsDataService) { }
 
     ngOnInit() {
 
@@ -45,8 +49,13 @@ export class ContactUsFilterComponent implements OnInit {
       this.contactUsFilterForm = this.formBuilder.group({
         username : [''],
         message : [''],
-        status : ['']
+        status : [''],
+        date : ['']
       });
+
+      if(this.contactUsDataService.mode == 4){
+        this.contactUsFilterForm.patchValue(this.contactUsDataService.formData);
+      }
     }
 
     //Apply Filter
@@ -82,4 +91,8 @@ export class ContactUsFilterComponent implements OnInit {
       this.contactUsFilterForm.reset();
     }
 
-}
+    //Close Form
+    closeForm(){
+      this.contactUsDataService.formData = this.contactUsFilterForm.value;
+    }
+} 

@@ -19,6 +19,7 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 
 // Service
 import { CanceledRideDataService } from '../../../../services/ride/canceled-ride-data.service';
+import { CommonService } from '../../../../services/common.service';
 
 //Filter Component
 import { OthersRideFilterComponent } from '../others-ride-filter/others-ride-filter.component';
@@ -69,7 +70,8 @@ export class CanceledListComponent implements OnInit {
       private store: Store<AppState>,
       private httpClient : HttpClient,
       public canceledRideDataService : CanceledRideDataService,
-      private route : ActivatedRoute) {
+      private route : ActivatedRoute,
+      private commonService : CommonService) {
 
         localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
 
@@ -203,6 +205,10 @@ export class CanceledListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      if(Object.keys(this.canceledRideDataService.formData).length > 0){
+        this.canceledRideDataService.mode = 4;
+      }
+
       localStorage.setItem('listType','canceledRide');
 
       const dialogRef = this.dialog.open(OthersRideFilterComponent, {
@@ -216,6 +222,8 @@ export class CanceledListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.canceledRideDataService.mode = 0;
+          this.canceledRideDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -224,6 +232,8 @@ export class CanceledListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('ridesFilter','');
+      this.canceledRideDataService.mode = 0;
+      this.canceledRideDataService.formData = {};
       this.dataSource.clearFilter();
     }
 

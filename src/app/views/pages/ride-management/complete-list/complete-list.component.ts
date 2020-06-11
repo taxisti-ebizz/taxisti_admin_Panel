@@ -19,6 +19,7 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 
 // Service
 import { CompleteRideDataService } from '../../../../services/ride/complete-ride-data.service';
+import { CommonService } from '../../../../services/common.service';
 
 //Filter Component
 import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
@@ -69,7 +70,8 @@ export class CompleteListComponent implements OnInit {
       private store: Store<AppState>,
       private httpClient : HttpClient,
       public completeRideDataService : CompleteRideDataService,
-      private route : ActivatedRoute) { 
+      private route : ActivatedRoute,
+      private commonService : CommonService) { 
 
         localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
 
@@ -203,6 +205,12 @@ export class CompleteListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      this.commonService.type = 'completed';
+
+      if(Object.keys(this.completeRideDataService.formData).length > 0){
+        this.completeRideDataService.mode = 4;
+      }
+
       localStorage.setItem('listType','completedRide');
 
       const dialogRef = this.dialog.open(RidesFilterComponent, {
@@ -216,6 +224,9 @@ export class CompleteListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.completeRideDataService.mode = 0;
+          this.completeRideDataService.formData = {};
+          this.completeRideDataService.otherData = [];
           this.dataSource.applyFilter();
         }
       });
@@ -224,6 +235,9 @@ export class CompleteListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('ridesFilter','');
+      this.completeRideDataService.mode = 0;
+      this.completeRideDataService.formData = {};
+      this.completeRideDataService.otherData = [];
       this.dataSource.clearFilter();
     }
 

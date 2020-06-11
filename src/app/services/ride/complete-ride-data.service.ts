@@ -17,6 +17,9 @@ export class CompleteRideDataService {
     page = 0;
     count = 0;
     total = 0;
+    mode = 0;
+    formData = {};
+    otherData = [];
 
     constructor(private httpClient : HttpClient,
       private spinner : NgxSpinnerService,

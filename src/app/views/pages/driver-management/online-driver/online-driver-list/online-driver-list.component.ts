@@ -234,6 +234,12 @@ export class OnlineDriverListComponent implements OnInit {
   //Apply More Filter
   applyCustomFilter() {
 
+    this.onlineDriverDataService.type = 'online';
+
+    if(this.onlineDriverDataService.formData!=''){
+      this.onlineDriverDataService.mode = 4;
+    }
+
     const dialogRef = this.dialog.open(DriverFilterComponent, {
       width: '1000px',
       height: 'auto',
@@ -245,6 +251,8 @@ export class OnlineDriverListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
      
       if(result != 3){
+        this.onlineDriverDataService.mode = 0;
+        this.onlineDriverDataService.formData = {};
         this.dataSource.applyFilter();
       }
     });
@@ -253,6 +261,8 @@ export class OnlineDriverListComponent implements OnInit {
   //Clear Filter
   clearFilter(){
     localStorage.setItem('driverFilter','');
+    this.onlineDriverDataService.formData = {};
+    this.onlineDriverDataService.mode = 0;
     this.dataSource.clearFilter();
   }
 

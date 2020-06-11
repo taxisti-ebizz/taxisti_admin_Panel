@@ -2,6 +2,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+// Service
+import { NoDriverAvailableDataService } from '../../../../../services/ride/no-driver-available-data.service';
+
+
 @Component({
   selector: 'kt-no-driver-available-filter',
   templateUrl: './no-driver-available-filter.component.html',
@@ -18,15 +22,21 @@ export class NoDriverAvailableFilterComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<NoDriverAvailableFilterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private formBuilder : FormBuilder) { }
+      private formBuilder : FormBuilder,
+      private noDriverAvailableDataService : NoDriverAvailableDataService) { }
 
     ngOnInit() {
 
       this.noDriverAvailbleFilterForm = this.formBuilder.group({
         rider_name : [''],
         mobile : [''],
-        location : ['']
+        location : [''],
+        created_date : ['']
       })
+
+      if(this.noDriverAvailableDataService.mode == 4){
+        this.noDriverAvailbleFilterForm.patchValue(this.noDriverAvailableDataService.formData);
+      }
 
     }
 
@@ -55,4 +65,8 @@ export class NoDriverAvailableFilterComponent implements OnInit {
       this.noDriverAvailbleFilterForm.reset();
     }
 
+    //Close Form
+    closeForm(){
+      this.noDriverAvailableDataService.formData = this.noDriverAvailbleFilterForm.value;
+    }
 }

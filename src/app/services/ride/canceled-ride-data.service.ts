@@ -18,6 +18,8 @@ export class CanceledRideDataService {
     page = 0;
     count = 0;
     total : any;
+    mode : any;
+    formData = {};
 
     constructor(private httpClient : HttpClient,
       private spinner : NgxSpinnerService,

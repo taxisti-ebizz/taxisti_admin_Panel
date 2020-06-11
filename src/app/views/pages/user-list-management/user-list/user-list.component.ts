@@ -215,6 +215,10 @@ export class UserListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      if(this.dataService.formData!=''){
+        this.dataService.mode = 4;
+      }
+
       const dialogRef = this.dialog.open(UserFilterComponent, {
         width: '1000px',
         height: 'auto',
@@ -226,6 +230,8 @@ export class UserListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.dataService.mode = 0;
+          this.dataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -270,6 +276,8 @@ export class UserListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('userFilter','');
+      this.dataService.formData = {};
+      this.dataService.mode = 0;
       this.dataSource.clearFilter();
     }
 }

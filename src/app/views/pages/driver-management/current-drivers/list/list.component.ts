@@ -218,6 +218,12 @@ export class ListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      this.curDriverDataService.type = 'current';
+
+      if(this.curDriverDataService.formData!=''){
+        this.curDriverDataService.mode = 4;
+      }
+
       const dialogRef = this.dialog.open(DriverFilterComponent, {
         width: '1000px',
         height: 'auto',
@@ -229,6 +235,8 @@ export class ListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.curDriverDataService.formData = {};
+          this.curDriverDataService.mode = 0;
           this.dataSource.applyFilter();
         }
       });
@@ -237,6 +245,8 @@ export class ListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('driverFilter','');
+      this.curDriverDataService.formData = {};
+      this.curDriverDataService.mode = 0;
       this.dataSource.clearFilter();
     }
 

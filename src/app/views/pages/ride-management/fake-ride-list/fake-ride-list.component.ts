@@ -19,6 +19,7 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 
 // Service
 import { FakeRideDataService } from '../../../../services/ride/fake-ride-data.service';
+import { CommonService } from '../../../../services/common.service';
 
 //Filter Component
 import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
@@ -69,7 +70,8 @@ export class FakeRideListComponent implements OnInit {
       private store: Store<AppState>,
       private httpClient : HttpClient,
       public fakeRideDataService : FakeRideDataService,
-      private route : ActivatedRoute) {
+      private route : ActivatedRoute,
+      private commonService : CommonService) {
 
         localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
 
@@ -203,6 +205,12 @@ export class FakeRideListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      this.commonService.type = 'fakeRide';
+
+      if(Object.keys(this.fakeRideDataService.formData).length > 0){
+        this.fakeRideDataService.mode = 4;
+      }
+
       localStorage.setItem('listType','fakeRide');
 
       const dialogRef = this.dialog.open(RidesFilterComponent, {
@@ -216,6 +224,9 @@ export class FakeRideListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.fakeRideDataService.mode = 0;
+          this.fakeRideDataService.formData = {};
+          this.fakeRideDataService.otherData = [];
           this.dataSource.applyFilter();
         }
       });
@@ -224,6 +235,9 @@ export class FakeRideListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('ridesFilter','');
+      this.fakeRideDataService.mode = 0;
+      this.fakeRideDataService.formData = {};
+      this.fakeRideDataService.otherData = [];
       this.dataSource.clearFilter();
     }
 }

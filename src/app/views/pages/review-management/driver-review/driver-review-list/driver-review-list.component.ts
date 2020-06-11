@@ -11,6 +11,7 @@ import { SubheaderService } from '../../../../../core/_base/layout';
 
 // Service
 import { DriverReviewDataService } from '../../../../../services/review/driver-review-data.service';
+import { CommonService } from '../../../../../services/common.service';
 
 import { DataSource } from '@angular/cdk/collections';
 import { DriverReview } from '../../../../../module/review/driver-review.module';
@@ -56,7 +57,8 @@ export class DriverReviewListComponent implements OnInit {
       private subheaderService: SubheaderService,
       public dialog: MatDialog,
       private httpClient : HttpClient,
-      public driverReviewDataService : DriverReviewDataService) { }
+      public driverReviewDataService : DriverReviewDataService,
+      private commonService : CommonService) { }
 
     ngOnInit() {
       // Set title to page breadCrumbs
@@ -186,6 +188,12 @@ export class DriverReviewListComponent implements OnInit {
     //Apply Custom Filter
     applyCustomFilter(){
 
+      this.commonService.type = 'driverReview';
+
+      if(Object.keys(this.driverReviewDataService.formData).length > 0){
+        this.driverReviewDataService.modeNum = 4;
+      }
+
       const dialogRef = this.dialog.open(ReviewFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -197,6 +205,8 @@ export class DriverReviewListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.driverReviewDataService.modeNum = 0;
+          this.driverReviewDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -205,6 +215,8 @@ export class DriverReviewListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('reviewsFilter','');
+      this.driverReviewDataService.modeNum = 0;
+      this.driverReviewDataService.formData = {};
       this.dataSource.clearFilter();
     }
 }

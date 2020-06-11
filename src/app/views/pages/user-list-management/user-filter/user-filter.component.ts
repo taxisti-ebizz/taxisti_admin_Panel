@@ -2,6 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+//Data Service
+import { DataService } from '../../../../services/user/data.service';
+
 @Component({
   selector: 'kt-user-filter',
   templateUrl: './user-filter.component.html',
@@ -22,9 +25,11 @@ export class UserFilterComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<UserFilterComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    private formBuilder : FormBuilder) { }
+    private formBuilder : FormBuilder,
+    private dataService : DataService) { }
 
   ngOnInit() {
+
     //Device Type Array 
     this.device_types = [
         { device_id: 'A', device_type: 'Android' },
@@ -76,11 +81,15 @@ export class UserFilterComponent implements OnInit {
       min_average : [''],
       max_average : ['']
     })
+
+    if(this.dataService.mode == 4){
+      this.userFilterForm.patchValue(this.dataService.formData);
+    }
   }
 
   //Apply Filter
   applyFilter(formData){
-
+    
     var dob = (<HTMLInputElement>document.getElementById('dob')).value;
     dob = ""+dob.toString()+"";
 
@@ -110,10 +119,10 @@ export class UserFilterComponent implements OnInit {
     const data = {
       "username" : formData.username,
       "mobile" : formData.mobile,
-      "complete_ride" : formData.min_completed!=''?formData.min_completed+'-'+formData.max_completed:'',
-      "cancelled_ride" : formData.min_cancelled!=''?formData.min_cancelled+'-'+formData.max_cancelled:'',
-      "total_review" : formData.min_total!=''?formData.min_total+'-'+formData.max_total:'',
-      "average_ratting" : formData.min_average!=''?formData.min_average+'-'+formData.max_average:'',
+      "complete_ride" : (formData.min_completed!='' && formData.min_completed!=null)?formData.min_completed+'-'+formData.max_completed:'',
+      "cancelled_ride" : (formData.min_cancelled!='' && formData.min_cancelled!=null)?formData.min_cancelled+'-'+formData.max_cancelled:'',
+      "total_review" : (formData.min_total!='' && formData.min_total!=null)?formData.min_total+'-'+formData.max_total:'',
+      "average_ratting" : (formData.min_average!='' && formData.min_average!=null)?formData.min_average+'-'+formData.max_average:'',
       "dob" : dateOfBirth,
       "dor" : dateOfRegister,
       "device_type" : deviceData,
@@ -129,6 +138,12 @@ export class UserFilterComponent implements OnInit {
     (<HTMLInputElement>document.getElementById('dob')).value = '';
     (<HTMLInputElement>document.getElementById('dor')).value = '';
     this.userFilterForm.reset();
+    this.dataService.mode = 0;
+    this.dataService.formData = {};
   }
 
+  //Close Form
+  closeForm(){
+    this.dataService.formData = this.userFilterForm.value;
+  }
 }

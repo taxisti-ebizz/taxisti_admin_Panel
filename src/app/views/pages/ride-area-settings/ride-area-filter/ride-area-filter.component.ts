@@ -2,6 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+// Service
+import { RideAreaDataService } from '../../../../services/ride-area/ride-area-data.service';
+
 @Component({
     selector: 'kt-ride-area-filter',
     templateUrl: './ride-area-filter.component.html',
@@ -18,13 +21,19 @@ export class RideAreaFilterComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<RideAreaFilterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private formBuilder : FormBuilder) { }
+      private formBuilder : FormBuilder,
+      private rideAreaService : RideAreaDataService) { }
 
     ngOnInit() {
 
       this.rideAreaFilterForm = this.formBuilder.group({
-          area_name : ['']
+          area_name : [''],
+          created_date : ['']
       });
+
+      if(this.rideAreaService.mode == 4){
+        this.rideAreaFilterForm.patchValue(this.rideAreaService.formData);
+      }
 
     }
 
@@ -45,4 +54,13 @@ export class RideAreaFilterComponent implements OnInit {
       this.dialogRef.close();
     }
 
+    //Close Form
+    closeForm(){
+      this.rideAreaService.formData = this.rideAreaFilterForm.value;
+    }
+
+    //Reset Form
+    resetForm(){
+      this.rideAreaFilterForm.reset();
+    }
 }

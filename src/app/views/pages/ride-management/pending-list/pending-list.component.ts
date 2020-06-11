@@ -22,6 +22,7 @@ import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
 
 // Service
 import { PendingRideDataService } from '../../../../services/ride/pending-ride-data.service';
+import { CommonService } from '../../../../services/common.service';
 
 //View Ride User details
 import { ViewRideUserDetailsComponent } from '../view-ride-user-details/view-ride-user-details.component';
@@ -70,7 +71,8 @@ export class PendingListComponent implements OnInit {
       private store: Store<AppState>,
       private httpClient : HttpClient,
       public pendingRideDataService : PendingRideDataService,
-      private route : ActivatedRoute) { 
+      private route : ActivatedRoute,
+      private commonService : CommonService) { 
         
         localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
         
@@ -226,6 +228,12 @@ export class PendingListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      this.commonService.type = 'pending';
+
+      if(this.pendingRideDataService.formData!=''){
+        this.pendingRideDataService.mode = 4;
+      }
+
       localStorage.setItem('listType','');
 
       const dialogRef = this.dialog.open(RidesFilterComponent, {
@@ -240,6 +248,8 @@ export class PendingListComponent implements OnInit {
       
         if(result != 3){
           this.dataSource.applyFilter();
+          this.pendingRideDataService.mode = 0;
+          this.pendingRideDataService.formData = {};
         }
       });
     }  
@@ -247,6 +257,8 @@ export class PendingListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('ridesFilter','');
+      this.pendingRideDataService.mode = 0;
+      this.pendingRideDataService.formData = {};
       this.dataSource.clearFilter();
     }
 }
@@ -331,7 +343,7 @@ export class ExampleDataSource extends DataSource<PendingRideIssue>{
 
   //Apply Filter
   applyFilter(){
-    this.exampleDatabase.deletePendingRide(this.exampleDatabase.page);
+    this.exampleDatabase.getPendingRideList(this.exampleDatabase.page);
   }
 
   //Clear Filter

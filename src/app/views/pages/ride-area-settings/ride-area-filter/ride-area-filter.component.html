@@ -25,7 +25,7 @@
                     <!-- Created Date -->
                     <div class="col-xs-12 col-md-6">
                         <label for="ssn" class="form-label label document">Created Date</label>
-                        <input type="text" class="form-control" id="created_date"
+                        <input type="text" class="form-control" id="created_date" formControlName="created_date"
                             placeholder="YYYY-MM-DD"  bsDaterangepicker 
                             [bsConfig]="{ adaptivePosition: true, isAnimated: true, containerClass: 'theme-dark-blue', rangeInputFormat : 'YYYY-MM-DD', dateInputFormat: 'YYYY-MM-DD' }" autocomplete="off">
                     </div>  
@@ -38,10 +38,11 @@
 			<div class="kt-form__actions kt-form__actions--solid">
 				<div class="row text-right">
 					<div class="col-lg-12">
-						<button type="button" mat-raised-button [mat-dialog-close]="3" cdkFocusInitial matTooltip="Close Modal">
+						<button type="button" class="resetForm" mat-raised-button (click)="resetForm()" matTooltip="Reset Form">Reset</button>&nbsp;
+                        <button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Apply Filter">Apply</button>&nbsp;
+                        <button type="button" mat-raised-button (click)="closeForm()" [mat-dialog-close]="3" cdkFocusInitial matTooltip="Close Modal" color="warn">
 							Close
-                        </button>&nbsp;
-						<button type="submit" mat-raised-button [ngClass]="{'kt-spinner kt-spinner--right kt-spinner--md kt-spinner--light': loading}" id="kt_login_signin_submit" class="btn btn-primary btn-elevate kt-login__btn-primary" color="primary" matTooltip="Apply Filter">Apply</button>
+                        </button>
 					</div>
 				</div>
 			</div>

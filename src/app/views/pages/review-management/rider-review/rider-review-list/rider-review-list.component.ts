@@ -17,6 +17,7 @@ import {	ManyProductsDeleted } from '../../../../../core/e-commerce';
 
 // Service
 import { RiderReviewDataService } from '../../../../../services/review/rider-review-data.service';
+import { CommonService } from '../../../../../services/common.service';
 
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../../core/reducers';
@@ -66,7 +67,8 @@ export class RiderReviewListComponent implements OnInit {
       private layoutUtilsService: LayoutUtilsService,
       private store: Store<AppState>,
       private httpClient : HttpClient,
-      public riderReviewDataService : RiderReviewDataService) { }
+      public riderReviewDataService : RiderReviewDataService,
+      private commonService : CommonService) { }
 
     ngOnInit() {
         // Set title to page breadCrumbs
@@ -166,6 +168,12 @@ export class RiderReviewListComponent implements OnInit {
     //Apply Custom Filter
     applyCustomFilter(){
 
+      this.commonService.type = 'riderReview';
+
+      if(Object.keys(this.riderReviewDataService.formData).length > 0){
+        this.riderReviewDataService.modeNum = 4;
+      }
+
       const dialogRef = this.dialog.open(ReviewFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -177,6 +185,8 @@ export class RiderReviewListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.riderReviewDataService.modeNum = 0;
+          this.riderReviewDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -185,6 +195,8 @@ export class RiderReviewListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('reviewsFilter','');
+      this.riderReviewDataService.modeNum = 0;
+      this.riderReviewDataService.formData = {};
       this.dataSource.clearFilter();
     }
 

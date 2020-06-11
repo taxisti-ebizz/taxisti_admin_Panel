@@ -222,6 +222,10 @@ export class SubAdminListComponent implements OnInit {
     //Apply Custom Filter
     applyCustomFilter(){
 
+      if(Object.keys(this.subAdminDataService.formData).length > 0){
+        this.subAdminDataService.mode = 4;
+      }
+
       const dialogRef = this.dialog.open(SubAdminFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -233,6 +237,8 @@ export class SubAdminListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.subAdminDataService.mode = 0;
+          this.subAdminDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -241,6 +247,8 @@ export class SubAdminListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('subAdminFilter','');
+      this.subAdminDataService.mode = 0;
+      this.subAdminDataService.formData = {};
       this.dataSource.clearFilter();
     }
 }

@@ -19,6 +19,7 @@ export class ContactUsDataService {
   page = 0;
   count = 0;
   total : any;
+  formData = {};
 
   constructor(private httpClient : HttpClient,
     private spinner : NgxSpinnerService,

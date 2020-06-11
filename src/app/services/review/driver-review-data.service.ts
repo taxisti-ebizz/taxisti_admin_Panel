@@ -19,6 +19,8 @@ export class DriverReviewDataService {
   page = 0;
   count = 0;
   total : any;
+  modeNum : any;
+  formData = {};
 
   constructor(private httpClient : HttpClient,
     private spinner : NgxSpinnerService,
@@ -31,7 +33,7 @@ export class DriverReviewDataService {
 
   //Get Driver Review Data
   getDriverReviewList(page) : void {
-    this.spinner.show();
+    //this.spinner.show();
 
     var data = {};
     if(localStorage.getItem('reviewsFilter')!=null && localStorage.getItem('reviewsFilter')!=''){

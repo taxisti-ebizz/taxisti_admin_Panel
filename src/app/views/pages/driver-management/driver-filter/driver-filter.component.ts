@@ -2,6 +2,11 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+//Services
+import { AllDriverDataService } from '../../../../services/driver/all-driver-data.service';
+import { CurDriverDataService } from '../../../../services/driver/cur-driver-data.service';
+import { OnlineDriverDataService } from '../../../../services/driver/online-driver-data.service';
+
 @Component({
   selector: 'kt-driver-filter',
   templateUrl: './driver-filter.component.html',
@@ -23,7 +28,10 @@ export class DriverFilterComponent implements OnInit {
 
     constructor(public dialogRef: MatDialogRef<DriverFilterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private formBuilder : FormBuilder) {
+      private formBuilder : FormBuilder,
+      private allDriverDataService : AllDriverDataService,
+      private curDriverDataService : CurDriverDataService,
+      private onlineDriverDataService : OnlineDriverDataService) {
       }
 
     ngOnInit() {
@@ -88,6 +96,18 @@ export class DriverFilterComponent implements OnInit {
         min_average : [''],
         max_average : ['']
       })
+
+      if(this.allDriverDataService.mode == 4){
+        this.driverFilterForm.patchValue(this.allDriverDataService.formData);
+      }
+
+      if(this.curDriverDataService.mode == 4){
+        this.driverFilterForm.patchValue(this.curDriverDataService.formData);
+      }
+
+      if(this.onlineDriverDataService.mode == 4){
+        this.driverFilterForm.patchValue(this.onlineDriverDataService.formData);
+      }
     }
 
     //Apply Filter
@@ -118,22 +138,26 @@ export class DriverFilterComponent implements OnInit {
     
         var dateOfRegister = dor.replace(/\s+-/g, '');
     
-        var verifyData = '';
-        for (let i = 0; i < formData.verify.length; i++) {
-          if(verifyData!=''){
-            verifyData += ',';
+        
+        if(formData.verify!='' && formData.verify!=null){
+          var verifyData = '';
+          for (let i = 0; i < formData.verify.length; i++) {
+            if(verifyData!=''){
+              verifyData += ',';
+            }
+            verifyData += formData.verify[i].verify_id;
           }
-          verifyData += formData.verify[i].verify_id;
         }
-    
-        var deviceData = '';
-        for (let i = 0; i < formData.device_type.length; i++) {
-          if(deviceData!=''){
-            deviceData += ',';
+       
+        if(formData.device_type!='' && formData.device_type!=null){
+          var deviceData = '';
+          for (let i = 0; i < formData.device_type.length; i++) {
+            if(deviceData!=''){
+              deviceData += ',';
+            }
+            deviceData += formData.device_type[i].device_id;
           }
-          deviceData += formData.device_type[i].device_id;
         }
-
        
         const data = {
           "username" : formData.username,
@@ -142,15 +166,15 @@ export class DriverFilterComponent implements OnInit {
           "dor" : dateOfRegister,
           "device_type" : deviceData,
           "verify" : verifyData,
-          "driver_rides" : formData.min_rides!=''?formData.min_rides+'-'+formData.max_rides:'',
-          "driver_cancel_ride" : formData.min_cancelled!=''?formData.min_cancelled+'-'+formData.max_cancelled:'',
-          "driver_total_review" : formData.min_total_reviews!=''?formData.min_total_reviews+'-'+formData.max_total_reviews:'',
-          "driver_avg_rating" : formData.min_average!=''?formData.min_average+'-'+formData.max_average:'',
-          "rejected_ratio"  : formData.min_rejected!=''?formData.min_rejected+'-'+formData.max_rejected:'',
-          "acceptance_ratio" : formData.min_acceptance!=''?formData.min_acceptance+'-'+formData.max_acceptance:'',
-          "online_hours_last_week" : formData.min_last_week!=''?formData.min_last_week+'-'+formData.max_last_week:'',
-          "online_hours_current_week" : formData.min_current_week!=''?formData.min_current_week+'-'+formData.max_current_week:'',
-          "total_online_hours" : formData.min_total_hours!=''?formData.min_total_hours+'-'+formData.max_total_hours:''
+          "driver_rides" : (formData.min_rides!='' && formData.min_rides!=null)?formData.min_rides+'-'+formData.max_rides:'',
+          "driver_cancel_ride" : (formData.min_cancelled!='' && formData.min_cancelled!=null)?formData.min_cancelled+'-'+formData.max_cancelled:'',
+          "driver_total_review" : (formData.min_total_reviews!='' && formData.min_total_reviews!=null)?formData.min_total_reviews+'-'+formData.max_total_reviews:'',
+          "driver_avg_rating" : (formData.min_average!='' && formData.min_average!=null)?formData.min_average+'-'+formData.max_average:'',
+          "rejected_ratio"  : (formData.min_rejected!='' && formData.min_rejected!=null)?formData.min_rejected+'-'+formData.max_rejected:'',
+          "acceptance_ratio" : (formData.min_acceptance!='' && formData.min_acceptance!=null)?formData.min_acceptance+'-'+formData.max_acceptance:'',
+          "online_hours_last_week" : (formData.min_last_week!='' && formData.min_last_week!=null)?formData.min_last_week+'-'+formData.max_last_week:'',
+          "online_hours_current_week" : (formData.min_current_week!='' && formData.min_current_week!=null)?formData.min_current_week+'-'+formData.max_current_week:'',
+          "total_online_hours" : (formData.min_total_hours!='' && formData.min_total_hours!=null)?formData.min_total_hours+'-'+formData.max_total_hours:''
         } 
     
         localStorage.setItem('driverFilter',JSON.stringify(data));
@@ -168,5 +192,29 @@ export class DriverFilterComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('dob')).value = '';
       (<HTMLInputElement>document.getElementById('dor')).value = '';
       this.driverFilterForm.reset();
+      if(this.allDriverDataService.type == 'all'){
+        this.allDriverDataService.mode = 0;
+        this.allDriverDataService.formData = {};
+      }else if(this.curDriverDataService.type == 'current'){
+        this.curDriverDataService.mode = 0;
+        this.curDriverDataService.formData = {};
+      }else if(this.onlineDriverDataService.type == 'online'){
+        this.onlineDriverDataService.mode = 0;
+        this.onlineDriverDataService.formData = {};
+      }
+      
+     
     }
-}
+
+    //Close Form
+    closeForm(){
+      if(this.allDriverDataService.type == 'all'){
+        this.allDriverDataService.formData = this.driverFilterForm.value;
+      }else if(this.curDriverDataService.type == 'current'){
+        this.curDriverDataService.formData = this.driverFilterForm.value;
+      }else if(this.onlineDriverDataService.type == 'online'){
+        this.onlineDriverDataService.formData = this.driverFilterForm.value;
+      }
+      
+    }
+} 

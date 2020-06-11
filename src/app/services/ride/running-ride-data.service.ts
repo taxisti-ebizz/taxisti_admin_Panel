@@ -17,6 +17,8 @@ export class RunningRideDataService {
   page = 0;
   count = 0;
   total : any;
+  mode : any;
+  formData = {};
 
   constructor(private httpClient : HttpClient,
     private spinner : NgxSpinnerService,
@@ -66,7 +68,7 @@ export class RunningRideDataService {
       data = {
         "page" : page,
         "type" : urlType,
-        "sub-type" : 'filter',
+        "sub_type" : 'filter',
         "filter" : localStorage.getItem('ridesFilter')
       }
     }else {

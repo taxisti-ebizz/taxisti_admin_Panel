@@ -19,6 +19,7 @@ import {	ManyProductsDeleted } from '../../../../core/e-commerce';
 
 // Service
 import { RunningRideDataService } from '../../../../services/ride/running-ride-data.service';
+import { CommonService } from '../../../../services/common.service';
 
 //Filter Component
 import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
@@ -70,7 +71,8 @@ export class RunningListComponent implements OnInit {
       private store: Store<AppState>,
       private httpClient : HttpClient,
       public runningRideDataService : RunningRideDataService,
-      private route : ActivatedRoute) { 
+      private route : ActivatedRoute,
+      private commonService : CommonService) { 
         
         localStorage.setItem('urlType',this.route.snapshot.paramMap.get('id'));
 
@@ -247,6 +249,12 @@ export class RunningListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      this.commonService.type = 'running';
+
+      if(this.runningRideDataService.formData!=''){
+        this.runningRideDataService.mode = 4;
+      }
+
       localStorage.setItem('listType','');
 
       const dialogRef = this.dialog.open(RidesFilterComponent, {
@@ -260,6 +268,8 @@ export class RunningListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.runningRideDataService.mode = 0;
+          this.runningRideDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -268,6 +278,8 @@ export class RunningListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('ridesFilter','');
+      this.runningRideDataService.mode = 0;
+      this.runningRideDataService.formData = {};
       this.dataSource.clearFilter();
     }
 

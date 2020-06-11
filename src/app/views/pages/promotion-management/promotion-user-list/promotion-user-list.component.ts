@@ -163,6 +163,10 @@ export class PromotionUserListComponent implements OnInit {
     //Apply Custom Filter
     applyCustomFilter(){
 
+      if(Object.keys(this.promotionUserDataService.formData).length > 0){
+        this.promotionUserDataService.mode = 4;
+      }
+
       const dialogRef = this.dialog.open(PromotionUserFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -174,6 +178,8 @@ export class PromotionUserListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.promotionUserDataService.mode = 0;
+          this.promotionUserDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -182,6 +188,8 @@ export class PromotionUserListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('promotionUserFilter','');
+      this.promotionUserDataService.mode = 0;
+      this.promotionUserDataService.formData = {};
       this.dataSource.clearFilter();
     }
 

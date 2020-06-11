@@ -19,6 +19,8 @@ export class RiderReviewDataService {
   page = 0;
   count = 0;
   total : any;
+  modeNum : any;
+  formData = {};
 
   constructor(private httpClient : HttpClient,
     private spinner : NgxSpinnerService,

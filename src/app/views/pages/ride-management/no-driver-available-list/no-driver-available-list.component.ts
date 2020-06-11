@@ -225,6 +225,10 @@ export class NoDriverAvailableListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      if(Object.keys(this.noDriverAvailableDataService.formData).length > 0){
+        this.noDriverAvailableDataService.mode = 4;
+      }
+
       const dialogRef = this.dialog.open(NoDriverAvailableFilterComponent, {
         width: '800px',
         height: 'auto',
@@ -236,6 +240,8 @@ export class NoDriverAvailableListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
       
         if(result != 3){
+          this.noDriverAvailableDataService.mode = 0;
+          this.noDriverAvailableDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -244,6 +250,8 @@ export class NoDriverAvailableListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('notAvailRidesFilter','');
+      this.noDriverAvailableDataService.mode = 0;
+      this.noDriverAvailableDataService.formData = {};
       this.dataSource.clearFilter();
     }
 }

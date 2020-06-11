@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CommonService {
 
+  type = '';
   constructor(private router: Router,
     private toastr: ToastrService) { }
 

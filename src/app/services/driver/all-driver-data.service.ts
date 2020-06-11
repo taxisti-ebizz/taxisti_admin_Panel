@@ -17,6 +17,9 @@ export class AllDriverDataService {
   page = 0;
   count = 0;
   total : any;
+  mode : any;
+  formData = {};
+  type : any;
 
   constructor(private httpClient : HttpClient,
     private spinner : NgxSpinnerService,

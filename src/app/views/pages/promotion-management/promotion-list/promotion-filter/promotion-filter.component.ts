@@ -2,6 +2,9 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
+// Service
+import { PromotionDataService } from '../../../../../services/promotion/promotion-data.service';
+
 @Component({
   selector: 'kt-promotion-filter',
   templateUrl: './promotion-filter.component.html',
@@ -20,7 +23,8 @@ export class PromotionFilterComponent implements OnInit {
     
     constructor(public dialogRef: MatDialogRef<PromotionFilterComponent>,
       @Inject(MAT_DIALOG_DATA) public data: any,
-      private formBuilder : FormBuilder) { }
+      private formBuilder : FormBuilder,
+      private promotionDataService : PromotionDataService) { }
 
     ngOnInit() {
 
@@ -45,8 +49,14 @@ export class PromotionFilterComponent implements OnInit {
         type : [''],
         code : [''],
         min_user_limit : [''],
-        max_user_limit : ['']
+        max_user_limit : [''],
+        start_date : [''],
+        end_date : ['']
       });
+
+      if(this.promotionDataService.mode == 4){
+        this.promotionFilterForm.patchValue(this.promotionDataService.formData);
+      }
     }
 
     //Apply Filter
@@ -73,7 +83,7 @@ export class PromotionFilterComponent implements OnInit {
       const data = {
         "type" : userTypeData,
         "code" : formData.code,
-        "user_limit" : formData.min_user_limit!=''?formData.min_user_limit+'-'+formData.max_user_limit:'',
+        "user_limit" : (formData.min_user_limit!=null && formData.min_user_limit!='')?formData.min_user_limit+'-'+formData.max_user_limit:'',
         "start_date" : startDate,
         "end_date" : endDate
       } 
@@ -87,5 +97,10 @@ export class PromotionFilterComponent implements OnInit {
       (<HTMLInputElement>document.getElementById('start_date')).value = '';
       (<HTMLInputElement>document.getElementById('end_date')).value = '';
       this.promotionFilterForm.reset();
+    }
+
+    //Close Form
+    closeForm(){
+      this.promotionDataService.formData = this.promotionFilterForm.value;
     }
 }

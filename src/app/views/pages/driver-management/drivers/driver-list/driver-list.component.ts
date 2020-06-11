@@ -274,6 +274,12 @@ export class DriverListComponent implements OnInit {
     //Apply More Filter
     applyCustomFilter() {
 
+      this.allDriverDataService.type = 'all';
+
+      if(this.allDriverDataService.formData!=''){
+        this.allDriverDataService.mode = 4;
+      }
+
       const dialogRef = this.dialog.open(DriverFilterComponent, {
         width: '1000px',
         height: 'auto',
@@ -285,6 +291,8 @@ export class DriverListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
        
         if(result != 3){
+          this.allDriverDataService.mode = 0;
+          this.allDriverDataService.formData = {};
           this.dataSource.applyFilter();
         }
       });
@@ -293,6 +301,8 @@ export class DriverListComponent implements OnInit {
     //Clear Filter
     clearFilter(){
       localStorage.setItem('driverFilter','');
+      this.allDriverDataService.formData = {};
+      this.allDriverDataService.mode = 0;
       this.dataSource.clearFilter();
     }
     

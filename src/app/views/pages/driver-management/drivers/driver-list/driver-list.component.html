@@ -58,8 +58,8 @@
             
                 <!-- Rides Column -->
                 <ng-container matColumnDef="rides">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rides</mat-header-cell>
-                    <mat-cell *matCellDef="let driver">{{driver.driver_rides_count}}</mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header style="padding-left: 15px;">Rides</mat-header-cell>
+                    <mat-cell *matCellDef="let driver" style="padding-left: 40px;">{{driver.driver_rides_count}}</mat-cell>
                 </ng-container>
 
                 <!-- Cancelled Ride Column -->

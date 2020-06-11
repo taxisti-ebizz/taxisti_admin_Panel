@@ -18,6 +18,9 @@ export class FakeRideDataService {
     page = 0;
     count = 0;
     total : any;
+    mode = 0;
+    formData = {};
+    otherData = [];
 
     constructor(private httpClient : HttpClient,
       private spinner : NgxSpinnerService,
