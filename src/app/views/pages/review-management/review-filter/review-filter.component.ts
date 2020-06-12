@@ -53,8 +53,8 @@ export class ReviewFilterComponent implements OnInit {
       const data = {  
         "name" : formData.name,
         "mobile" : formData.mobile,
-        "review" : formData.min_review!=null?formData.min_review+'-'+formData.max_review:'',
-        "avg_rating" : formData.min_avg_rating!=null?formData.min_avg_rating+'-'+formData.max_avg_rating:''
+        "review" : (formData.min_review!=null && formData.min_review!='')?formData.min_review+'-'+formData.max_review:'',
+        "avg_rating" : (formData.min_avg_rating!=null && formData.min_avg_rating!='')?formData.min_avg_rating+'-'+formData.max_avg_rating:''
       }  
       
       localStorage.setItem('reviewsFilter',JSON.stringify(data));

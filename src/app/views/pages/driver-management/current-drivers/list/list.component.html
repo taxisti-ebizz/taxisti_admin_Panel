@@ -107,7 +107,7 @@
                 <!-- Average Rating Column -->
                 <ng-container matColumnDef="average_rating">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Average Rating</mat-header-cell>
-                    <mat-cell *matCellDef="let driver">{{driver.driver_avg_rating_count}}</mat-cell>
+                    <mat-cell *matCellDef="let driver">{{driver.driver_avg}}</mat-cell>
                 </ng-container>
 
                 <!-- Date Of Birth Column -->
@@ -137,6 +137,7 @@
                     </mat-cell>
                 </ng-container>
 
+                <!-- Actions Column -->
                 <ng-container matColumnDef="actions">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Action / Status</mat-header-cell>
                     <mat-cell *matCellDef="let driver; let i=index;">

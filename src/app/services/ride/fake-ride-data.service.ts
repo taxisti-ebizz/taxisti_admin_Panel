@@ -88,6 +88,17 @@ export class FakeRideDataService {
                 else if(element.cancel_by == 2){
                   element.cancel_by_name = 'Rider';
                 }
+
+                element.rider_rat = 0;
+                if(element.rider_rating.length > 0){
+                  element.rider_rat = element.rider_rating[0].ratting;
+                }
+                
+                element.driver_rat = 0;
+                if(element.driver_rating.length > 0){
+                  element.driver_rat = element.driver_rating[0].ratting;
+                }
+
                 i++;
               });
 

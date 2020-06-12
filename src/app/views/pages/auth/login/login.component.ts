@@ -28,6 +28,8 @@ import { config } from 'process';
 //Ngx Spinner
 import { NgxSpinnerService } from 'ngx-spinner';
 
+import { AdminAuthService } from '../../../../helper/admin-auth.service';
+
 /**
  * ! Just example => Should be removed in development
  */
@@ -80,9 +82,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 		private api : ApiService,
 		private http : HttpService,
 		private spinner: NgxSpinnerService,
-		private toastr : ToastrService
-	) {
+		private toastr : ToastrService,
+		private adminAuthService: AdminAuthService) {
 		this.unsubscribe = new Subject();
+
+		if (this.adminAuthService.loggedIn()) {
+			this.router.navigate(['/dashboard']);
+		}
+		else{
+			this.router.navigate(['/']);
+		}
 	}
 
 	/**

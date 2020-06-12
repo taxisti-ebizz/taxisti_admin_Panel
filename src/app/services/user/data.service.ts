@@ -78,6 +78,12 @@ export class DataService {
             result.data.data.forEach(element => {
               element.id = i;
               
+              if(element.avg_rating.length > 0){
+                element.average_rating = element.avg_rating[0].avg;
+              }
+              else{
+                element.average_rating = 0;
+              }
               i++;
             });
             

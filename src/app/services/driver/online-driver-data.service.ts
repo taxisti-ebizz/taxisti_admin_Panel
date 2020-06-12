@@ -66,6 +66,14 @@ export class OnlineDriverDataService {
         var i = 1;
         result.data.data.forEach(element => {
           element.id = i;
+
+          if(element.driver_avg_rating.length > 0){
+            element.driver_avg = element.driver_avg_rating[0].avg;
+          }
+          else{
+            element.driver_avg = 0;
+          }
+
           i++;
         });
         

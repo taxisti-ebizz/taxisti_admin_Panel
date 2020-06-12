@@ -81,6 +81,17 @@ export class CompleteRideDataService {
               var i = 1;
               result.data.data.forEach(element => {
                 element.index = i;
+
+                element.rider_rat = 0;
+                if(element.rider_rating.length > 0){
+                  element.rider_rat = element.rider_rating[0].ratting;
+                }
+                
+                element.driver_rat = 0;
+                if(element.driver_rating.length > 0){
+                  element.driver_rat = element.driver_rating[0].ratting;
+                }
+
                 i++;
               });
 

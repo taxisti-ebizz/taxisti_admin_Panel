@@ -41,11 +41,11 @@ export class DashboardComponent implements OnInit {
 		private http : HttpService,
 		private spinner : NgxSpinnerService) {
 
-		if (!this.adminAuthService.loggedIn()) {
-			this.router.navigate(['/']);
+		if (this.adminAuthService.loggedIn()) {
+			this.router.navigate(['/dashboard']);
 		}
 		else{
-			this.router.navigate(['/dashboard']);
+			this.router.navigate(['/']);
 		}
 
 		

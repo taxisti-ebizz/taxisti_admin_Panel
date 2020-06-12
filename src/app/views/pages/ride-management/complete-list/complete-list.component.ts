@@ -43,7 +43,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CompleteListComponent implements OnInit {
 
-    displayedColumns = ['select', 'id', 'rider_name', 'driver_name', 'start_date', 'end_date', 'start_location', 'end_location', 'amount', 'distance', 'rider_ratting', 'driver_ratting'];
+    displayedColumns = ['select', 'id', 'rider_name', 'driver_name', 'start_date', 'end_date', 'start_location', 'end_location', 'amount', 'distance', 'rider_rating', 'driver_rating'];
 
     exampleDatabase : CompleteRideDataService | null;
     dataSource : ExampleDataSource | null;

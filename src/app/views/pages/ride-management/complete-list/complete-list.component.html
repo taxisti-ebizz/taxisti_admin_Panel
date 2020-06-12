@@ -133,15 +133,15 @@
                 </ng-container>
 
                 <!-- Rider Ratting Column -->
-                <ng-container matColumnDef="rider_ratting">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Ratting</mat-header-cell>
-                    <mat-cell *matCellDef="let ride">{{ride.rider_ratting}}</mat-cell>
+                <ng-container matColumnDef="rider_rating">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Rider Rating</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.rider_rat}}</mat-cell>
                 </ng-container>
 
                 <!-- Driver Ratting Column -->
-                <ng-container matColumnDef="driver_ratting">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Ratting</mat-header-cell>
-                    <mat-cell *matCellDef="let ride">{{ride.driver_ratting}}</mat-cell>
+                <ng-container matColumnDef="driver_rating">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Rating</mat-header-cell>
+                    <mat-cell *matCellDef="let ride">{{ride.driver_rat}}</mat-cell>
                 </ng-container>
             
                 <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
