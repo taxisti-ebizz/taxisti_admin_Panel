@@ -114,7 +114,8 @@ export class SubAdminListComponent implements OnInit {
         width: '700px',
         height: 'auto',
         backdropClass: 'masterModalPopup',
-        data: { page : this.pageData }
+        data: { page : this.pageData },
+        disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -202,7 +203,8 @@ export class SubAdminListComponent implements OnInit {
             width: '700px',
             height: 'auto',
             backdropClass: 'masterModalPopup',
-            data: { mode: 3, userData : result.data }
+            data: { mode: 3, userData : result.data },
+            disableClose: true
           });
           dialogRef.afterClosed().subscribe(result => {
             

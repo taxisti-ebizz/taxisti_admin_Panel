@@ -139,7 +139,8 @@ export class RideAreaListComponent implements OnInit {
               width: '1000px',
               height: 'auto',
               backdropClass: 'masterModalPopup',
-              data: { mode: 3, zoom : 8, area : JSON.parse(result.data.coordinates), latitude : parseFloat(result.data.lat), longitude : parseFloat(result.data.long) }
+              data: { mode: 3, zoom : 8, area : JSON.parse(result.data.coordinates), latitude : parseFloat(result.data.lat), longitude : parseFloat(result.data.long) },
+              disableClose: true
             });
             dialogRef.afterClosed().subscribe(result => {
               

@@ -114,7 +114,8 @@ export class ListComponent implements OnInit {
         width: '700px',
         height: 'auto',
         backdropClass: 'masterModalPopup',
-        data: { mode: 3, driverData : driverData }
+        data: { mode: 3, driverData : driverData },
+        disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
         
@@ -133,7 +134,8 @@ export class ListComponent implements OnInit {
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     const dialogRef = this.dialog.open(EditComponent, {
-      data: { driver : driverData }
+      data: { driver : driverData },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -267,7 +269,8 @@ export class ListComponent implements OnInit {
             width: '700px',
             height: 'auto',
             backdropClass: 'masterModalPopup',
-            data: { mode: 3, userData : result.data }
+            data: { mode: 3, userData : result.data },
+            disableClose: true
           });
           dialogRef.afterClosed().subscribe(result => {
             

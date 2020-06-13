@@ -112,7 +112,8 @@ export class DriverReviewListComponent implements OnInit {
               width: '700px',
               height: 'auto',
               backdropClass: 'masterModalPopup',
-              data: { mode: 3, reviewData : result.data }
+              data: { mode: 3, reviewData : result.data },
+              disableClose: true
             });
             dialogRef.afterClosed().subscribe(result => {
               
@@ -172,7 +173,8 @@ export class DriverReviewListComponent implements OnInit {
             width: '700px',
             height: 'auto',
             backdropClass: 'masterModalPopup',
-            data: { mode: 3, userData : result.data }
+            data: { mode: 3, userData : result.data },
+            disableClose: true
           });
           dialogRef.afterClosed().subscribe(result => {
             

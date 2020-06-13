@@ -131,7 +131,8 @@ export class PromotionListComponent implements OnInit {
   addPromotion() {
 
     const dialogRef = this.dialog.open(AddPromotionComponent, {
-      data: { promotion : this.promotion }
+      data: { promotion : this.promotion },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -155,7 +156,8 @@ export class PromotionListComponent implements OnInit {
     // index row is used just for debugging proposes and can be removed
     this.index = i;
     const dialogRef = this.dialog.open(EditPromotionComponent, {
-      data: { promoData : promotionData }
+      data: { promoData : promotionData },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

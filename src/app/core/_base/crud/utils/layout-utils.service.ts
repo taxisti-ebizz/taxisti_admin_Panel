@@ -75,7 +75,8 @@ export class LayoutUtilsService {
 		
 		return this.dialog.open(DeleteEntityDialogComponent, {
 			data: { title, description, waitDesciption, id, type },
-			width: '440px'
+			width: '440px',
+			disableClose: true
 		});
 	}
 
@@ -89,7 +90,8 @@ export class LayoutUtilsService {
 	verifyElement(title: string = '', description: string = '', waitDesciption: string = '', id, status, type) {
 		return this.dialog.open(VerifyStatusDialogComponent, {
 			data: { title, description, waitDesciption, id, status, type},
-			width: '440px'
+			width: '440px',
+			disableClose: true
 		});
 	}
 
@@ -101,7 +103,8 @@ export class LayoutUtilsService {
 	fetchElements(_data) {
 		return this.dialog.open(FetchEntityDialogComponent, {
 			data: _data,
-			width: '400px'
+			width: '400px',
+			disableClose: true
 		});
 	}
 
@@ -115,7 +118,8 @@ export class LayoutUtilsService {
 	updateStatusForEntities(title, statuses, messages) {
 		return this.dialog.open(UpdateStatusDialogComponent, {
 			data: { title, statuses, messages },
-			width: '480px'
+			width: '480px',
+			disableClose: true
 		});
 	}
 }

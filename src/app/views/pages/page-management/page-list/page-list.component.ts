@@ -105,7 +105,8 @@ export class PageListComponent implements OnInit {
       width: '1000px',
       height: 'auto',
       backdropClass: 'masterModalPopup',
-      data: { page : this.pageData }
+      data: { page : this.pageData },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -134,7 +135,8 @@ export class PageListComponent implements OnInit {
       width: '1000px',
       height: 'auto',
       backdropClass: 'masterModalPopup',
-      data: { pageData : pageData }
+      data: { pageData : pageData },
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

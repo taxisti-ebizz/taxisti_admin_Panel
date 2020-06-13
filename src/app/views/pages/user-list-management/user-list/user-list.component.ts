@@ -133,7 +133,8 @@ export class UserListComponent implements OnInit {
       // index row is used just for debugging proposes and can be removed
       this.index = i;
       const dialogRef = this.dialog.open(UserEditComponent, {
-        data: { user : userData }
+        data: { user : userData },
+        disableClose: true
       });
 
       dialogRef.afterClosed().subscribe(result => {
@@ -164,7 +165,8 @@ export class UserListComponent implements OnInit {
         width: '700px',
         height: 'auto',
         backdropClass: 'masterModalPopup',
-        data: { mode: 3, userData : userData }
+        data: { mode: 3, userData : userData },
+        disableClose: true
       });
       dialogRef.afterClosed().subscribe(result => {
         
