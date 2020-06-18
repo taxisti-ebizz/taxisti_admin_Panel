@@ -81,20 +81,22 @@ export class DriverFilterComponent implements OnInit {
         max_rides : [''],
         min_cancelled : [''],
         max_cancelled : [''],
-        min_acceptance : [''],
-        max_acceptance : [''],
-        min_rejected : [''],
-        max_rejected : [''],
-        min_last_week : [''],
-        max_last_week : [''],
-        min_current_week : [''],
-        max_current_week : [''],
-        min_total_hours : [''],
-        max_total_hours : [''],
         min_total_reviews : [''],
         max_total_reviews : [''],
         min_average : [''],
         max_average : ['']
+        //======================Commented BY VS 18-06-2020 7:09 PM============================
+          // min_acceptance : [''],
+          // max_acceptance : [''],
+          // min_rejected : [''],
+          // max_rejected : [''],
+          // min_last_week : ['00:00'],
+          // max_last_week : ['00:00'],
+          // min_current_week : ['00:00'],
+          // max_current_week : ['00:00'],
+          // min_total_hours : ['00:00'],
+          // max_total_hours : ['00:00'],
+        //======================Commented BY VS 18-06-2020 7:09 PM============================
       })
 
       if(this.allDriverDataService.mode == 4){
@@ -113,21 +115,7 @@ export class DriverFilterComponent implements OnInit {
     //Apply Filter
     applyFilter(formData){
 
-      // if(formData.username=='' && formData.mobile=='' && formData.dor=='' && formData.dob=='' && formData.device_type=='' && formData.verify=='' && 
-      // (formData.min_rides=='' || formData.max_rides=='') && 
-      // (formData.min_cancelled=='' || formData.max_cancelled=='') &&
-      // (formData.min_total=='' || formData.max_total=='') &&
-      // (formData.min_average=='' || formData.max_average=='') &&
-      // (formData.min_rejected=='' || formData.max_rejected=='') &&
-      // (formData.min_acceptance=='' || formData.max_acceptance=='') &&
-      // (formData.min_last_week=='' || formData.max_last_week=='') &&
-      // (formData.min_current_week=='' || formData.max_current_week=='') &&
-      // (formData.min_total_hours=='' || formData.max_total_hours=='')){
-      //   this.hasFormErrors = true;
-      //   return;
-      // }
-      // else{
-
+    
         var dob = (<HTMLInputElement>document.getElementById('dob')).value;
         dob = ""+dob.toString()+"";
     
@@ -169,14 +157,19 @@ export class DriverFilterComponent implements OnInit {
           "driver_rides" : (formData.min_rides!='' && formData.min_rides!=null)?formData.min_rides+'-'+formData.max_rides:'',
           "driver_cancel_ride" : (formData.min_cancelled!='' && formData.min_cancelled!=null)?formData.min_cancelled+'-'+formData.max_cancelled:'',
           "driver_total_review" : (formData.min_total_reviews!='' && formData.min_total_reviews!=null)?formData.min_total_reviews+'-'+formData.max_total_reviews:'',
-          "driver_avg_rating" : (formData.min_average!='' && formData.min_average!=null)?formData.min_average+'-'+formData.max_average:'',
-          "rejected_ratio"  : (formData.min_rejected!='' && formData.min_rejected!=null)?formData.min_rejected+'-'+formData.max_rejected:'',
-          "acceptance_ratio" : (formData.min_acceptance!='' && formData.min_acceptance!=null)?formData.min_acceptance+'-'+formData.max_acceptance:'',
-          "online_hours_last_week" : (formData.min_last_week!='' && formData.min_last_week!=null)?formData.min_last_week+'-'+formData.max_last_week:'',
-          "online_hours_current_week" : (formData.min_current_week!='' && formData.min_current_week!=null)?formData.min_current_week+'-'+formData.max_current_week:'',
-          "total_online_hours" : (formData.min_total_hours!='' && formData.min_total_hours!=null)?formData.min_total_hours+'-'+formData.max_total_hours:''
+          "driver_avg_rating" : (formData.min_average!='' && formData.min_average!=null)?formData.min_average+'-'+formData.max_average:''
         } 
-    
+
+
+        //=============================Commented BY VS 18-06-2020 7:09 PM======================================
+          // "rejected_ratio"  : (formData.min_rejected!='' && formData.min_rejected!=null)?formData.min_rejected+'-'+formData.max_rejected:'',
+          // "acceptance_ratio" : (formData.min_acceptance!='' && formData.min_acceptance!=null)?formData.min_acceptance+'-'+formData.max_acceptance:'',
+          // "online_hours_last_week" : (formData.min_last_week!='00:00' && formData.min_last_week!=null)?formData.min_last_week+':00'+'-'+formData.max_last_week+':00':'',
+          // "online_hours_current_week" : (formData.min_current_week!='00:00' && formData.min_current_week!=null)?formData.min_current_week+':00'+'-'+formData.max_current_week+':00':'',
+          // "total_online_hours" : (formData.min_total_hours!='00:00' && formData.min_total_hours!=null)?formData.min_total_hours+':00'+'-'+formData.max_total_hours+':00':''
+        //=============================Commented BY VS 18-06-2020 7:09 PM======================================
+        
+
         localStorage.setItem('driverFilter',JSON.stringify(data));
         this.dialogRef.close(true);
       // }

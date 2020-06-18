@@ -31,8 +31,8 @@ export class OthersRideFilterComponent implements OnInit {
 
       //Device Type Array 
       this.cancel_by = [
-          { cancelBy_id: 'A', cancel_by: 'Rider' },
-          { cancelBy_id: 'I', cancel_by: 'Driver' },
+          { cancelBy_id: '2', cancel_by: 'Rider' },
+          { cancelBy_id: '1', cancel_by: 'Driver' },
       ];
 
       //Multiple Cancel By Settings
@@ -54,8 +54,8 @@ export class OthersRideFilterComponent implements OnInit {
         driver_mobile : [''],
         start_date : [''],
         end_date : [''],
-        date_of_ride : [''],
-        date_of_cancel : [''],
+        // date_of_ride : [''],
+        // date_of_cancel : [''],
         start_location : [''],
         end_location : [''],
         min_amount : [''],
@@ -83,13 +83,13 @@ export class OthersRideFilterComponent implements OnInit {
           endDate = ""+endDate.toString()+"";
       var end_date = endDate.replace(/\s+-/g, '');
 
-      var date_of_ride = (<HTMLInputElement>document.getElementById('date_of_ride')).value;
-          date_of_ride = ""+date_of_ride.toString()+"";
-      var dateOfRide = date_of_ride.replace(/\s+-/g, '');
+      // var date_of_ride = (<HTMLInputElement>document.getElementById('date_of_ride')).value;
+      //     date_of_ride = ""+date_of_ride.toString()+"";
+      // var dateOfRide = date_of_ride.replace(/\s+-/g, '');
 
-      var date_of_cancel = (<HTMLInputElement>document.getElementById('date_of_cancel')).value;
-          date_of_cancel = ""+date_of_cancel.toString()+"";
-      var dateOfCancel = date_of_cancel.replace(/\s+-/g, '');
+      // var date_of_cancel = (<HTMLInputElement>document.getElementById('date_of_cancel')).value;
+      //     date_of_cancel = ""+date_of_cancel.toString()+"";
+      // var dateOfCancel = date_of_cancel.replace(/\s+-/g, '');
 
       
       if(formData.cancel_by!='' && formData.cancel_by!=null){
@@ -102,8 +102,8 @@ export class OthersRideFilterComponent implements OnInit {
         }
       }
 
-      const data = {
-        "user_name" : formData.username,
+      const filterData = {
+        "user_name" : formData.user_name,
         "driver_name" : (formData.driver_name!=null && formData.driver_name!='')?formData.driver_name:'',
         "driver_mobile" : (formData.driver_mobile!=null && formData.driver_mobile!='')?formData.driver_mobile:'',
         "user_mobile" : (formData.user_mobile!=null && formData.user_mobile!='')?formData.user_mobile:'',
@@ -112,12 +112,13 @@ export class OthersRideFilterComponent implements OnInit {
         "start_location" : (formData.start_location!=null && formData.start_location!='')?formData.start_location:'',
         "end_location" : (formData.end_location!=null && formData.end_location!='')?formData.end_location:'',
         "amount" : (formData.min_amount!=null && formData.min_amount!='')?formData.min_amount+'-'+formData.max_amount:'',
-        "date_of_ride" : dateOfRide,
-        "date_of_cancel" : dateOfCancel,
-        "cancel_by" : cancelByData,
+        "cancel_by" : cancelByData!=''?cancelByData:'',
       } 
 
-      localStorage.setItem('ridesFilter',JSON.stringify(data));
+      // "date_of_ride" : dateOfRide,
+      // "date_of_cancel" : dateOfCancel,
+
+      localStorage.setItem('canceledRidesFilter',JSON.stringify(filterData));
       this.dialogRef.close(true);
     }
 

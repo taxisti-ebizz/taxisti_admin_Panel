@@ -75,12 +75,26 @@ export class AllDriverDataService {
           result.data.data.forEach(element => {
             element.id = i;
 
+            element.driver_avg = 0;
             if(element.driver_avg_rating.length > 0){
               element.driver_avg = element.driver_avg_rating[0].avg;
             }
-            else{
-              element.driver_avg = 0;
+
+            element.online_hours_current_week_count = '00:00:00';
+            if(element.online_hours_current_week.length > 0){
+              element.online_hours_current_week_count = element.online_hours_current_week[0].time;
             }
+
+            element.online_hours_last_week_count = '00:00:00';
+            if(element.online_hours_last_week.length > 0){
+              element.online_hours_last_week_count = element.online_hours_last_week[0].time;
+            }
+
+            element.total_online_hours_count = '00:00:00';
+            if(element.total_online_hours.length > 0){
+              element.total_online_hours_count = element.total_online_hours[0].time;
+            }
+            
 
             i++;
           });

@@ -75,6 +75,7 @@ import { AgmCoreModule } from '@agm/core';
 
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+//import { TimepickerModule } from 'ngx-bootstrap/timepicker';
 
 //import { RatingModule } from 'ng-starrating';
 
@@ -150,7 +151,8 @@ const routes: Routes = [
 			apiKey: 'AIzaSyCyHzLEsS3Obyncia4v8idZ3RENsUKiWDs'
 		}),
 		NgMultiSelectDropDownModule.forRoot(),
-		BsDatepickerModule.forRoot()
+		BsDatepickerModule.forRoot(),
+		//TimepickerModule.forRoot()
 		//RatingModule
 	],
 	providers: [

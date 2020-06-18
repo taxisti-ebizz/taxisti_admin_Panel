@@ -91,7 +91,7 @@ export class CanceledListComponent implements OnInit {
           this.pageTitle = 'Canceled Ride List';
         }
 
-        localStorage.setItem('ridesFilter','');
+        localStorage.setItem('canceledRidesFilter','');
         this.getCanceledRideList();
     }
 
@@ -232,7 +232,7 @@ export class CanceledListComponent implements OnInit {
 
     //Clear Filter
     clearFilter(){
-      localStorage.setItem('ridesFilter','');
+      localStorage.setItem('canceledRidesFilter','');
       this.canceledRideDataService.mode = 0;
       this.canceledRideDataService.formData = {};
       this.dataSource.clearFilter();

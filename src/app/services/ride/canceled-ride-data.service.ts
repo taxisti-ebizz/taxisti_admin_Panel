@@ -56,12 +56,12 @@ export class CanceledRideDataService {
       }
 
       var data = {};
-      if(localStorage.getItem('ridesFilter')!=null && localStorage.getItem('ridesFilter')!=''){
+      if(localStorage.getItem('canceledRidesFilter')!=null && localStorage.getItem('canceledRidesFilter')!=''){
         data = {
           "page" : page,
           "type" : urlType,
           "sub_type" : "filter",
-          "filter" : localStorage.getItem('ridesFilter')
+          "filter" : localStorage.getItem('canceledRidesFilter')
         }
       }else{
         data = {
