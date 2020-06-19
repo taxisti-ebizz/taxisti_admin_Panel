@@ -106,7 +106,7 @@
                 <div class="form-group kt-form__group row">
                     <label class="col-md-2">Message</label>
                     <div class="col-md-10">
-                        <textarea class="form-control" formControlName="message" placeholder="Enter Message Here" [ngClass]="{ 'is-invalid': isControlHasError('message','required') }" cols="5" rows="5"></textarea>
+                        <textarea class="form-control" id="message" formControlName="message" placeholder="Enter Message Here" [ngClass]="{ 'is-invalid': isControlHasError('message','required') }" cols="5" rows="5"></textarea>
                         <mat-error *ngIf="isControlHasError('message','required')">
                             <strong>Message is required</strong>
                         </mat-error>

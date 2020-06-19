@@ -117,11 +117,16 @@ export class SendNotificationComponent implements OnInit {
         this.spinner.hide();
         this.loading = false;
         
-        this.notificationForm.get('message').setValue('');
+        this.notificationForm.reset();
+        this.dataSource.selection.clear();
         this.toastr.success('Notification has been send successfully.');
+        this.notificationForm.get('status').setValue('all');
+        (<HTMLDivElement>document.getElementById('specificUser')).hidden = true;
       }
       else{
         this.hasFormErrors = true;
+        this.spinner.hide();
+        this.toastr.error('Something went wrong');
       }
     })
   }

@@ -8,6 +8,9 @@ import { HttpService } from '../../../../services/http.service';
 //Ngx Spinner
 import { NgxSpinnerService } from 'ngx-spinner';
 
+//Toastr Messages
+import { ToastrService } from 'ngx-toastr';
+
 //API Service
 import { ApiService } from '../../../../services/api.service';
 import { MapLoaderService } from '../../../../services/ride-area/map-loader.service'
@@ -40,7 +43,8 @@ export class AddRideAreaComponent implements OnInit {
       private formBuilder: FormBuilder,
       private router: Router,
       private spinner : NgxSpinnerService,
-      private activatedRoute: ActivatedRoute) { }
+      private activatedRoute: ActivatedRoute,
+      private toastr : ToastrService) { }
 
     ngOnInit() {
        // Set title to page breadCrumbs
@@ -133,7 +137,11 @@ export class AddRideAreaComponent implements OnInit {
 					if (result.status == true) {
               this.spinner.hide();
               this.router.navigateByUrl('/ride-area-settings/ride-area-list', { relativeTo: this.activatedRoute });
-					}
+          }
+          else{
+            this.spinner.hide();
+            this.toastr.error('Something went wrong');
+          }
 				}),
 				finalize(() => {
 					this.loading = false;

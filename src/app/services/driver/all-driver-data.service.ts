@@ -95,7 +95,6 @@ export class AllDriverDataService {
               element.total_online_hours_count = element.total_online_hours[0].time;
             }
             
-
             i++;
           });
           
