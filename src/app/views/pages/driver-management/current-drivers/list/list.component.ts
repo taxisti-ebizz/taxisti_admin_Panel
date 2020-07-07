@@ -41,7 +41,7 @@ import { map } from 'rxjs/operators';
 })
 export class ListComponent implements OnInit {
 
-    displayedColumns = ['id', 'username', 'mobile_no', 'rides', 'cancelled_ride', 'acceptance_ratio', 'rejected_ratio', 'last_week_online_hours', 'current_week_online_hours', 'total_online_hours', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
+    displayedColumns = ['id', 'username', 'mobile_no', 'rides', 'cancelled_ride', 'acceptance_ratio', 'rejected_ratio', 'last_week_online_hours', 'current_week_online_hours', 'total_online_hours', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'status', 'actions'];
 
     exampleDatabase : CurDriverDataService | null;
     dataSource : ExampleDataSource | null;
@@ -130,24 +130,24 @@ export class ListComponent implements OnInit {
     */
     editDriver(i: number, driverData) {
       
-    this.id = driverData.id;
-    // index row is used just for debugging proposes and can be removed
-    this.index = i;
-    const dialogRef = this.dialog.open(EditComponent, {
-      data: { driver : driverData },
-      disableClose: true
-    });
+      this.id = driverData.id;
+      // index row is used just for debugging proposes and can be removed
+      this.index = i;
+      const dialogRef = this.dialog.open(EditComponent, {
+        data: { driver : driverData },
+        disableClose: true
+      });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // When using an edit things are little different, firstly we find record inside DataService by id
-        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-        // Then you update that record using data from dialogData (values you enetered)
-        this.exampleDatabase.dataChange.value[foundIndex] = this.curDriverDataService.getDialogData();
-        // And lastly refresh table
-        this.refreshTable();
-      }
-    });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result === 1) {
+          // When using an edit things are little different, firstly we find record inside DataService by id
+          const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+          // Then you update that record using data from dialogData (values you enetered)
+          this.exampleDatabase.dataChange.value[foundIndex] = this.curDriverDataService.getDialogData();
+          // And lastly refresh table
+          this.refreshTable();
+        }
+      });
     }
 
     //Delete Driver 
@@ -214,6 +214,43 @@ export class ListComponent implements OnInit {
             result[foundIndex].verify = status;
         });
 
+      });
+    }
+
+    //Active & Inactive Driver
+    activeInactiveDriver(i,driverId,status){
+      this.id = i + 1;
+
+      var _title = '';
+      var _description = '';
+      var _waitDesciption = '';
+      var _deleteMessage = '';
+      if(status == 0){
+        _title = 'Driver Inactive';
+        _description = 'Are you sure want to Inactive?';
+        _waitDesciption = 'Driver is inactivating...';
+        _deleteMessage = `Driver has been inactivated`;
+      }else{
+        _title = 'Driver Active';
+        _description = 'Are you sure want to Active?';
+        _waitDesciption = 'Driver is activating...';
+        _deleteMessage = `Driver has been activated`;
+      }
+
+      const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, driverId, status, 'userStatus');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
+
+        this.store.dispatch(new UserDeleted({ id: driverId }));
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Update);
+
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        this.exampleDatabase.dataChange.subscribe(res => {
+          const result : any = res;
+            result[foundIndex].status = status;
+        });
       });
     }
 

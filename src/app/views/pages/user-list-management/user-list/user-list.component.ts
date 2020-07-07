@@ -50,7 +50,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class UserListComponent implements OnInit {
 
-    displayedColumns = ['id', 'username', 'mobile_no', 'completed_ride', 'cancelled_ride', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'actions'];
+    displayedColumns = ['id', 'username', 'mobile_no', 'completed_ride', 'cancelled_ride', 'total_reviews', 'average_rating', 'date_of_birth', 'date_of_register', 'device_type', 'verify', 'status', 'actions'];
 	
     //dataSource: MatTableDataSource<any>;
     
@@ -210,6 +210,43 @@ export class UserListComponent implements OnInit {
         this.exampleDatabase.dataChange.subscribe(res => {
           const result : any = res;
             result[foundIndex].verify = status;
+        });
+      });
+    }
+
+    //Active & Inactive User
+    activeInactiveUser(i,userId,status){
+      this.id = i + 1;
+
+      var _title = '';
+      var _description = '';
+      var _waitDesciption = '';
+      var _deleteMessage = '';
+      if(status == 0){
+        _title = 'User Inactive';
+        _description = 'Are you sure want to Inactive?';
+        _waitDesciption = 'User is inactivating...';
+        _deleteMessage = `User has been inactivated`;
+      }else{
+        _title = 'User Active';
+        _description = 'Are you sure want to Active?';
+        _waitDesciption = 'User is activating...';
+        _deleteMessage = `User has been activated`;
+      }
+
+      const dialogRef = this.layoutUtilsService.verifyElement(_title, _description, _waitDesciption, userId, status, 'userStatus');
+      dialogRef.afterClosed().subscribe(res => {
+        if (!res) {
+          return;
+        }
+
+        this.store.dispatch(new UserDeleted({ id: userId }));
+        this.layoutUtilsService.showActionNotification(_deleteMessage, MessageType.Update);
+
+        const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+        this.exampleDatabase.dataChange.subscribe(res => {
+          const result : any = res;
+            result[foundIndex].status = status;
         });
       });
     }

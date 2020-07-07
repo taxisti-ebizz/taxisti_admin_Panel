@@ -15,7 +15,7 @@ export class ApiService {
     deleteUser = this.path+'deleteUser/';
     updateUserStatus = this.path+'updateUserStatus';
     getUserDetail = this.path+'getUserDetail';
-
+    manageStatus = this.path+'manageStatus';
 
     //Driver 
     getDriverList = this.path+'getDriverList';

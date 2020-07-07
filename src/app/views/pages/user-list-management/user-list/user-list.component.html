@@ -105,6 +105,18 @@
                     <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" *ngIf="row.verify == 1">Approved</span> 
                   </mat-cell>
                 </ng-container>
+
+                <ng-container matColumnDef="status">
+                  <mat-header-cell *matHeaderCellDef mat-sort-header>Status <br>(0 = Inactive, 1 = Active)</mat-header-cell>
+                  <mat-cell *matCellDef="let row; let i=index;"> 
+                    <button mat-icon-button class="material-icons color_green" matTooltip="Active User" type="button" *ngIf="row.status == 1" (click)="activeInactiveUser(i,row.user_id,0)">
+                        <mat-icon style="color: green;">thumb_up</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" matTooltip="Inactive User" type="button" *ngIf="row.status == 0" (click)="activeInactiveUser(i,row.user_id,1)">
+                        <mat-icon style="color: red;">thumb_down</mat-icon>
+                    </button>
+                  </mat-cell>
+                </ng-container>
             
                 <!-- actions -->
                 <ng-container matColumnDef="actions">
