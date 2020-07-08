@@ -21,8 +21,10 @@ export class DriverFilterComponent implements OnInit {
 
     dropdownDeviceSettings: any = {}; // Used For Device Dropdown Settings
     dropdownVerifySettings : any = {}; // Used For Verify Dropdown Settings
+    dropdownStatusSettings : any = {}; // Used For Status Dropdown Settings
     device_types : any = [];
     verify_data : any = [];
+    status_data : any = [];
     disabled = false;
     hasFormErrors = false;
 
@@ -47,6 +49,12 @@ export class DriverFilterComponent implements OnInit {
         { verify_id: '2', verify: 'Unapproved' },
       ];
 
+      //Status Array 
+      this.status_data = [
+        { status_id: '1', status: 'Active' },
+        { status_id: '2', status: 'Inactive' },
+      ];
+
       //Multiple Device Type Settings
       this.dropdownDeviceSettings = {
         singleSelection: false,
@@ -68,6 +76,17 @@ export class DriverFilterComponent implements OnInit {
         itemsShowLimit: 3,
         allowSearchFilter: false
       };
+
+      //Multiple Status Settings
+      this.dropdownStatusSettings = {
+        singleSelection: false,
+        idField: 'status_id',
+        textField: 'status',
+        selectAllText: 'Select All',
+        unSelectAllText: 'UnSelect All',
+        itemsShowLimit: 3,
+        allowSearchFilter: false
+      };
       
       //Driver Filter Form
       this.driverFilterForm = this.formBuilder.group({
@@ -75,6 +94,7 @@ export class DriverFilterComponent implements OnInit {
         mobile : [''],
         device_type : [''],
         verify : [''],
+        status : [''],
         dob : [''],
         dor : [''],
         min_rides : [''],
@@ -146,6 +166,16 @@ export class DriverFilterComponent implements OnInit {
             deviceData += formData.device_type[i].device_id;
           }
         }
+
+        if(formData.status!='' && formData.status!=null){
+          var statusData = '';
+          for (let i = 0; i < formData.status.length; i++) {
+            if(statusData!=''){
+              statusData += ',';
+            }
+            statusData += formData.status[i].status_id;
+          }
+        }  
        
         const data = {
           "username" : formData.username,
@@ -154,6 +184,7 @@ export class DriverFilterComponent implements OnInit {
           "dor" : dateOfRegister,
           "device_type" : deviceData,
           "verify" : verifyData,
+          "status" : statusData,
           "driver_rides" : (formData.min_rides!='' && formData.min_rides!=null)?formData.min_rides+'-'+formData.max_rides:'',
           "driver_cancel_ride" : (formData.min_cancelled!='' && formData.min_cancelled!=null)?formData.min_cancelled+'-'+formData.max_cancelled:'',
           "driver_total_review" : (formData.min_total_reviews!='' && formData.min_total_reviews!=null)?formData.min_total_reviews+'-'+formData.max_total_reviews:'',

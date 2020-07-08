@@ -19,8 +19,10 @@ export class UserFilterComponent implements OnInit {
 
   dropdownDeviceSettings: any = {}; // Used For Device Dropdown Settings
   dropdownVerifySettings : any = {}; // Used For Verify Dropdown Settings
+  dropdownStatusSettings : any = {}; // Used For Status Dropdown Settings
   device_types : any = [];
   verify_data : any = [];
+  status_data : any = [];
   disabled = false;
 
   constructor(public dialogRef: MatDialogRef<UserFilterComponent>,
@@ -40,6 +42,12 @@ export class UserFilterComponent implements OnInit {
     this.verify_data = [
       { verify_id: '1', verify: 'Approved' },
       { verify_id: '2', verify: 'Unapproved' },
+    ];
+
+    //Status Array 
+    this.status_data = [
+      { status_id: '1', status: 'Active' },
+      { status_id: '2', status: 'Inactive' },
     ];
 
     //Multiple Device Type Settings
@@ -64,12 +72,24 @@ export class UserFilterComponent implements OnInit {
       allowSearchFilter: false
     };
 
+    //Multiple Status Settings
+    this.dropdownStatusSettings = {
+      singleSelection: false,
+      idField: 'status_id',
+      textField: 'status',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: false
+    };
+
     //User Filter Form
     this.userFilterForm = this.formBuilder.group({
       username : [''],
       mobile : [''],
       device_type : [''],
       verify : [''],
+      status : [''],
       dob : [''],
       dor : [''],
       min_completed : [''],
@@ -108,6 +128,16 @@ export class UserFilterComponent implements OnInit {
       verifyData += formData.verify[i].verify_id;
     }
 
+    if(formData.status!='' && formData.status!=null){
+      var statusData = '';
+      for (let i = 0; i < formData.status.length; i++) {
+        if(statusData!=''){
+          statusData += ',';
+        }
+        statusData += formData.status[i].status_id;
+      }
+    }  
+
     var deviceData = '';
     for (let i = 0; i < formData.device_type.length; i++) {
       if(deviceData!=''){
@@ -126,7 +156,8 @@ export class UserFilterComponent implements OnInit {
       "dob" : dateOfBirth,
       "dor" : dateOfRegister,
       "device_type" : deviceData,
-      "verify" : verifyData
+      "verify" : verifyData,
+      "status" : statusData
     } 
 
     localStorage.setItem('userFilter',JSON.stringify(data));

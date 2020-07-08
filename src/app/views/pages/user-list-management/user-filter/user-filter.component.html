@@ -84,8 +84,8 @@
         
       <div class="form-group kt-form__group row">
         <!-- Device Type Box -->
-        <div class="form-row mb-4 halfWidth">
-          <div class="col-xs-12 col-md-6">
+        <div class="form-row mb-4 fullwidthl">
+          <div class="col-xs-12 col-md-3">
             <label for="ssn" class="form-label label document fullwidthl">Device Type</label>
             <ng-multiselect-dropdown
                 name="device_id"
@@ -99,7 +99,7 @@
           </div>  
   
           <!-- Device Type Box -->
-          <div class="col-xs-12 col-md-6">
+          <div class="col-xs-12 col-md-3">
             <label for="ssn" class="form-label label document fullwidthl">Verify</label>
             <ng-multiselect-dropdown
                 name="verify_id"
@@ -108,6 +108,20 @@
                 formControlName="verify"
                 [disabled]="disabled"
                 [settings]="dropdownVerifySettings">
+            </ng-multiselect-dropdown>
+          </div>  
+
+          
+          <!-- Status Box -->
+          <div class="col-xs-12 col-md-3">
+            <label for="ssn" class="form-label label document fullwidthl">Status</label>
+            <ng-multiselect-dropdown
+                name="status_id"
+                [placeholder]="'Select Status'"
+                [data]="status_data"
+                formControlName="status"
+                [disabled]="disabled"
+                [settings]="dropdownStatusSettings">
             </ng-multiselect-dropdown>
           </div>  
         </div>

@@ -158,6 +158,19 @@
                         </ng-multiselect-dropdown>
                     </div>  
 
+                    <!-- Status Box -->
+                    <div class="col-xs-12 col-md-3">
+                        <label for="ssn" class="form-label label document fullwidthl">Status</label>
+                        <ng-multiselect-dropdown
+                            name="status_id"
+                            [placeholder]="'Select Status'"
+                            [data]="status_data"
+                            formControlName="status"
+                            [disabled]="disabled"
+                            [settings]="dropdownStatusSettings">
+                        </ng-multiselect-dropdown>
+                    </div>  
+
                 </div>  
 
             </div>

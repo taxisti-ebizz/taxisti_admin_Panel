@@ -140,13 +140,9 @@
                 <!-- Status Column -->
                 <ng-container matColumnDef="status">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Status <br>(0 = Inactive, 1 = Active)</mat-header-cell>
-                    <mat-cell *matCellDef="let row; let i=index;"> 
-                      <button mat-icon-button class="material-icons color_green" matTooltip="Active Driver" type="button" *ngIf="row.status == 1" (click)="activeInactiveDriver(i,row.user_id,0)">
-                          <mat-icon style="color: green;">thumb_up</mat-icon>
-                      </button>
-                      <button mat-icon-button color="warn" matTooltip="Inactive Driver" type="button" *ngIf="row.status == 0" (click)="activeInactiveDriver(i,row.user_id,1)">
-                          <mat-icon style="color: red;">thumb_down</mat-icon>
-                      </button>
+                    <mat-cell *matCellDef="let row"> 
+                        <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--danger kt-badge--wide" *ngIf="row.status == 0">Inactive</span>
+                        <span class="kt-badge kt-badge--inline kt-badge--pill kt-badge--success kt-badge--wide" *ngIf="row.status == 1">Active</span> 
                     </mat-cell>
                 </ng-container>
 
@@ -166,13 +162,21 @@
                                 <mat-icon>delete</mat-icon>
                             </button>
                         </ng-container>
-						
+                        
+                        <br>
 						<button mat-icon-button class="material-icons color_green" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 1" (click)="verifyDriver(i,driver.user_id,0)">
 							<mat-icon style="color: green;">thumb_up</mat-icon>
 						</button>
 						<button mat-icon-button color="warn" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 0" (click)="verifyDriver(i,driver.user_id,1)">
 							<mat-icon style="color: red;">thumb_down</mat-icon>
-						</button>
+                        </button>
+                        
+                        <button mat-icon-button class="material-icons color_green" matTooltip="Active Driver" type="button" *ngIf="driver.status == 1" (click)="activeInactiveDriver(i,driver.user_id,0)">
+                            <img src="assets/img/switch_on.png">
+                        </button>
+                        <button mat-icon-button class="material-icons color_green" matTooltip="Inactive Driver" type="button" *ngIf="driver.status == 0" (click)="activeInactiveDriver(i,driver.user_id,1)">
+                            <img src="assets/img/switch_off.png">
+                        </button>
                     </mat-cell>
                 </ng-container>
             

@@ -46,6 +46,7 @@ import {
 	MAT_DIALOG_DEFAULT_OPTIONS,
 	MatSnackBarModule,
 	MatTooltipModule,
+	MatSlideToggleModule
 } from '@angular/material';
 import {
 	usersReducer,
@@ -111,6 +112,7 @@ const routes: Routes = [
 		MatTooltipModule,
 		MatDialogModule,
 		NgbPaginationModule,
+		MatSlideToggleModule,
 		NgMultiSelectDropDownModule.forRoot(),
     	BsDatepickerModule.forRoot()
   	],

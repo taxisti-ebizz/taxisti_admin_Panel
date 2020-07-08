@@ -6,3 +6,9 @@ table {
     font-size: 14px;
     width: 100%;
 }
+
+mat-cell, mat-footer-cell, mat-header-cell {
+    display: block !important;
+    align-items: center;
+    overflow: hidden;
+}
