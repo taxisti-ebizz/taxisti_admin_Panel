@@ -147,9 +147,9 @@
                 </ng-container>
 
                 <ng-container matColumnDef="actions">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Action / Status</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
                     <mat-cell *matCellDef="let driver; let i=index;">
-                        <button (click)="viewDriverDetails(driver)" mat-icon-button color="primary" matTooltip="view Driver Details">
+                        <!-- <button mat-icon-button (click)="viewDriverDetails(driver)" color="primary" matTooltip="view Driver Details">
 							<mat-icon>remove_red_eye</mat-icon>
                         </button>
                         
@@ -176,7 +176,50 @@
                         </button>
                         <button mat-icon-button class="material-icons color_green" matTooltip="Inactive Driver" type="button" *ngIf="driver.status == 0" (click)="activeInactiveDriver(i,driver.user_id,1)">
                             <img src="assets/img/switch_off.png">
+                        </button> -->
+
+
+                        <button mat-icon-button [matMenuTriggerFor]="menu" matTooltip="More actions">
+                            <mat-icon>more_horiz</mat-icon>
                         </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="viewDriverDetails(driver)" color="primary" matTooltip="view driver details">
+                              <mat-icon style="color: rgb(11, 90, 207);">remove_red_eye</mat-icon>
+                              <span>View driver details</span>
+                            </button>
+  
+                            <button mat-menu-item (click)="editDriver(i, driver)" color="primary" matTooltip="Edit driver">
+                              <mat-icon style="color: black;">edit</mat-icon>
+                              <span>Edit driver</span>
+                            </button>
+                            
+                            <ng-container *ngIf="userDetail.type==0">
+                              <button mat-menu-item color="warn" matTooltip="Delete driver" type="button" (click)="deleteDriver(i, driver.user_id)">
+                                <mat-icon style="color: rgb(252, 0, 147);">delete</mat-icon>
+                                <span>Delete driver</span>
+                              </button>
+                            </ng-container>
+                            
+                            <button mat-menu-item class="material-icons color_green" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 1" (click)="verifyDriver(i,driver.user_id,0)">
+                              <mat-icon style="color: green;">thumb_up</mat-icon>
+                              <span style="font-size: 14px;">Verify driver</span>
+                            </button>
+  
+                            <button mat-menu-item color="warn" matTooltip="Verify driver" type="button" *ngIf="driver.verify == 0" (click)="verifyDriver(i,driver.user_id,1)">
+                              <mat-icon style="color: red;">thumb_down</mat-icon>
+                              <span style="font-size: 14px;">Unverify driver</span>
+                            </button>
+  
+                            <button mat-menu-item class="material-icons color_green" matTooltip="Active driver" type="button" *ngIf="driver.status == 1" (click)="activeInactiveDriver(i,driver.user_id,0)">
+                              <img src="assets/img/switch_on.png">&nbsp;&nbsp;
+                              <span style="font-size: 14px;">Active driver</span>
+                            </button>
+    
+                            <button mat-menu-item class="material-icons color_green" matTooltip="Inactive driver" type="button" *ngIf="driver.status == 0" (click)="activeInactiveDriver(i,driver.user_id,1)">
+                              <img src="assets/img/switch_off.png">&nbsp;&nbsp;
+                              <span style="font-size: 14px;">Inactive driver</span>
+                            </button>
+                        </mat-menu>
                     </mat-cell>
                 </ng-container>
             
