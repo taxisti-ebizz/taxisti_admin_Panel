@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { SubheaderService } from '../../../../core/_base/layout';
 
 // Env
-import { environment } from '../../../../../environments/environment';
+// import { environment } from '../../../../../environments/environment';
 
 import * as firebase from 'firebase';
 
@@ -19,6 +19,17 @@ export const snapshotToArray = (snapshot: any) => {
   return returnArr;
 };
 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyB9pnqJDpeqtfTQqiC5eiulPN5aLnOg3J8", //OLD ===> AIzaSyDPKHXnfTbkIqJTFNGWpTvt4MCyebb5DeE
+  authDomain: "taxistinewproject.firebaseapp.com",
+  databaseURL: "https://taxistinewproject.firebaseio.com",
+  projectId: "taxistinewproject", //taxisti-8392c
+  storageBucket: "taxistinewproject.appspot.com",
+  messagingSenderId: "823803868309" //OLD ===> 1007628796907
+}
+
+export default !firebase.apps.length ? firebase.initializeApp(firebaseConfig) : firebase.app();
 
 @Component({
   selector: 'kt-location',
@@ -42,18 +53,20 @@ export class LocationComponent implements OnInit {
     //   });
     // }
 
-    firebase.initializeApp(environment.firebaseConfig);
-
     firebase.database().ref('userData1/').on('value', resp => {
+
       this.donors = [];
 
       this.donors = snapshotToArray(resp);
-     
+    
       this.donors.forEach(element => {
         element.icon = 'assets/img/car_img.png';
       });
     });
-    // this.initMap();
+
+    //this.initMap();
+        
+      
   }
 
   ngOnInit() {
