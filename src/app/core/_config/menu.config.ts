@@ -10,68 +10,68 @@ export class MenuConfig {
 					page: '/dashboard',
 					translate: 'MENU.DASHBOARD',
 				},
-				{
-					title: 'Custom',
-					root: true,
-					alignment: 'left',
-					toggle: 'click',
-					submenu: [
-						{
-							title: 'Error Pages',
-							bullet: 'dot',
-							icon: 'flaticon2-list-2',
-							submenu: [
-								{
-									title: 'Error 1',
-									page: '/error/error-v1'
-								},
-								{
-									title: 'Error 2',
-									page: '/error/error-v2'
-								},
-								{
-									title: 'Error 3',
-									page: '/error/error-v3'
-								},
-								{
-									title: 'Error 4',
-									page: '/error/error-v4'
-								},
-								{
-									title: 'Error 5',
-									page: '/error/error-v5'
-								},
-								{
-									title: 'Error 6',
-									page: '/error/error-v6'
-								},
-							]
-						},
-						{
-							title: 'Wizard',
-							bullet: 'dot',
-							icon: 'flaticon2-mail-1',
-							submenu: [
-								{
-									title: 'Wizard 1',
-									page: '/wizard/wizard-1'
-								},
-								{
-									title: 'Wizard 2',
-									page: '/wizard/wizard-2'
-								},
-								{
-									title: 'Wizard 3',
-									page: '/wizard/wizard-3'
-								},
-								{
-									title: 'Wizard 4',
-									page: '/wizard/wizard-4'
-								},
-							]
-						},
-					]
-				},
+				// {
+				// 	title: 'Custom',
+				// 	root: true,
+				// 	alignment: 'left',
+				// 	toggle: 'click',
+				// 	submenu: [
+				// 		{
+				// 			title: 'Error Pages',
+				// 			bullet: 'dot',
+				// 			icon: 'flaticon2-list-2',
+				// 			submenu: [
+				// 				{
+				// 					title: 'Error 1',
+				// 					page: '/error/error-v1'
+				// 				},
+				// 				{
+				// 					title: 'Error 2',
+				// 					page: '/error/error-v2'
+				// 				},
+				// 				{
+				// 					title: 'Error 3',
+				// 					page: '/error/error-v3'
+				// 				},
+				// 				{
+				// 					title: 'Error 4',
+				// 					page: '/error/error-v4'
+				// 				},
+				// 				{
+				// 					title: 'Error 5',
+				// 					page: '/error/error-v5'
+				// 				},
+				// 				{
+				// 					title: 'Error 6',
+				// 					page: '/error/error-v6'
+				// 				},
+				// 			]
+				// 		},
+				// 		{
+				// 			title: 'Wizard',
+				// 			bullet: 'dot',
+				// 			icon: 'flaticon2-mail-1',
+				// 			submenu: [
+				// 				{
+				// 					title: 'Wizard 1',
+				// 					page: '/wizard/wizard-1'
+				// 				},
+				// 				{
+				// 					title: 'Wizard 2',
+				// 					page: '/wizard/wizard-2'
+				// 				},
+				// 				{
+				// 					title: 'Wizard 3',
+				// 					page: '/wizard/wizard-3'
+				// 				},
+				// 				{
+				// 					title: 'Wizard 4',
+				// 					page: '/wizard/wizard-4'
+				// 				},
+				// 			]
+				// 		},
+				// 	]
+				// },
 			]
 		},
 		aside: {

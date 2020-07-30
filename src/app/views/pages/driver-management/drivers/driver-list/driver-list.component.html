@@ -47,7 +47,7 @@
                 <!-- Username Column -->
                 <ng-container matColumnDef="username">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
-                    <mat-cell *matCellDef="let driver"><a href="javascript:void(0)" (click)="viewUserDetails(driver.user_id)">{{driver.first_name+' '+driver.last_name}}</a></mat-cell>
+                    <mat-cell *matCellDef="let driver"><a href="javascript:void(0)" (click)="viewDriverDetails(driver)">{{driver.first_name+' '+driver.last_name}}</a></mat-cell>
                 </ng-container>
             
                 <!-- Mobile No Column -->

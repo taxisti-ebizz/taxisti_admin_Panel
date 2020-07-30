@@ -290,36 +290,36 @@ export class ListComponent implements OnInit {
     }
 
     //View User Details
-    viewUserDetails(user_id){
+    // viewUserDetails(user_id){
 
-      const data = {
-        "user_id" : user_id
-      }
+    //   const data = {
+    //     "user_id" : user_id
+    //   }
 
-      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
-        const result : any = res;
-        if(result.status == true){
+    //   this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+    //     const result : any = res;
+    //     if(result.status == true){
 
-          this.spinner.hide();
+    //       this.spinner.hide();
          
-          const dialogRef = this.dialog.open(ViewDriverUserDetailsComponent, {
-            width: '700px',
-            height: 'auto',
-            backdropClass: 'masterModalPopup',
-            data: { mode: 3, userData : result.data },
-            disableClose: true
-          });
-          dialogRef.afterClosed().subscribe(result => {
+    //       const dialogRef = this.dialog.open(ViewDriverUserDetailsComponent, {
+    //         width: '700px',
+    //         height: 'auto',
+    //         backdropClass: 'masterModalPopup',
+    //         data: { mode: 3, userData : result.data },
+    //         disableClose: true
+    //       });
+    //       dialogRef.afterClosed().subscribe(result => {
             
-            if (result === false) {
-              this.spinner.hide();
-            }
-          });
+    //         if (result === false) {
+    //           this.spinner.hide();
+    //         }
+    //       });
            
-        }
-      })
+    //     }
+    //   })
     
-    }
+    // }
 
 
     private refreshTable() {
