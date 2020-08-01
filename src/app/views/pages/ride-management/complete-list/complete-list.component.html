@@ -93,7 +93,7 @@
                 <!-- Driver Name Column -->
                 <ng-container matColumnDef="driver_name">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Driver Name</mat-header-cell>
-                    <mat-cell *matCellDef="let ride"><a href="javascript:void(0)" (click)="viewUserDetails(ride.driver_id)">{{ride.driver_name}}</a></mat-cell>
+                    <mat-cell *matCellDef="let ride"><a href="javascript:void(0)" (click)="viewDriverDetails(ride.driver_id)">{{ride.driver_name}}</a></mat-cell>
                 </ng-container>
             
                 <!-- Start Date Column -->

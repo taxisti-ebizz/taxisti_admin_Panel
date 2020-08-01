@@ -24,8 +24,10 @@ import { RidesFilterComponent } from '../rides-filter/rides-filter.component';
 import { PendingRideDataService } from '../../../../services/ride/pending-ride-data.service';
 import { CommonService } from '../../../../services/common.service';
 
-//View Ride User details
+//View Ride User and driver details
 import { ViewRideUserDetailsComponent } from '../view-ride-user-details/view-ride-user-details.component';
+import { ViewRideDriverDetailsComponent } from '../view-ride-driver-details/view-ride-driver-details.component';
+
 
 import { Store, select } from '@ngrx/store';
 import { AppState } from '../../../../core/reducers';
@@ -224,6 +226,36 @@ export class PendingListComponent implements OnInit {
         }
       })
       
+    }
+
+    //View Driver Details
+    viewDriverDetails(driver_id){
+
+      const data = {
+        "driver_id" : driver_id
+      }
+
+      this.http.postReq(this.api.getDriverDetails,data).subscribe(res => {
+        const result : any = res;
+        if(result.status == true){
+
+          this.spinner.hide();
+          
+          const dialogRef = this.dialog.open(ViewRideDriverDetailsComponent, {
+            width: '700px',
+            height: 'auto',
+            backdropClass: 'masterModalPopup',
+            data: { mode: 3, driverData : result.data },
+            disableClose: true
+          });
+          dialogRef.afterClosed().subscribe(result => {
+            
+            if (result === false) {
+              this.spinner.hide();
+            }
+          });
+        }
+      })
     }
 
     //Apply More Filter

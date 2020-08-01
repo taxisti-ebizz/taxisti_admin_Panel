@@ -21,6 +21,7 @@ import { map } from 'rxjs/operators';
 
 //Componenent
 import { ViewDriverReviewDetailComponent } from '../view-driver-review-detail/view-driver-review-detail.component'
+import { ReviewDriverDetailsComponent } from '../../review-driver-details/review-driver-details.component'
 
 //Filter Component
 import { ReviewFilterComponent } from '../../review-filter/review-filter.component';
@@ -157,23 +158,23 @@ export class DriverReviewListComponent implements OnInit {
     // }
 
     //View User Details
-    viewUserDetails(user_id){
+    viewDriverDetails(driver_id){
 
       const data = {
-        "user_id" : user_id
+        "driver_id" : driver_id
       }
 
-      this.http.postReq(this.api.getUserDetail,data).subscribe(res => {
+      this.http.postReq(this.api.getDriverDetails,data).subscribe(res => {
         const result : any = res;
         if(result.status == true){
 
           this.spinner.hide();
 
-          const dialogRef = this.dialog.open(ReviewUserDetailsComponent, {
+          const dialogRef = this.dialog.open(ReviewDriverDetailsComponent, {
             width: '700px',
             height: 'auto',
             backdropClass: 'masterModalPopup',
-            data: { mode: 3, userData : result.data },
+            data: { mode: 3, driverData : result.data },
             disableClose: true
           });
           dialogRef.afterClosed().subscribe(result => {

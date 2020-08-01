@@ -20,15 +20,15 @@
 
             <div class="col-sm-12">
                 <label class="col-sm-4">Licence  :</label>
-                <ng-container *ngIf="data.driverData.profile_pic!=''"><img src="{{data.driverData.licence}}"></ng-container> 
-                <ng-container *ngIf="data.driverData.profile_pic==''"><img src="assets/img/driver-license.png"></ng-container> 
+                <ng-container *ngIf="data.driverData.licence!=''"><img src="{{data.driverData.licence}}"></ng-container> 
+                <ng-container *ngIf="data.driverData.licence==''"><img src="assets/img/driver-license.png"></ng-container> 
             </div>
             <br/>
 
             <div class="col-sm-12">
                 <label class="col-sm-4">Driver Pic :</label>
-                <ng-container *ngIf="data.driverData.profile_pic!=''"><img src="{{data.driverData.profile}}"></ng-container> 
-                <ng-container *ngIf="data.driverData.profile_pic==''"><img src="assets/img/driver.png"></ng-container> 
+                <ng-container *ngIf="data.driverData.profile!=''"><img src="{{data.driverData.profile}}"></ng-container> 
+                <ng-container *ngIf="data.driverData.profile==''"><img src="assets/img/driver.png"></ng-container> 
             </div>
             <br/>
             

@@ -31,6 +31,7 @@ import { NoDriverAvailableFilterComponent } from './no-driver-available-list/no-
 
 //View Ride User details
 import { ViewRideUserDetailsComponent } from './view-ride-user-details/view-ride-user-details.component';
+import { ViewRideDriverDetailsComponent } from './view-ride-driver-details/view-ride-driver-details.component';
 
 // Material
 import {
@@ -206,13 +207,15 @@ const routes: Routes = [
       RidesFilterComponent,
       OthersRideFilterComponent,
       NoDriverAvailableFilterComponent,
-      ViewRideUserDetailsComponent
+      ViewRideUserDetailsComponent,
+      ViewRideDriverDetailsComponent
     ],
     entryComponents : [
       RidesFilterComponent,
       OthersRideFilterComponent,
       NoDriverAvailableFilterComponent,
-      ViewRideUserDetailsComponent
+      ViewRideUserDetailsComponent,
+      ViewRideDriverDetailsComponent
     ]
 })
 export class RideManagementModule { }
