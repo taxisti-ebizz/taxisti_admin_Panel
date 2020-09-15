@@ -128,26 +128,40 @@ export class ListComponent implements OnInit {
     /*
       Edit Driver detail
     */
-    editDriver(i: number, driverData) {
+    editDriver(i: number, id, driver_id) {
       
-      this.id = driverData.id;
+      this.id = id;
       // index row is used just for debugging proposes and can be removed
       this.index = i;
-      const dialogRef = this.dialog.open(EditComponent, {
-        data: { driver : driverData },
-        disableClose: true
-      });
 
-      dialogRef.afterClosed().subscribe(result => {
-        if (result === 1) {
-          // When using an edit things are little different, firstly we find record inside DataService by id
-          const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
-          // Then you update that record using data from dialogData (values you enetered)
-          this.exampleDatabase.dataChange.value[foundIndex] = this.curDriverDataService.getDialogData();
-          // And lastly refresh table
-          this.refreshTable();
+      const data = {
+        "driver_id" : driver_id
+      }
+
+      this.http.postReq(this.api.getDriverDetails,data).subscribe(res => {
+        const result : any = res;
+
+        if(result.status == true){
+
+          this.spinner.hide();
+
+          const dialogRef = this.dialog.open(EditComponent, {
+            data: { driver : result.data },
+            disableClose: true
+          });
+    
+          dialogRef.afterClosed().subscribe(result => {
+            if (result === 1) {
+              // When using an edit things are little different, firstly we find record inside DataService by id
+              const foundIndex = this.exampleDatabase.dataChange.value.findIndex(x => x.id === this.id);
+              // Then you update that record using data from dialogData (values you enetered)
+              this.exampleDatabase.dataChange.value[foundIndex] = this.curDriverDataService.getDialogData();
+              // And lastly refresh table
+              this.refreshTable();
+            }
+          });
         }
-      });
+      })
     }
 
     //Delete Driver 

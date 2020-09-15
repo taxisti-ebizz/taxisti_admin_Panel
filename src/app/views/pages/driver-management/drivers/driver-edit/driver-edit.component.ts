@@ -47,7 +47,7 @@ export class DriverEditComponent implements OnInit {
     profile_img: File = null; //Store Profile Image
     car_img = []; // Store Car Image
     lic_img : File = null; // Store Licence Image
-    requests : any = [];
+    requests = [];
     
     //Upload Profile Pic
     error_file = false;
@@ -102,7 +102,12 @@ export class DriverEditComponent implements OnInit {
       editDriverFD.append('plate_no',this.data.driver.plate_no);
       editDriverFD.append('profile_pic',this.profile_img);
       editDriverFD.append('licence',this.lic_img);
-      editDriverFD.append('car_image',this.requests);
+
+      for (var k = 0; k < this.car_img.length; k++) {  
+        editDriverFD.append("car_image[]", this.car_img[k]);  
+      }  
+
+      //editDriverFD.append('car_image[]',this.requests);
 
       this.http
 			.postReqForVerify(this.api.editDriverDetail,editDriverFD)
@@ -160,8 +165,8 @@ export class DriverEditComponent implements OnInit {
           ///this.car_img = <File>evt.target.files[0];
 
           for (let k = 0; k < evt.target.files.length; k++) {	
-                //this.car_img.push(<File>evt.target.files[k]);
-                this.requests.push(<File>evt.target.files[k]);    
+                this.car_img.push(<File>evt.target.files[k]);
+                //this.requests.push(<File>evt.target.files[k]);    
           }
         }
         else{
@@ -217,6 +222,7 @@ export class DriverEditComponent implements OnInit {
                 var self = this;
                 $(".remove").click(function () {
                   $(this).parent(".carImage").remove();
+                  self.requests.splice(i,1);
                   self.base64textString.splice(i, 1);
                   self.fileStream.splice(i, 1);
                   (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
