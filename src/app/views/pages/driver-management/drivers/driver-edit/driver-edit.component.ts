@@ -103,7 +103,7 @@ export class DriverEditComponent implements OnInit {
       editDriverFD.append('profile_pic',this.profile_img);
       editDriverFD.append('licence',this.lic_img);
 
-      for (var k = 0; k < this.car_img.length; k++) {  
+      for (var k = 0; k < this.car_img.length; k++) {     
         editDriverFD.append("car_image[]", this.car_img[k]);  
       }  
 
@@ -222,10 +222,9 @@ export class DriverEditComponent implements OnInit {
                 var self = this;
                 $(".remove").click(function () {
                   $(this).parent(".carImage").remove();
-                  self.requests.splice(i,1);
+                  self.car_img.splice(i,1);
                   self.base64textString.splice(i, 1);
                   self.fileStream.splice(i, 1);
-                  (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
                   self.certificateLength -= 1;
                 });
               }
@@ -240,7 +239,7 @@ export class DriverEditComponent implements OnInit {
                   $(this).parent(".licImage").remove();
                   self.base64textString.splice(i, 1);
                   self.fileStream.splice(i, 1);
-                  (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
+                  (<FormArray>self.editDriverForm.get('licence')).removeAt(i);
                   self.certificateLength -= 1;
                 });
               }

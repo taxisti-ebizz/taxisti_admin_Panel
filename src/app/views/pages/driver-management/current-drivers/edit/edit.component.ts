@@ -217,7 +217,6 @@ export class EditComponent implements OnInit {
                   $(this).parent(".carImage").remove();
                   self.base64textString.splice(i, 1);
                   self.fileStream.splice(i, 1);
-                  (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
                   self.certificateLength -= 1;
                 });
               }
@@ -234,7 +233,7 @@ export class EditComponent implements OnInit {
                   $(this).parent(".licImage").remove();
                   self.base64textString.splice(i, 1);
                   self.fileStream.splice(i, 1);
-                  (<FormArray>self.editDriverForm.get('profile_pic')).removeAt(i);
+                  (<FormArray>self.editDriverForm.get('licence')).removeAt(i);
                   self.certificateLength -= 1;
                 });
               }
